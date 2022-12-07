@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { UserService } from './user.service';
+import {RegisterComponent} from "./register/register.component";
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +15,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes : Routes = 
 [
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent}
 ]
 
 @NgModule({
@@ -23,7 +25,9 @@ const appRoutes : Routes =
     ToolbarComponent,
     LoginComponent,
     NavbarComponent,
-    ButtonComponent
+    ButtonComponent,
+    RegisterComponent
+
   ],
   imports: [
     BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
