@@ -6,17 +6,24 @@ import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { UserService } from './user.service';
 import {RegisterComponent} from "./register/register.component";
+import { LoginComponent } from './login/login.component';
+import { MaterialModule } from 'src/infrastructure/material.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule
+    BrowserModule, HttpClientModule, MaterialModule, NgbModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
