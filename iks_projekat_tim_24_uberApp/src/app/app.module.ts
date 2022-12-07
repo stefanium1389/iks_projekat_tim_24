@@ -10,8 +10,12 @@ import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ButtonComponent } from './components/button/button.component';
+import { RouterModule, Routes } from '@angular/router';
 
-
+const appRoutes : Routes = 
+[
+  {path: 'login', component: LoginComponent}
+]
 
 @NgModule({
   declarations: [
@@ -22,7 +26,7 @@ import { ButtonComponent } from './components/button/button.component';
     ButtonComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, MaterialModule, NgbModule
+    BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

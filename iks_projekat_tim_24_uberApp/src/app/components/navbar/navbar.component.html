@@ -1,7 +1,7 @@
 <header>
-    <a id="navbar_logo">{{companyName}}</a>
+    <a id="navbar_logo" routerLink="">{{companyName}}</a>
     <div>
-        <a class = "cta"><button class="lol">Log in</button></a>
-        <a class = "cta"><button class="lol">Register</button></a>
+        <app-button color="#DDDBDB" text="Log in" ref="login"></app-button>
+        <app-button color="#DDDBDB" text="Register" ref="register"></app-button>
     </div>
 </header>

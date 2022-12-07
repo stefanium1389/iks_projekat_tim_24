@@ -5,6 +5,7 @@
     font-size: 20px;
     margin-right: auto;
     color: white;
+    text-decoration: none;
 }
 
 header{
@@ -15,15 +16,7 @@ header{
     padding: 30px 10%;
 }
 
-.cta
+app-button
 {
     margin: 0px 15px;
-}
-
-.lol
-{
-    background-color: #DDDBDB;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 15px;
 }
