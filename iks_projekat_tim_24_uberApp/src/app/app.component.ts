@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
         this.users = response;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        //alert(error.message);
       }
     )
   }

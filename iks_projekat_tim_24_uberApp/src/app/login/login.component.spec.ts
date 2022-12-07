@@ -21,3 +21,11 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+<form
+  IksProjekatTim24UberApp
+  formGroup="loginForm" 
+  (ngSubmit)="login()"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+>

@@ -7,6 +7,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { UserService } from './user.service';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -17,7 +18,7 @@ import { MaterialModule } from 'src/infrastructure/material.module';
     LoginComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, MaterialModule
+    BrowserModule, HttpClientModule, MaterialModule, NgbModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

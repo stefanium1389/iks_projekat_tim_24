@@ -1,18 +1,36 @@
-<form
-  IksProjekatTim24UberApp
-  formGroup="loginForm" 
-  (ngSubmit)="login()"
-  fxLayout="column"
->
-  <mat-form-field > 
-    <mat-label>Name</mat-label>
-    <input matInput type="text" name="usernamename" formControlName="username" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input matInput type="password" name="password" formControlName="password" />
-  </mat-form-field>>
-  <div fxLayout="row" fxLayoutAlign="space-between end">
-    <button color="primary" type="submit" mat-raised-button>Login</button>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <form
+              IksProjekatTim24UberApp
+              formGroup="loginForm" 
+              (ngSubmit)="login()"
+              fxLayout="row"
+              fxLayoutAlign="space-between center">
+                <div class="mb-md-5 mt-md-4 pb-5">
+
+                  <h1 class="fw mb-5">UberApp</h1>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="E-mail"/>
+                  </div>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" placeholder="Password"/>
+                  </div>
+
+                  <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+
+                  <button class="btn btn-outline-light btn-lg btn-block px-5" type="submit">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</form>
+</section>
+<!-- original taken from https://mdbootstrap.com/docs/standard/extended/login/#section-6-->
