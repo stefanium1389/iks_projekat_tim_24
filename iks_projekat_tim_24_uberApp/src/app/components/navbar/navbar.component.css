@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+#navbar_logo{
+    font-family: "Roboto";
+    font-size: 20px;
+    margin-right: auto;
+    color: white;
+    text-decoration: none;
+}
+
+header{
+    background-color: #2E8B57 ;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 10%;
+}
+
+app-button
+{
+    margin: 0px 15px;
+}

@@ -15,9 +15,6 @@ export class AppComponent implements OnInit{
 
   constructor(private userService: UserService){}
 
-  ngOnInit(): void
-  {
-
   public getUsers(): void{
     this.userService.getUsers().subscribe(
       (response: User[]) => {
@@ -28,4 +25,10 @@ export class AppComponent implements OnInit{
       }
     )
   }
+
+  ngOnInit(): void
+  {
+  
+  }
+  
 }

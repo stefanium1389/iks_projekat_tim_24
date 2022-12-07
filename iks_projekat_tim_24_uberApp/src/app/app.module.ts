@@ -9,18 +9,28 @@ import {RegisterComponent} from "./register/register.component";
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ButtonComponent } from './components/button/button.component';
+import { RouterModule, Routes } from '@angular/router';
 
-
+const appRoutes : Routes = 
+[
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent}
+]
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
-    RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent,
+    ButtonComponent,
+    RegisterComponent
+
   ],
   imports: [
-    BrowserModule, HttpClientModule, MaterialModule, NgbModule
+    BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
