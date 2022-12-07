@@ -5,16 +5,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { UserService } from './user.service';
+import { LoginComponent } from './login/login.component';
+import { MaterialModule } from 'src/infrastructure/material.module';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    LoginComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule
+    BrowserModule, HttpClientModule, MaterialModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
