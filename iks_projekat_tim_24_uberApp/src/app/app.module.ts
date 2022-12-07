@@ -8,6 +8,8 @@ import { UserService } from './user.service';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ButtonComponent } from './components/button/button.component';
 
 
 
@@ -15,7 +17,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     AppComponent,
     ToolbarComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, MaterialModule, NgbModule

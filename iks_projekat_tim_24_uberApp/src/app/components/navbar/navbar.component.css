@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+#navbar_logo{
+    font-family: "Roboto";
+    font-size: 20px;
+    margin-right: auto;
+    color: white;
+}
+
+header{
+    background-color: #2E8B57 ;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.cta
+{
+    margin: 0px 15px;
+}
+
+.lol
+{
+    background-color: #DDDBDB;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+}
