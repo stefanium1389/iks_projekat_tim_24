@@ -22,6 +22,7 @@
 }
 
 input{
+    width: 100%;
     border-radius: 10px;
     background-color: #DDDBDB;
     text-align: center;
@@ -37,6 +38,7 @@ input{
     padding:10px;
 }
 .search-form{
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,6 +46,7 @@ input{
 p{
     color : white;
     width: fit-content;
+    margin:5px;
 }
 p.estimate{
     color: black;
@@ -63,11 +66,12 @@ button{
     text-align: center;
     text-align: center;
     color: black;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 15px 32px;
     width:fit-content;
     background-color: #DDDBDB;
     margin:5px;
+    border:none;
+    font-size:20px;
 }
 button:hover{
     color : black;
@@ -84,10 +88,15 @@ button:hover{
 .profil-pregled{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items:center;
     margin-bottom: 10px;
+    width: 90%;
 }
+
+#driver-accept-container
+{
+    align-items: left;
+}
+
 
 .map-container
 {
