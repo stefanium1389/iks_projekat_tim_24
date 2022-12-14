@@ -3,10 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 import { UserService } from './user.service';
-import {RegisterComponent} from "./register/register.component";
-import { LoginComponent } from './login/login.component';
+import {RegisterComponent} from "./components/register/register.component";
+import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -23,7 +22,6 @@ const appRoutes : Routes =
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent,
     LoginComponent,
     NavbarComponent,
     ButtonComponent,
