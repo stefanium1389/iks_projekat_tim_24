@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
+import { DriverMainComponent } from './driver-main/driver-main.component';
 
 const appRoutes : Routes = 
 [
@@ -24,7 +25,8 @@ const appRoutes : Routes =
     LoginComponent,
     NavbarComponent,
     ButtonComponent,
-    RegisterComponent
+    RegisterComponent,
+    DriverMainComponent
 
   ],
   imports: [
