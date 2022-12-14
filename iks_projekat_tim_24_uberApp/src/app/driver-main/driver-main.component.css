@@ -2,12 +2,25 @@
     border-radius: 25px;
     align-items: center;
     display: flex;
-    width: 100%;
-    padding: 10%;
+    
+    padding: 10px;
     margin: 10px;
     flex-direction: column;
     background-color:#2E8B57 ;
+    height: fit-content;
 }
+
+#destination-parameters > *
+{
+    width: 80%;
+}
+
+.real-wrapper
+{
+    display: flex;
+    height: 90%;
+}
+
 input{
     border-radius: 10px;
     background-color: #DDDBDB;
@@ -22,13 +35,11 @@ input{
     border-radius: 10px;
     margin:5px;
     padding:10px;
-    width:69%;
 }
 .search-form{
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
 }
 p{
     color : white;
@@ -39,16 +50,14 @@ p.estimate{
 }
 .wrapper{
     display: flex;
-    justify-content: center;
+    padding: 10px;
     flex-direction: column;
     height: 85%;
     width: 20%;
+    min-width: 300px;
 }
 
-div{
-    flex:1;
-    margin:2px;
-}
+
 button{
     border-radius: 10px;
     text-align: center;
@@ -77,13 +86,37 @@ button:hover{
     flex-direction: row;
     justify-content: center;
     align-items:center;
+    margin-bottom: 10px;
 }
 
+.map-container
+{
+    width: 80%;
+    padding: 20px;
+}
+
+#map
+{
+    background-color: grey;
+    width: 100%;
+    height: 100%;
+}
+
+.profil-pregled > p
+{
+    margin: auto;
+    margin-left: 5px;
+}
 
 .checkbox-holder{
     display: flex;
     flex-direction: row;
     margin: 5px;
+}
+
+.checkbox-holder > *
+{
+    margin-right: 5px;
 }
 .checkbox-holder input{
     position: absolute;
