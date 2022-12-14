@@ -27,6 +27,7 @@ input{
     background-color: #DDDBDB;
     text-align: center;
     margin:5px;
+    border: none;
 }
 .estimate-box{
     display: flex;
