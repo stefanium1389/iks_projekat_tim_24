@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MapComponent } from '../components/map/map/map.component';
 import { DriverMainComponent } from './driver-main.component';
 
 describe('DriverMainComponent', () => {
