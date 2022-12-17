@@ -13,6 +13,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { DriverMainComponent } from './driver-main/driver-main.component';
 import { MapModule } from './components/map/map/map.module';
 
+
+
 const appRoutes : Routes = 
 [
   {path: 'login', component: LoginComponent},
