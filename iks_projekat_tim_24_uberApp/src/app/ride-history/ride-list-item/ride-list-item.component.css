@@ -1,0 +1,13 @@
+div {
+    display: flex;
+    background-color: #DDDBDB;
+    border-radius: 5em;
+    flex-direction: row;
+    margin: 1em;;
+}
+div.column{
+    flex:auto;
+    display: block;
+    margin-left: 5em;
+    margin-right: 5em;
+}

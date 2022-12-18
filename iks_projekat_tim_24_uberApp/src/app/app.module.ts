@@ -12,7 +12,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DriverMainComponent } from './driver-main/driver-main.component';
 import { MapModule } from './components/map/map/map.module';
-
+import { RideHistoryModule } from './ride-history/ride-history.module';
 
 
 const appRoutes : Routes = 
@@ -22,19 +22,19 @@ const appRoutes : Routes =
 ]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NavbarComponent,
-    ButtonComponent,
-    RegisterComponent,
-    DriverMainComponent
-  ],
-  imports: [
-    MapModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
-  ],
-  providers: [UserService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        NavbarComponent,
+        ButtonComponent,
+        RegisterComponent,
+        DriverMainComponent
+    ],
+    providers: [UserService],
+    bootstrap: [AppComponent],
+    imports: [
+        MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
+    ]
 })
 export class AppModule { }
 

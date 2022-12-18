@@ -1,0 +1,4 @@
+div.list-container{
+    overflow-y:scroll;
+    max-height: 100%;
+}
