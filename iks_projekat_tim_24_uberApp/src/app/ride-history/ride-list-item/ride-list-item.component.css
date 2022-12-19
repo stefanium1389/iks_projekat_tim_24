@@ -1,9 +1,9 @@
 div {
     display: flex;
     background-color: #DDDBDB;
-    border-radius: 5em;
+    border-radius: 2em;
     flex-direction: row;
-    margin: 1em;;
+    margin: 1em;
 }
 div.column{
     flex:auto;

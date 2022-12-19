@@ -1,18 +1,33 @@
-div.wrapper{
+div.wrapper-details{
     display: flex;
-    height: 30%;
-    align-items: center;
+    height: 15%;
+    align-items:stretch;
+    justify-content: center;
 }
 div.green-card{
+    display: flex;
     background-color: #2E8B57;
-    border-radius: 15em;
+    border-radius: 2em;
     margin: 2em;
     padding: 2em;
+}
+div.green-card.trajanje{
+    
+    align-items: center;
+    justify-content: center;
+    
+}
+div.green-card.pets-baby{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    
 }
 div.row{
     display: flex;
     align-items: center;
-    flex-direction: row;
+    flex-direction:row;
+    width: fit-content;
 }
 
 .profile-pic{
@@ -20,4 +35,12 @@ div.row{
     height: 50px;
     border-radius: 25px;
     background-color: #2196F3;
+}
+p{
+    width: fit-content;
+    color: white;
+}
+div.profil-pregled{
+    display: flex;
+    flex-direction: row;
 }
