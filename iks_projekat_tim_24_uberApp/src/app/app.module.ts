@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UserService } from './user.service';
+import { ReactiveFormsModule } from '@angular/forms';
 import {RegisterComponent} from "./components/register/register.component";
 import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
@@ -28,12 +29,12 @@ const appRoutes : Routes =
         NavbarComponent,
         ButtonComponent,
         RegisterComponent,
-        DriverMainComponent
+        DriverMainComponent,
     ],
     providers: [UserService],
     bootstrap: [AppComponent],
     imports: [
-        MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
+        MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule
     ]
 })
 export class AppModule { }
