@@ -40,5 +40,6 @@ button
 
 button:hover
 {
-  background-color: #69A754;
+  color : black;
+  background-color: white;
 }

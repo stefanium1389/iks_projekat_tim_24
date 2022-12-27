@@ -12,8 +12,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DriverMainComponent } from './driver-main/driver-main.component';
+import { UnregisteredUserMainComponent } from './unregistered-user-main/unregistered-user-main.component';
 
-const appRoutes : Routes = 
+const appRoutes : Routes =
 [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent}
@@ -26,8 +27,8 @@ const appRoutes : Routes =
     NavbarComponent,
     ButtonComponent,
     RegisterComponent,
-    DriverMainComponent
-
+    DriverMainComponent,
+    UnregisteredUserMainComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
