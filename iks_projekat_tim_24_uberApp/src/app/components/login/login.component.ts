@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, RequiredValidator } from '@angular/forms';
 import { Router } from '@angular/router';
-import jwtDecode from 'jwt-decode';
-import { User } from 'src/app/user';
 import { UserService } from 'src/app/user.service';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../jwt-service.service';
@@ -36,7 +34,6 @@ export class LoginComponent implements OnInit {
     
     const response = await this.http.post(environment.apiBaseUrl+'api/user/login', {email:email, password:password}).toPromise() as loginResponse;
     this.jwtSetvice.setJwt(response.accessToken);
-    console.log(this.jwtSetvice.getEmail());
     this.router.navigate(['/']);
 
     }

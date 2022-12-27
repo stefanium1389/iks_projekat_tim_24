@@ -39,5 +39,8 @@ export class JwtService {
     }
     return null;
   }
+  logout(){
+    localStorage.removeItem('jwt');
+  }
   constructor() { }
 }
