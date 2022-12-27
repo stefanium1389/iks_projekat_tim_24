@@ -1,0 +1,180 @@
+.driver-side-panel{
+    border-radius: 25px;
+    align-items: center;
+    display: flex;
+    
+    padding: 10px;
+    margin: 10px;
+    flex-direction: column;
+    background-color:#2E8B57 ;
+    height: fit-content;
+}
+
+#destination-parameters > *
+{
+    width: 80%;
+}
+
+.real-wrapper
+{
+    display: flex;
+    height: 90%;
+}
+
+input{
+    width: 100%;
+    border-radius: 10px;
+    background-color: #DDDBDB;
+    text-align: center;
+    margin:5px;
+    border: none;
+}
+.estimate-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin:5px;
+    padding:10px;
+}
+.search-form{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+p{
+    color : white;
+    width: fit-content;
+    margin:5px;
+}
+p.estimate{
+    color: black;
+}
+.wrapper{
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    height: 85%;
+    width: 20%;
+    min-width: 300px;
+}
+
+
+button{
+    border-radius: 10px;
+    text-align: center;
+    text-align: center;
+    color: black;
+    padding: 15px 32px;
+    width:fit-content;
+    background-color: #DDDBDB;
+    margin:5px;
+    border:none;
+    font-size:20px;
+}
+button:hover{
+    color : black;
+    background-color: white;
+}
+
+.profile-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #2196F3;
+}
+
+.profil-pregled{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+#driver-accept-container
+{
+    align-items: left;
+}
+
+
+.map-container
+{
+    width: 80%;
+    height: 90%;
+    padding: 10px;
+}
+
+#map
+{
+    background-color: grey;
+    width: 100%;
+    height: 100%;
+}
+
+.profil-pregled > p
+{
+    margin: auto;
+    margin-left: 5px;
+}
+
+.checkbox-holder{
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.checkbox-holder > *
+{
+    margin-right: 5px;
+}
+.checkbox-holder input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+/* On mouse-over, add a grey background color */
+.checkbox-holder:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .checkbox-holder input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .checkbox-holder input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .checkbox-holder .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }

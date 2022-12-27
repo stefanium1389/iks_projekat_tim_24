@@ -1,0 +1,19 @@
+div.map-container{
+    width: 45%;
+    height:30em;
+    
+}
+div.list-container{
+    width: 40%;
+    margin: 2em;
+}
+div.big-wrapper{
+    display: flex;
+    align-self: center;
+    height: 80%;
+    margin: 1em;
+}
+div.info-containter{
+    display: flex;
+    width: 100%;
+}

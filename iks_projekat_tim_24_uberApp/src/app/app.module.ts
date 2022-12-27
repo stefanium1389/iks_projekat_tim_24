@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 import { UserService } from './user.service';
-import {RegisterComponent} from "./register/register.component";
-import { LoginComponent } from './login/login.component';
+import {RegisterComponent} from "./components/register/register.component";
+import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
+import { DriverMainComponent } from './driver-main/driver-main.component';
+import { UnregisteredUserMainComponent } from './unregistered-user-main/unregistered-user-main.component';
+import { MapModule } from './components/map/map/map.module';
+import { RideHistoryModule } from './ride-history/ride-history.module';
 
-const appRoutes : Routes = 
+const appRoutes : Routes =
 [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent}
@@ -22,18 +24,18 @@ const appRoutes : Routes =
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent,
     LoginComponent,
     NavbarComponent,
     ButtonComponent,
-    RegisterComponent
-
-  ],
-  imports: [
-    BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
+    RegisterComponent,
+    DriverMainComponent,
+    UnregisteredUserMainComponent
   ],
   providers: [UserService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  imports: [
+      MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
+  ]
 })
 export class AppModule { }
 
