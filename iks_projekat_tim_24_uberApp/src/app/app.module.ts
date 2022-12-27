@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
 import { UserService } from './user.service';
 import {RegisterComponent} from "./components/register/register.component";
@@ -12,6 +11,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DriverMainComponent } from './driver-main/driver-main.component';
+import { MapModule } from './components/map/map/map.module';
+
+
 
 const appRoutes : Routes = 
 [
@@ -27,10 +29,9 @@ const appRoutes : Routes =
     ButtonComponent,
     RegisterComponent,
     DriverMainComponent
-
   ],
   imports: [
-    BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
+    MapModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
