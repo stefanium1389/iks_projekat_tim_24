@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
     
     const response = await this.http.post(environment.apiBaseUrl+'api/user/login', {email:email, password:password}).toPromise() as loginResponse;
     this.jwtSetvice.setJwt(response.accessToken);
+    console.log(this.jwtSetvice.getEmail());
     this.router.navigate(['/']);
 
     }

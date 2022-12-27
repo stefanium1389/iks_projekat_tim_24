@@ -17,7 +17,7 @@ export class JwtService {
     const jwt = this.getJwt();
     if(jwt){
       const user = jwtDecode(jwt) as User;
-      return user.email;
+      return user.sub; 
     }
     return null;
   }
@@ -30,7 +30,7 @@ export class JwtService {
     }
     return null;
   }
-  
+
   getId() : number | null{
     const jwt = this.getJwt();
     if(jwt){
