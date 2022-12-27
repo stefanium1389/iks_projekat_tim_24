@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TimeDialogComponent } from './components/time-dialog/time-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { RideHistoryModule } from './ride-history/ride-history.module';
 
 
 const appRoutes : Routes = 
@@ -52,7 +53,7 @@ const appRoutes : Routes =
   ],
   providers: [UserService],
   bootstrap: [AppComponent],
-  entryComponents: [TimeDialogComponent],
+  entryComponents: [TimeDialogComponent]
 })
 export class AppModule { }
 
