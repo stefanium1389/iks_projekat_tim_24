@@ -1,0 +1,6 @@
+<form #form="ngForm" (ngSubmit)="saveTime()">
+    <mat-form-field>
+      <input matInput type="time" [(ngModel)]="selectedTime" name="selectedTime" required>
+    </mat-form-field>
+    <button mat-button type="submit">Save time</button>
+  </form>
