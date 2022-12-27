@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
 import { UserService } from './user.service';
 import {RegisterComponent} from "./components/register/register.component";
@@ -13,6 +12,8 @@ import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DriverMainComponent } from './driver-main/driver-main.component';
 import { UnregisteredUserMainComponent } from './unregistered-user-main/unregistered-user-main.component';
+import { MapModule } from './components/map/map/map.module';
+import { RideHistoryModule } from './ride-history/ride-history.module';
 
 const appRoutes : Routes =
 [
@@ -30,11 +31,11 @@ const appRoutes : Routes =
     DriverMainComponent,
     UnregisteredUserMainComponent
   ],
-  imports: [
-    BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
-  ],
   providers: [UserService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  imports: [
+      MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes)
+  ]
 })
 export class AppModule { }
 
