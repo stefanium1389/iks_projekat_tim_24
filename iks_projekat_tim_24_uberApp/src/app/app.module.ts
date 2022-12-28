@@ -40,11 +40,15 @@ const appRoutes : Routes =
         ButtonComponent,
         RegisterComponent,
         DriverMainComponent,
+        UnregisteredUserMainComponent,
+        PassengerMainComponent,
+        TimeDialogComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent],
     imports: [
-        MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule
+        MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
+        MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule
     ]
 })
 export class AppModule { }
