@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DriverMainComponent } from './driver-main/driver-main.component';
+import { UnregisteredUserMainComponent } from './unregistered-user-main/unregistered-user-main.component';
 import { MapModule } from './components/map/map/map.module';
 import { PassengerMainComponent } from './components/passenger-main/passenger-main.component';
 import { FormsModule } from '@angular/forms';
@@ -24,8 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RideHistoryModule } from './ride-history/ride-history.module';
 
-
-const appRoutes : Routes = 
+const appRoutes : Routes =
 [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent}
@@ -39,6 +39,7 @@ const appRoutes : Routes =
     ButtonComponent,
     RegisterComponent,
     DriverMainComponent,
+    UnregisteredUserMainComponent,
     PassengerMainComponent,
     TimeDialogComponent
   ],
