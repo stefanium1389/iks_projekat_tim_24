@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UserService } from './user.service';
+import { ReactiveFormsModule } from '@angular/forms';
 import {RegisterComponent} from "./components/register/register.component";
 import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
@@ -32,29 +33,19 @@ const appRoutes : Routes =
 ]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NavbarComponent,
-    ButtonComponent,
-    RegisterComponent,
-    DriverMainComponent,
-    UnregisteredUserMainComponent,
-    PassengerMainComponent,
-    TimeDialogComponent
-  ],
-  imports: [
-    MapModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule,
-     RouterModule.forRoot(appRoutes), FormsModule,MatCheckboxModule,
-     MatButtonModule,
-     MatDialogModule,
-     MatFormFieldModule,
-     MatInputModule,
-     BrowserAnimationsModule
-  ],
-  providers: [UserService],
-  bootstrap: [AppComponent],
-  entryComponents: [TimeDialogComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        NavbarComponent,
+        ButtonComponent,
+        RegisterComponent,
+        DriverMainComponent,
+    ],
+    providers: [UserService],
+    bootstrap: [AppComponent],
+    imports: [
+        MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule
+    ]
 })
 export class AppModule { }
 

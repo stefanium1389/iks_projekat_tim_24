@@ -13,18 +13,7 @@ export class AppComponent implements OnInit{
 
   public users: User[] = [];
 
-  constructor(private userService: UserService){}
-
-  public getUsers(): void{
-    this.userService.getUsers().subscribe(
-      (response: User[]) => {
-        this.users = response;
-      },
-      (error: HttpErrorResponse) => {
-        //alert(error.message);
-      }
-    )
-  }
+  constructor(){}
 
   ngOnInit(): void
   {
