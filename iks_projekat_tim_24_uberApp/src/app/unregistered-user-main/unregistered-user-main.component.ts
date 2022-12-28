@@ -1,6 +1,7 @@
 import { Component, OnInit,ViewChild,Output,EventEmitter, Input} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MapComponent } from '../components/map/map/map.component';
+import { TimeAndDistance } from '../components/map/map/map.component';
 
 @Component({
   selector: 'app-unregistered-user-main',
@@ -12,16 +13,17 @@ export class UnregisteredUserMainComponent implements OnInit {
   destinationForm: FormGroup;
   @ViewChild(MapComponent) map !:any ;
   @Input() timeAndDistance: {time: number, distance: number};
+  dobijena : string;
   time : number;
-  distance : number;
+  distance : string;
+  locationType : string;
 
 
   constructor() {
     this.destinationForm = new FormGroup({
       start_location: new FormControl(),
-      end_location: new FormControl()
+      end_location: new FormControl(),
     });
-
     
   }
 
@@ -29,10 +31,32 @@ export class UnregisteredUserMainComponent implements OnInit {
     
   }
 
-  ngOnChanges() {
+  /*ngOnChanges() {
     console.log(this.timeAndDistance);
     this.time = this.timeAndDistance.time;
     this.distance = this.timeAndDistance.distance;
+  }*/
+
+  getLocationType(locationTypeSelect: HTMLSelectElement): void {
+    this.locationType = locationTypeSelect.value;
+    this.map.locationType = this.locationType;
+  }
+
+
+  locStartHandler(loc:string)
+  {
+      this.destinationForm.get('start_location')?.setValue(loc);
+  }
+
+  locEndHandler(loc:string)
+  {
+      this.destinationForm.get('end_location')?.setValue(loc);
+  }
+
+  timeAndDistanceHandler(timeAndDistance : TimeAndDistance)
+  {
+      this.time = timeAndDistance.time;
+      this.distance = Number(timeAndDistance.distance).toFixed(2);
   }
 
   search(which : string) {

@@ -12,18 +12,22 @@
                     <input type="text" placeholder="krajnja destinacija" formControlName="end_location"/>
                     <i (click)="search('end')" class="fa fa-search"></i>
                 </div>
+                <select #locationTypeSelect id="location-type-selection" (change)="getLocationType(locationTypeSelect)">
+                    <option value="departure">Polazište</option>
+                    <option value="destination">Odredište</option>
+                </select>
             </form>
 
             <div class="estimate-box">
                 <p class="estimate">Oko {{ time }} minuta</p>
                 <p class="estimate">Oko {{ distance }} km</p>
-              </div>
+            </div>
 
-                    <button>Zapocni</button>
+                <button>Zapocni</button>
         </div>
     </div>
 
     <div class = "map-container">
-        <app-map></app-map>
+        <app-map (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
     </div>
 </div>

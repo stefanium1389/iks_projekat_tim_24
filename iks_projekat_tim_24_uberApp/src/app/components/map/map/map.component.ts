@@ -3,7 +3,12 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
 import { EventEmitter, Input, Output } from '@angular/core';
-import { start } from '@popperjs/core';
+
+export interface TimeAndDistance {
+  time : number;
+  distance : number;
+}
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -16,8 +21,11 @@ export class MapComponent implements AfterViewInit {
   ride_route : L.Routing.Control;
   totalDistance: number;
   totalTime: number;
-  @Output() timeAndDistance = new EventEmitter<{time: number, distance: number}>();
+  locationType: string;
 
+  @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
+  @Output() out_start_location = new EventEmitter<string>();
+  @Output() out_end_location = new EventEmitter<string>();
 
   constructor(private mapService: MapService, ) {
     
@@ -42,7 +50,7 @@ export class MapComponent implements AfterViewInit {
 
     //this.search();
     // this.addMarker();
-    // this.registerOnClick();
+     this.registerOnClick2();
     // this.route();
   }
 
@@ -82,39 +90,49 @@ export class MapComponent implements AfterViewInit {
 
   }
 
-  search(): void {
-    this.mapService.search('Strazilovska 19').subscribe({
-      next: (result) => {
-        console.log(result);
-        L.marker([result[0].lat, result[0].lon])
-          .addTo(this.map)
-          .bindPopup('Pozdrav iz Strazilovske 19.')
-          .openPopup();
-      },
-      error: () => {},
-    });
-  }
-
-  registerOnClick(): void {
+  registerOnClick2(): void {
     this.map.on('click', (e: any) => {
       const coord = e.latlng;
       const lat = coord.lat;
       const lng = coord.lng;
       this.mapService.reverseSearch(lat, lng).subscribe((res) => {
         console.log(res.display_name);
+        if (this.locationType === "departure")
+        {
+          this.out_start_location.emit(res.display_name);
+        }
+        else
+        {
+          this.out_end_location.emit(res.display_name);
+        }
+        
       });
       console.log(
         'You clicked the map at latitude: ' + lat + ' and longitude: ' + lng
       );
-      const mp = new L.Marker([lat, lng]).addTo(this.map);
-      alert(mp.getLatLng());
-    });
-  }
 
-  route(): void {
-    L.Routing.control({
-      waypoints: [L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)],
-    }).addTo(this.map);
+      if (this.locationType === "departure")
+      {
+        if (this.start_location)
+        {
+          this.start_location.removeFrom(this.map);
+        }
+        this.start_location = new L.Marker([lat, lng]);
+        this.start_location.addTo(this.map).openPopup();
+      }
+      else
+      {
+        if (this.end_location)
+        {
+          this.end_location.removeFrom(this.map);
+        }
+        this.end_location = new L.Marker([lat, lng]);
+        this.end_location.addTo(this.map).openPopup();
+      }
+
+      this.route2();
+
+    });
   }
 
   route2(): void {
@@ -136,7 +154,7 @@ export class MapComponent implements AfterViewInit {
         let summary = routes[0].summary;
         this.totalDistance = summary.totalDistance / 1000;
         this.totalTime = Math.round(summary.totalTime % 3600 / 60);
-        this.timeAndDistance.emit({time: this.totalTime, distance: this.totalDistance});
+        this.out_timeAndDistance.emit({time: this.totalTime, distance: this.totalDistance});
       });
       
       this.ride_route.addTo(this.map);
