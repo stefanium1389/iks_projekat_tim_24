@@ -2,6 +2,8 @@ import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
+import { EventEmitter, Output } from '@angular/core';
+import { start } from '@popperjs/core';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -9,8 +11,12 @@ import { MapService } from '../map.service';
 })
 export class MapComponent implements AfterViewInit {
   private map: any;
+  start_location : L.Marker
+  end_location : L.Marker
+  ride_route : L.Routing.Control
 
-  constructor(private mapService: MapService) {}
+  constructor(private mapService: MapService, ) {
+  }
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -29,10 +35,44 @@ export class MapComponent implements AfterViewInit {
     );
     tiles.addTo(this.map);
 
-    // this.search();
+    //this.search();
     // this.addMarker();
     // this.registerOnClick();
     // this.route();
+  }
+
+  search2(address : string, which : string): void {
+
+    this.mapService.search(address).subscribe({
+      next: (result) => {
+        //console.log(result);
+        console.log(this.start_location);
+        if (which === "start")
+        {
+          if (this.start_location)
+          {
+            this.start_location.removeFrom(this.map);
+          }
+          this.start_location = L.marker([result[0].lat, result[0].lon]);
+          this.start_location.addTo(this.map).openPopup();
+        }
+        else
+        {
+          if (this.end_location)
+          {
+            this.end_location.removeFrom(this.map);
+          }
+          this.end_location = L.marker([result[0].lat, result[0].lon]);
+          this.end_location.addTo(this.map).openPopup();
+        }
+        this.route2();
+          
+      },
+      error: () => {},
+    });
+
+    this.map
+
   }
 
   search(): void {
@@ -68,6 +108,23 @@ export class MapComponent implements AfterViewInit {
     L.Routing.control({
       waypoints: [L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)],
     }).addTo(this.map);
+  }
+
+  route2(): void {
+
+    if (this.start_location && this.end_location)
+    {
+
+      if (this.ride_route)
+      {
+        this.ride_route.remove();
+      }
+
+      this.ride_route = L.Routing.control({
+        waypoints: [this.start_location.getLatLng(), this.end_location.getLatLng()],
+      })
+      this.ride_route.addTo(this.map);
+    }
   }
 
   private addMarker(): void {

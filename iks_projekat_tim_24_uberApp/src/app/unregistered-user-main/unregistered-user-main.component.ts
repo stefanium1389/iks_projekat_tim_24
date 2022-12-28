@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { MapComponent } from '../components/map/map/map.component';
 
 @Component({
   selector: 'app-unregistered-user-main',
@@ -9,6 +10,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class UnregisteredUserMainComponent implements OnInit {
 
   destinationForm: FormGroup;
+  @ViewChild(MapComponent) map !:any ;
 
   constructor() {
     this.destinationForm = new FormGroup({
@@ -24,10 +26,12 @@ export class UnregisteredUserMainComponent implements OnInit {
     if (which === "start")
     {
       console.log(`pocetna sacuvana u komponenti je ${this.destinationForm.get('start_location')?.value}`)
+      this.map.search2(this.destinationForm.get('start_location')?.value,"start");
     }
     else
     {
       console.log(`krajnja sacuvana u komponenti je ${this.destinationForm.get('end_location')?.value}`)
+      this.map.search2(this.destinationForm.get('end_location')?.value,"end");
     }
     
     /*const usernameControl = this.loginForm.get('start_location');
