@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
-import { EventEmitter, Output } from '@angular/core';
+import { EventEmitter, Input, Output } from '@angular/core';
 import { start } from '@popperjs/core';
 @Component({
   selector: 'app-map',
@@ -13,9 +13,14 @@ export class MapComponent implements AfterViewInit {
   private map: any;
   start_location : L.Marker
   end_location : L.Marker
-  ride_route : L.Routing.Control
+  ride_route : L.Routing.Control;
+  totalDistance: number;
+  totalTime: number;
+  @Output() timeAndDistance = new EventEmitter<{time: number, distance: number}>();
+
 
   constructor(private mapService: MapService, ) {
+    
   }
 
   private initMap(): void {
@@ -40,6 +45,8 @@ export class MapComponent implements AfterViewInit {
     // this.registerOnClick();
     // this.route();
   }
+
+  
 
   search2(address : string, which : string): void {
 
@@ -122,8 +129,19 @@ export class MapComponent implements AfterViewInit {
 
       this.ride_route = L.Routing.control({
         waypoints: [this.start_location.getLatLng(), this.end_location.getLatLng()],
-      })
+      });
+
+      this.ride_route.on('routesfound', (e) => {
+        let routes = e.routes;
+        let summary = routes[0].summary;
+        this.totalDistance = summary.totalDistance / 1000;
+        this.totalTime = Math.round(summary.totalTime % 3600 / 60);
+        this.timeAndDistance.emit({time: this.totalTime, distance: this.totalDistance});
+      });
+      
       this.ride_route.addTo(this.map);
+      
+      
     }
   }
 
