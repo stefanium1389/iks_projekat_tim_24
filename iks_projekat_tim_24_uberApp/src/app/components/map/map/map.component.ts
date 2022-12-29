@@ -3,6 +3,8 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
 import { EventEmitter, Input, Output } from '@angular/core';
+import { icon } from 'leaflet';
+import { placements } from '@popperjs/core';
 
 export interface TimeAndDistance {
   time : number;
@@ -53,9 +55,11 @@ export class MapComponent implements AfterViewInit {
      this.registerOnClick2();
     // this.route();
   }
-
+  newIcon = icon({
+    iconUrl: String(L.Icon.Default.prototype.options.iconUrl),
+    iconAnchor: [12, 45],
+  });
   
-
   search2(address : string, which : string): void {
 
     this.mapService.search(address).subscribe({
@@ -68,7 +72,8 @@ export class MapComponent implements AfterViewInit {
           {
             this.start_location.removeFrom(this.map);
           }
-          this.start_location = L.marker([result[0].lat, result[0].lon]);
+          this.start_location = L.marker(
+            [result[0].lat, result[0].lon], {icon:this.newIcon} );
           this.start_location.addTo(this.map).openPopup();
         }
         else
@@ -77,7 +82,7 @@ export class MapComponent implements AfterViewInit {
           {
             this.end_location.removeFrom(this.map);
           }
-          this.end_location = L.marker([result[0].lat, result[0].lon]);
+          this.end_location = L.marker([result[0].lat, result[0].lon],{icon:this.newIcon});
           this.end_location.addTo(this.map).openPopup();
         }
         this.route2();
@@ -117,7 +122,7 @@ export class MapComponent implements AfterViewInit {
         {
           this.start_location.removeFrom(this.map);
         }
-        this.start_location = new L.Marker([lat, lng]);
+        this.start_location = new L.Marker([lat, lng],{icon:this.newIcon});
         this.start_location.addTo(this.map).openPopup();
       }
       else
@@ -126,13 +131,17 @@ export class MapComponent implements AfterViewInit {
         {
           this.end_location.removeFrom(this.map);
         }
-        this.end_location = new L.Marker([lat, lng]);
+        this.end_location = new L.Marker([lat, lng],{icon:this.newIcon});
         this.end_location.addTo(this.map).openPopup();
       }
 
       this.route2();
 
     });
+  }
+
+  private createCustomMarker(waypointIndex: number, waypoint: L.Routing.Waypoint, numberOfWaypoints: number){
+    return false
   }
 
   route2(): void {
@@ -145,10 +154,17 @@ export class MapComponent implements AfterViewInit {
         this.ride_route.remove();
       }
 
+      let myPlan = new L.Routing.Plan([this.start_location.getLatLng(), this.end_location.getLatLng()],
+      {
+          createMarker: this.createCustomMarker
+      })
+
       this.ride_route = L.Routing.control({
         waypoints: [this.start_location.getLatLng(), this.end_location.getLatLng()],
+        addWaypoints: false,
+        plan: myPlan
       });
-
+      
       this.ride_route.on('routesfound', (e) => {
         let routes = e.routes;
         let summary = routes[0].summary;
@@ -156,7 +172,6 @@ export class MapComponent implements AfterViewInit {
         this.totalTime = Math.round(summary.totalTime % 3600 / 60);
         this.out_timeAndDistance.emit({time: this.totalTime, distance: this.totalDistance});
       });
-      
       this.ride_route.addTo(this.map);
       
       
