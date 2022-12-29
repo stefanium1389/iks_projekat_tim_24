@@ -1,20 +1,33 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 <div class = "real-wrapper">
     <div class="wrapper">
         <div class="unregistered-user-side-panel" id = "destination-parameters">
+            
+            <form [formGroup]="destinationForm">
+                <div class="destination-container">
+                    <input type="text" placeholder="pocetna destinacija" formControlName="start_location"/>
+                    <i (click)="search('start')" class="fa fa-search"></i>
+                </div>
+                <div class="destination-container">
+                    <input type="text" placeholder="krajnja destinacija" formControlName="end_location"/>
+                    <i (click)="search('end')" class="fa fa-search"></i>
+                </div>
+                <select #locationTypeSelect id="location-type-selection" (change)="getLocationType(locationTypeSelect)">
+                    <option value="departure">Polazište</option>
+                    <option value="destination">Odredište</option>
+                </select>
+            </form>
 
-                    <input type="text" placeholder="pocetna destinacija"/>
-                    <input type="text" placeholder="krajnja destinacija"/>
+            <div class="estimate-box">
+                <p class="estimate">Oko {{ time }} minuta</p>
+                <p class="estimate">Oko {{ distance }} km</p>
+            </div>
 
-                    <div class="estimate-box">
-                        <p class="estimate">Oko 10 minuta</p>
-                        <p class="estimate">Oko 300 RSD</p>
-                    </div>
-
-                    <button>Zapocni</button>
+                <button>Zapocni</button>
         </div>
     </div>
 
     <div class = "map-container">
-        <div id="map"></div>
+        <app-map (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
     </div>
 </div>

@@ -124,6 +124,18 @@ button:hover{
     margin: 5px;
 }
 
+.destination-container
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa.fa-search
+{
+    color: white;
+}
+
 .checkbox-holder > *
 {
     margin-right: 5px;
