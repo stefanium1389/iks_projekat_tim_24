@@ -25,11 +25,14 @@ import { TimeDialogComponent } from './components/time-dialog/time-dialog.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RideHistoryModule } from './ride-history/ride-history.module';
+import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
 
 const appRoutes : Routes =
 [
+  {path:'', component:UnregisteredUserMainComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
+  {path: 'register', component: RegisterComponent},
+  {path: 'reset-password', component: ResetPasswordComponent}
 ]
 
 @NgModule({
@@ -42,7 +45,8 @@ const appRoutes : Routes =
         DriverMainComponent,
         UnregisteredUserMainComponent,
         PassengerMainComponent,
-        TimeDialogComponent
+        TimeDialogComponent,
+        ResetPasswordComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent],
