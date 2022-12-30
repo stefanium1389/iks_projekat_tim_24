@@ -1,0 +1,47 @@
+div.green-card{
+    background-color: #2E8B57;
+    margin:5%;
+    margin-left: 20%;
+    margin-right:20%;
+    padding: 3em;
+    border-radius: 2em;
+}
+div.column{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding:1em;
+    margin: 1%;
+    width: fit-content;
+}
+h1{
+    color: white;
+}
+p{
+    color: white;
+}
+.mat-checkbox
+{
+    display: block;
+    color: white;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+    background-color: transparent !important; 
+    color: white;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: white;
+}
+
+.row{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: fit-content;
+}
+
+button{
+    background-color: #DDDBDB;
+    color: black;
+}

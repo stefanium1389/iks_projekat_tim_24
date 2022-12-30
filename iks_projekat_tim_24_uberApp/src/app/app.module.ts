@@ -26,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RideHistoryModule } from './ride-history/ride-history.module';
 import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
+import { AdminCreateDriverComponent } from './components/admin-create-driver/admin-create-driver.component';
 
 const appRoutes : Routes =
 [
@@ -46,7 +47,8 @@ const appRoutes : Routes =
         UnregisteredUserMainComponent,
         PassengerMainComponent,
         TimeDialogComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        AdminCreateDriverComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent],

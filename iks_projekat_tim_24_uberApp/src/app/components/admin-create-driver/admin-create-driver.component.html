@@ -1,0 +1,51 @@
+<div>
+    <div class="green-card">
+        <div>
+            <h1>Kreiranje vozaca</h1>
+        </div>
+        <form class="row">
+                <div class="column">
+                    <p>Licni podaci</p>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="name" class="form-control form-control-lg" placeholder="Name" formControlName="name"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="lastname" class="form-control form-control-lg" placeholder="Lastname" formControlName="lastname"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="city" class="form-control form-control-lg" placeholder="City" formControlName="city"/>
+                    </div>
+                    <div class="checkbox-parameters">
+                        <mat-checkbox [(ngModel)]="hasBabyDriver" label="babyDriver" >Beba</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="hasPetDriver" label="petsDriver" >Ljubimci</mat-checkbox>
+                    </div>
+                </div>
+                <div class="column">
+                    <p>Kontakt</p>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="phone" class="form-control form-control-lg" placeholder="Phone number" formControlName="phone"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="email" class="form-control form-control-lg" placeholder="E-mail" formControlName="email"/>
+                    </div>
+                </div>
+                <div class="column">
+                    <p>Detalji o vozilu</p>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="marka-vozila" class="form-control form-control-lg" placeholder="Vehicle manufacturer" formControlName="vehicle-man"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="vehicle-name" class="form-control form-control-lg" placeholder="Vehicle name" formControlName="vehicle-name"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="vehicle-detail" class="form-control form-control-lg" placeholder="Vehicle detail" formControlName="vehicle-detail"/>
+                    </div>
+                    <div class="checkbox-parameters">
+                        <mat-checkbox [(ngModel)]="hasBabyVehicle" label="babyVehicle" >Beba</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="hasPetVehicle" label="petsVehicle" >Ljubimci</mat-checkbox>
+                    </div>
+                </div>
+                <button class="btn btn-outline-light btn-lg btn-block px-5" type="submit">Create</button>
+        </form>
+    </div>
+</div>
