@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatMenu } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-admin-create-driver',
@@ -13,8 +15,13 @@ export class AdminCreateDriverComponent implements OnInit {
   hasBabyDriver:boolean;
   hasPetVehicle:boolean;
   hasBabyVehicle:boolean;
+  selectedType:string;
+  isTypeSelected:boolean = false;
 
   ngOnInit(): void {
   }
 
+  onTypeChange(event:string){
+
+  }
 }

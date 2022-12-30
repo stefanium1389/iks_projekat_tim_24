@@ -15,7 +15,12 @@ div.column{
     width: fit-content;
 }
 h1{
+    margin-left: 37%;
     color: white;
+    width: fit-content;
+    align-self: center;
+    font-size: xx-large;
+    font-weight: 500;
 }
 p{
     color: white;

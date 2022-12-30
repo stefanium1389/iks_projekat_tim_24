@@ -16,8 +16,8 @@
                         <input type="text" name="city" class="form-control form-control-lg" placeholder="City" formControlName="city"/>
                     </div>
                     <div class="checkbox-parameters">
-                        <mat-checkbox [(ngModel)]="hasBabyDriver" label="babyDriver" >Beba</mat-checkbox>
-                        <mat-checkbox [(ngModel)]="hasPetDriver" label="petsDriver" >Ljubimci</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="hasBabyDriver" label="babyDriver" >Vozac zeli da vozi bebe</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="hasPetDriver" label="petsDriver" >Vozac zeli da vozi ljubimce</mat-checkbox>
                     </div>
                 </div>
                 <div class="column">
@@ -27,6 +27,10 @@
                     </div>
                     <div class="form-outline form-white mb-4">
                         <input type="text" name="email" class="form-control form-control-lg" placeholder="E-mail" formControlName="email"/>
+                    </div>
+                    <p>Dokument</p>
+                    <div class="form-outline form-white mb-4">
+                        <input type="file" name="phone" class="form-control form-control-sm" placeholder="Select document" formControlName="phone"/>
                     </div>
                 </div>
                 <div class="column">
@@ -38,11 +42,19 @@
                         <input type="text" name="vehicle-name" class="form-control form-control-lg" placeholder="Vehicle name" formControlName="vehicle-name"/>
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <input type="text" name="vehicle-detail" class="form-control form-control-lg" placeholder="Vehicle detail" formControlName="vehicle-detail"/>
+                        <input type="number" name="vehicle-detail" class="form-control form-control-lg" placeholder="Number of seats" formControlName="vehicle-detail"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <select [(ngModel)]="selectedType" (ngModelChange)="onTypeChange($event)" id="vehicle-type-selection" class="form-control form-control-lg">
+                            <!-- <option *ngIf="!isTypeSelected" value="">Odaberite tip vozila</option> -->
+                            <option value="standardno">Standardno</option>
+                            <option value="luksuzno">Luksuzno</option>
+                            <option value="kombi">Kombi</option>
+                        </select>
                     </div>
                     <div class="checkbox-parameters">
-                        <mat-checkbox [(ngModel)]="hasBabyVehicle" label="babyVehicle" >Beba</mat-checkbox>
-                        <mat-checkbox [(ngModel)]="hasPetVehicle" label="petsVehicle" >Ljubimci</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="hasBabyVehicle" label="babyVehicle" >Vozilo ima opremu za bebe</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="hasPetVehicle" label="petsVehicle" >Vozilo ima opremu za ljubimce</mat-checkbox>
                     </div>
                 </div>
                 <button class="btn btn-outline-light btn-lg btn-block px-5" type="submit">Create</button>
