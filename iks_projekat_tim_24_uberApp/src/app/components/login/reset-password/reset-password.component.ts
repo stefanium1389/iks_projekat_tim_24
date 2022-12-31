@@ -13,6 +13,7 @@ export class ResetPasswordComponent implements OnInit {
 
   emailForm : FormGroup;
   emailSent: boolean = false;
+  hasToken: boolean = true;
 
   ngOnInit(): void {
     this.emailForm = new FormGroup({
@@ -32,5 +33,8 @@ export class ResetPasswordComponent implements OnInit {
     this.router.navigate(['..']);
 
   };
+  confirmReset(){
+    
+  }
 
 }
