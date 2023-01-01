@@ -1,0 +1,7 @@
+<!-- star-rating.component.html -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
+<div class="star-rating">
+    <i *ngFor="let star of stars" [ngClass]="{'fa-star': star <= rating, 'fa-star-o': star > rating}" (click)="updateRating(star)"></i>
+  </div>
+  

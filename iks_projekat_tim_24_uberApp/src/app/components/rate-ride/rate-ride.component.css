@@ -1,0 +1,30 @@
+.profile-data{
+    width: 25%;
+    margin: 1em;
+    padding: 1%;
+}
+.green-card{
+    background-color: #2E8B57;
+    width: 66%;
+    margin: 1em;
+    padding: 1%;
+    border-radius: 1em;
+    flex-direction: column;
+}
+div{
+    display: flex;
+    
+}
+h1{
+    color:white;
+}
+.column{
+    margin: 1em;
+    padding: 1%;
+    flex-direction: column;
+    align-items: center;
+}
+.top-row{
+    flex-direction: row;
+    justify-content: space-evenly;
+}

@@ -1,0 +1,16 @@
+/* star-rating.component.css */
+.star-rating i {
+    cursor: pointer;
+    font-size: 2em;
+    color: #ccc;
+  }
+  
+  .star-rating i.fa-star {
+    color: #ff0;
+  }
+.fa 
+{
+    color: white;
+    font-size: 20px;
+}
+  

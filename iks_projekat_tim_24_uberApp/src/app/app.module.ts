@@ -28,6 +28,9 @@ import { MatButton } from '@angular/material/button';
 import { RideHistoryModule } from './ride-history/ride-history.module';
 import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
 import { AdminCreateDriverComponent } from './components/admin-create-driver/admin-create-driver.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { RateRideComponent } from './components/rate-ride/rate-ride.component';
+
 
 const appRoutes : Routes =
 [
@@ -49,7 +52,9 @@ const appRoutes : Routes =
         PassengerMainComponent,
         TimeDialogComponent,
         ResetPasswordComponent,
-        AdminCreateDriverComponent
+        AdminCreateDriverComponent,
+        StarRatingComponent,
+        RateRideComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent],
