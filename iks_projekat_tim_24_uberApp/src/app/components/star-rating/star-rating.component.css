@@ -1,7 +1,6 @@
-/* star-rating.component.css */
 .star-rating i {
     cursor: pointer;
-    font-size: 2em;
+    font-size: 3em;
     color: #ccc;
   }
   

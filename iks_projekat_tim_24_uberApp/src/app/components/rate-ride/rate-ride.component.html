@@ -1,6 +1,15 @@
-<div>
+<div class="rating-wrapper">
     <div class="profile-data">
-
+        <div class="column">
+            <div class="profile-pic">
+            </div>
+            <p>
+                {{driver}}
+            </p>
+            <p>
+                {{vehicle}}
+            </p>
+        </div>
     </div>
     <div class="green-card">
         <div class="top-row">
@@ -14,7 +23,12 @@
             </div>
         </div>
         <div class="comment">
-
+            <textarea rows="6" cols="75" maxlength="200" placeholder="Comment..."></textarea>
+        </div>
+        <div class="top-row">
+            <button class="btn btn-outline-light btn-lg px-5" (click)="back()">Back</button>
+            <button class="btn btn-outline-light btn-lg px-5" (click)="confirm()">Rate</button>
+            
         </div>
     </div>
 </div>
