@@ -31,13 +31,16 @@ import { AdminCreateDriverComponent } from './components/admin-create-driver/adm
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { RateRideComponent } from './components/rate-ride/rate-ride.component';
 
+import { NotificationModule } from "./components/notification/notification.module";
+import { NotificationPageComponent } from './components/notification/notification-page/notification-page.component';
 
 const appRoutes : Routes =
 [
-  {path:'', component:UnregisteredUserMainComponent},
+  {path: '', component:UnregisteredUserMainComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'reset-password', component: ResetPasswordComponent}
+  {path: 'reset-password', component: ResetPasswordComponent},
+  {path: 'notifications', component: NotificationPageComponent}
 ]
 
 @NgModule({
@@ -60,7 +63,8 @@ const appRoutes : Routes =
     bootstrap: [AppComponent],
     imports: [
         MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
-        MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule
+        MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
+        NotificationModule
     ]
 })
 export class AppModule { }

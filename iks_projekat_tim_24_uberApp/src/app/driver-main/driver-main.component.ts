@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DriverMainComponent implements OnInit {
 
+  inRide:boolean=false;
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  startRide(){
+    this.inRide=true;
+  }
+  stopRide(){
+    this.inRide=false;
+  }
+  panic(){
+    alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  }
 }
