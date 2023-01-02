@@ -18,8 +18,16 @@ export class RateRideComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  confirm(){
+  vozacRatingFunc(rating: number){
+    this.vozacRating=rating;
+  }
+  voziloRatingFunc(rating: number){
+    this.voziloRating=rating;
+  }
 
+  confirm(){
+    console.log(this.vozacRating);
+    console.log(this.voziloRating);
   }
   back(){
     

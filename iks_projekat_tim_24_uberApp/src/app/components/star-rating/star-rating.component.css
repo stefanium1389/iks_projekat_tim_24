@@ -2,10 +2,14 @@
     cursor: pointer;
     font-size: 3em;
     color: #ccc;
+    margin: 0.1em;
   }
   
-  .star-rating i.fa-star {
-    color: #ff0;
+.star-rating i.fa-star {
+    color: white;
+  }
+.star-rating i.fa-star-o {
+    color: white;
   }
 .fa 
 {

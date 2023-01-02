@@ -15,11 +15,11 @@
         <div class="top-row">
             <div class="column">
                 <h1>Ocenite vozaca</h1>
-                <app-star-rating (rating)="vozacRating"></app-star-rating>
+                <app-star-rating (ratingChange)="vozacRatingFunc($event)"></app-star-rating>
             </div>
             <div class="column">
                 <h1>Ocetnite vozilo</h1>
-                <app-star-rating (rating)="voziloRating"></app-star-rating>
+                <app-star-rating (ratingChange)="voziloRatingFunc($event)"></app-star-rating>
             </div>
         </div>
         <div class="comment">
@@ -28,7 +28,6 @@
         <div class="top-row">
             <button class="btn btn-outline-light btn-lg px-5" (click)="back()">Back</button>
             <button class="btn btn-outline-light btn-lg px-5" (click)="confirm()">Rate</button>
-            
         </div>
     </div>
 </div>
