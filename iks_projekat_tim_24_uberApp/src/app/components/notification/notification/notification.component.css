@@ -1,0 +1,32 @@
+.profile-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #2196F3;
+}
+div.grey-card{
+    display: flex;
+    flex-direction: column;
+    background-color: #DDDBDB;
+    border-radius: 2em;
+    padding: 1em;
+    margin:1em;
+}
+div.grey-card:hover{
+    background-color: #878787;
+    cursor: pointer;
+}
+div.top-row{
+    display: flex;
+    flex-direction: row;
+    margin: 1em;
+}
+h1{
+    margin: 0.3em;
+}
+p{
+    margin: 1em;
+}
+div.date-wrapper{
+    align-self: flex-end;
+}

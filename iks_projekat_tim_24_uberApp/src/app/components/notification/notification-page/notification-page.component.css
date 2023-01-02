@@ -1,0 +1,16 @@
+div{
+    display: flex;
+    flex-direction: column;
+}
+div.list{
+    overflow-y:scroll;
+    width: 33%;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    height: 45em;
+}
+h1.title{
+    margin: 1em;
+    font-size: xx-large;
+}
