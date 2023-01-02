@@ -28,13 +28,16 @@ import { MatButton } from '@angular/material/button';
 import { RideHistoryModule } from './ride-history/ride-history.module';
 import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
 import { AdminCreateDriverComponent } from './components/admin-create-driver/admin-create-driver.component';
+import { NotificationModule } from "./components/notification/notification.module";
+import { NotificationPageComponent } from './components/notification/notification-page/notification-page.component';
 
 const appRoutes : Routes =
 [
-  {path:'', component:UnregisteredUserMainComponent},
+  {path: '', component:UnregisteredUserMainComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'reset-password', component: ResetPasswordComponent}
+  {path: 'reset-password', component: ResetPasswordComponent},
+  {path: 'notifications', component: NotificationPageComponent}
 ]
 
 @NgModule({
@@ -55,7 +58,8 @@ const appRoutes : Routes =
     bootstrap: [AppComponent],
     imports: [
         MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
-        MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule
+        MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
+        NotificationModule
     ]
 })
 export class AppModule { }
