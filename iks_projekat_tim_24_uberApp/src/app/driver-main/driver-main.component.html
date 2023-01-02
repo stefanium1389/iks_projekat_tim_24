@@ -33,9 +33,13 @@
                 <div class="profile-pic"></div> 
                 <p>Ime Prezime</p>
             </div>
-            <div>
-                <button>Pocetak</button>
+            <div *ngIf='!inRide'>
+                <button (click)='startRide()'>Pocetak</button>
                 <button>Otkazi</button>
+            </div>
+            <div *ngIf="inRide">
+                <button (click)='stopRide()'>Zavrsi</button>
+                <button class="panic-button"(click)="panic()">Panic</button>
             </div>
         </div>
     </div>

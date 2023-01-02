@@ -61,6 +61,14 @@ p.estimate{
     min-width: 300px;
 }
 
+.panic-button{
+    background-color: #D43131;
+    color:white;
+}
+.panic-button:hover{
+    background-color: #ff0000;
+    color:white;
+}
 
 button{
     border-radius: 10px;
