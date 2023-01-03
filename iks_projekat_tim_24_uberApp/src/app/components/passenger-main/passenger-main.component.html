@@ -41,9 +41,26 @@
             <div class="profil-pregled">
                 <div class="profile-pic"></div> 
                 <p>Ime Prezime</p>
+                <div class="scoring">
+                    <p> 4.4</p>
+                    <i class="fa fa-star"></i>
+                </div>
             </div>
-                <button>Odustani</button>
+            <div class="profil-pregled">
+                <p>Ford Fiesta</p>
+                <div class="scoring">
+                    <p> 4.9</p>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+            <p *ngIf="!inRide">Pristiže u 5 minuta</p>
+                <button *ngIf="!inRide">Odustani</button>
+                <div *ngIf="inRide" class="u-voznji">
+                    <button>Odustani</button>
+                    <button class="panic-dugme">PANIC</button>
+                </div>
         </div>
+
     </div>
 
     <div class = "map-container">

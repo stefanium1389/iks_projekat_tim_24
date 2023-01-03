@@ -141,7 +141,6 @@ button:hover{
 
 .driver-side-panel .fa 
 {
-
     color: white;
     font-size: 20px;
 }
@@ -161,9 +160,26 @@ button:hover{
   width: 100%;
 }
 
+.scoring
+{
+    display: flex;
+    align-items: center;
+}
+
+.scoring
+{
+    display: flex;
+}
+
 #display-time
 {
     color:white;
+}
+
+.panic-dugme
+{
+    background-color: red;
+    color: white;
 }
 
 /* On mouse-over, add a grey background color */

@@ -10,11 +10,7 @@ import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 })
 export class PassengerMainComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) {}
-
-  ngOnInit(): void {
-  }
-
+  inRide = false;
   isFavorited = false;
   isTypeSelected = false;
   selectedType = '';
@@ -22,6 +18,11 @@ export class PassengerMainComponent implements OnInit {
   hasPet = false;
   selectedTime: string = "xddd";
   showTime = false;
+
+  constructor(private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+  }
 
   toggleFavorite() {
     this.isFavorited = !this.isFavorited;
