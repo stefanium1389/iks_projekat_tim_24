@@ -1,7 +1,5 @@
 <header>
     <a id="navbar_logo" routerLink="">{{companyName}}</a>
-    <div>
-        <app-button color="#DDDBDB" text="Log in" ref="login"></app-button>
-        <app-button color="#DDDBDB" text="Register" ref="register"></app-button>
-    </div>
+    <app-navbar-registered *ngIf="isLoggedIn"></app-navbar-registered>
+    <app-navbar-unregistered *ngIf="!isLoggedIn"></app-navbar-unregistered>
 </header>

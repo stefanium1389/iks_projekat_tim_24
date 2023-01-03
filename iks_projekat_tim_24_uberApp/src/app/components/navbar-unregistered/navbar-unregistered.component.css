@@ -4,6 +4,7 @@ button
     padding: 8px 18px;
     border: none;
     border-radius: 15px;
+    margin: 0px 15px;
 }
 button:hover{
     background-color: white;
