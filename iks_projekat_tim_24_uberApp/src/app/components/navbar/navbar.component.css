@@ -11,7 +11,8 @@
 header{
     background-color: #2E8B57 ;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 10%;
+    max-height: 70px;
 }

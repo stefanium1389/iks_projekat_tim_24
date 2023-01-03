@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarRegisteredComponent implements OnInit {
 
+  hasNotification : boolean = false;
+  showDropdown : boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  dropdownClick(item : string)
+  {
+
   }
 
 }

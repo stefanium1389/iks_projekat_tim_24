@@ -1,1 +1,10 @@
-<p>navbar-registered works!</p>
+<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
+<div class="bell-and-profile-container">
+    <i class="fa fa-solid fa-bell" [ngClass]="{'no-notifications': !hasNotification, 'has-notifications': hasNotification}" [routerLink]="['/notifications']"></i>
+    <div class="profile-pic" mat-raised-button  [matMenuTriggerFor]="menu"></div>
+</div>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/notifications']">jozsefe</button>
+    <button mat-menu-item>vlaf</button>
+    <button mat-menu-item>mjehao</button>
+</mat-menu>
