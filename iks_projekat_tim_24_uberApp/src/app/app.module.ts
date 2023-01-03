@@ -9,7 +9,6 @@ import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ButtonComponent } from './components/button/button.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DriverMainComponent } from './driver-main/driver-main.component';
 import { UnregisteredUserMainComponent } from './unregistered-user-main/unregistered-user-main.component';
@@ -33,6 +32,8 @@ import { RateRideComponent } from './components/rate-ride/rate-ride.component';
 
 import { NotificationModule } from "./components/notification/notification.module";
 import { NotificationPageComponent } from './components/notification/notification-page/notification-page.component';
+import { NavbarUnregisteredComponent } from './components/navbar-unregistered/navbar-unregistered.component';
+import { NavbarRegisteredComponent } from './components/navbar-registered/navbar-registered.component';
 
 const appRoutes : Routes =
 [
@@ -48,7 +49,6 @@ const appRoutes : Routes =
         AppComponent,
         LoginComponent,
         NavbarComponent,
-        ButtonComponent,
         RegisterComponent,
         DriverMainComponent,
         UnregisteredUserMainComponent,
@@ -57,7 +57,9 @@ const appRoutes : Routes =
         ResetPasswordComponent,
         AdminCreateDriverComponent,
         StarRatingComponent,
-        RateRideComponent
+        RateRideComponent,
+        NavbarUnregisteredComponent,
+        NavbarRegisteredComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent],
