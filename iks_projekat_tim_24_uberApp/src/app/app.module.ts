@@ -25,7 +25,8 @@ import { TimeDialogComponent } from './components/time-dialog/time-dialog.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButton } from '@angular/material/button';
-import { RideHistoryModule } from './ride-history/ride-history.module';
+import { RideHistoryDriverModule } from './ride-history/ride-history-driver.module';
+import { RideHistoryPassengerModule } from './ride-history/ride-history-passenger.module';
 import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
 import { AdminCreateDriverComponent } from './components/admin-create-driver/admin-create-driver.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
@@ -68,7 +69,7 @@ const appRoutes : Routes =
     providers: [UserService],
     bootstrap: [AppComponent],
     imports: [
-        MapModule, RideHistoryModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
+        MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
         MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         NotificationModule
     ]
