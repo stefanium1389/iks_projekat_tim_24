@@ -1,0 +1,50 @@
+<div class="wrapper">
+    <div class="profile-wrapper">
+        <h1>Profil</h1>
+
+        <div class="profile-container">
+            <div class="profile-icon"></div>
+        </div>
+
+        <div class="side-panel">
+            <form [formGroup]="ProfileForm" (ngSubmit)="changeProfile()" fxLayout="column">
+                <mat-form-field class="form-field">
+                  <mat-label>Ime</mat-label>
+                  <input matInput type="text" name="name" formControlName="name" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                  <mat-label>Prezime</mat-label>
+                  <input matInput type="text" name="surname" formControlName="surname" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <mat-label>Adresa</mat-label>
+                    <input matInput type="text" name="address" formControlName="address" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <mat-label>Grad</mat-label>
+                    <input matInput type="text" name="city" formControlName="city" />
+                </mat-form-field>
+            </form>
+            <button>Sačuvaj</button>
+        </div>
+        <div class="side-panel">
+            <form [formGroup]="PasswordForm" (ngSubmit)="changeProfile()" fxLayout="row">
+                <mat-form-field class="form-field">
+                  <mat-label>Stara lozinka</mat-label>
+                  <input matInput type="password" name="oldPass" formControlName="oldPass" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                  <mat-label>Nova lozinka</mat-label>
+                  <input matInput type="password" name="newPass" formControlName="newPass" />
+                </mat-form-field>
+            </form>
+            <button>Sačuvaj</button>
+        </div>
+    </div>
+
+    <div class="stats-wrapper">
+        <h1>Statistika</h1>
+        <div class="placeholder"></div>
+    </div>
+    
+</div>
