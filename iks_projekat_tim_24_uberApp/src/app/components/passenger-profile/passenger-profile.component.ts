@@ -42,8 +42,5 @@ export class PassengerProfileComponent implements OnInit {
     this.ProfileForm.get('surname')?.setValue("Prezime1");
     this.ProfileForm.get('address')?.setValue("Adresa1");
     this.ProfileForm.get('city')?.setValue("Grad1");
-
-    this.PasswordForm.get('oldPass')?.setValue("sifra");
-    this.PasswordForm.get('newPass')?.setValue("sifra");
   }
 }
