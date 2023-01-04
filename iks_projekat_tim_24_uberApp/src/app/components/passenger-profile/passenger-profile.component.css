@@ -1,0 +1,88 @@
+.wrapper
+{
+    display: flex;
+    padding: 20px 60px;
+}
+
+.profile-wrapper
+{
+    width: 30%;
+}
+
+.stats-wrapper
+{
+    width: 70%;
+    padding: 0px 50px;
+}
+
+.placeholder
+{
+    width: 300px;
+    height: 300px;
+    background-color: purple;
+}
+
+.profile-icon{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: #2196F3;
+}
+
+.profile-container
+{
+    display: flex;
+    align-items: center;
+}
+
+.form-field
+{
+    display: block;
+    margin: 0px 10px;
+    color: white;
+    width: 80%;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    color: white !important;
+   }
+  
+   ::ng-deep.mat-form-field-underline {
+    background-color: white !important;
+  } 
+  
+  ::ng-deep.mat-form-field-ripple {
+   background-color: white !important;
+  }
+
+  mat-label{
+    color: white;
+  }
+
+.side-panel{
+    border-radius: 25px;
+    align-items: left;
+    display: flex;
+    
+    padding: 10px;
+    margin: 10px;
+    flex-direction: column;
+    background-color:#2E8B57 ;
+    height: fit-content;
+}
+
+button{
+    border-radius: 10px;
+    text-align: center;
+    color: black;
+    padding: 12px 16px;
+    width:fit-content;
+    background-color: #DDDBDB;
+    margin:2px 10px;
+    border:none;
+    font-size:1em;
+}
+button:hover{
+    color : black;
+    background-color: white;
+}
