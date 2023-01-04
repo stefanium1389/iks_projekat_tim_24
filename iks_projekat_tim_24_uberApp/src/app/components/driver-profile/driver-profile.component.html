@@ -1,0 +1,95 @@
+<div class="wrapper">
+  <div class="profile-wrapper">
+    <h1 id="profil">Profil</h1>
+
+    <div class="profile-container">
+      <div class="upload">
+        <div class="profile-icon"></div>
+        <div class="round">
+          <input type="file" (change)="uploadPicture($event)" accept="image/*">
+          <i class="fa fa-plus" style="color: #fff;"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="sides">
+      <div>
+        <div class="side-panel">
+          <form [formGroup]="ProfileForm" (ngSubmit)="changeProfile()">
+            <mat-form-field class="form-field">
+              <mat-label>Ime</mat-label>
+              <input matInput type="text" name="name" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Prezime</mat-label>
+              <input matInput type="text" name="surname" formControlName="surname" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Adresa</mat-label>
+              <input matInput type="text" name="address" formControlName="address" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Grad</mat-label>
+              <input matInput type="text" name="city" formControlName="city" />
+            </mat-form-field>
+          </form>
+          <button>Sačuvaj</button>
+        </div>
+        <div class="side-panel">
+          <form [formGroup]="PasswordForm" (ngSubmit)="changeProfile()">
+            <mat-form-field class="form-field">
+              <mat-label>Stara lozinka</mat-label>
+              <input matInput type="password" name="oldPass" formControlName="oldPass" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Nova lozinka</mat-label>
+              <input matInput type="password" name="newPass" formControlName="newPass" />
+            </mat-form-field>
+          </form>
+          <button>Sačuvaj</button>
+        </div>
+      </div>
+      <div>
+        <div class="side-panel" id="vehicle-panel">
+          <form [formGroup]="VehicleForm" (ngSubmit)="changeVehicle()">
+            <mat-form-field class="form-field">
+              <mat-label>Tip vozila</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">
+                  {{ vehicle }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Registarske tablice</mat-label>
+              <input matInput type="text" name="plates" formControlName="plates" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Broj mesta</mat-label>
+              <input matInput type="number" name="numberOfSeats" formControlName="numberOfSeats" />
+            </mat-form-field>
+            <div class="checkbox-parameters">
+              <mat-checkbox formControlName="drivesBabies" label="baby">Beba</mat-checkbox>
+              <mat-checkbox formControlName="drivesPets" label="pets" >Ljubimci</mat-checkbox>
+            </div>
+          </form>
+          <button>Sačuvaj</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stats-wrapper">
+    <h1>Statistika</h1>
+    <div class="placeholder"></div>
+
+
+
+    
+
+
+
+  </div>
+
+</div>

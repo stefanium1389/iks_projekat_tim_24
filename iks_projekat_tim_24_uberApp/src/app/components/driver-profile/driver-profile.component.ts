@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ViewChild, ElementRef } from '@angular/core';
 
 @Component({
-  selector: 'app-passenger-profile',
-  templateUrl: './passenger-profile.component.html',
-  styleUrls: ['./passenger-profile.component.css']
+  selector: 'app-driver-profile',
+  templateUrl: './driver-profile.component.html',
+  styleUrls: ['./driver-profile.component.css']
 })
-export class PassengerProfileComponent implements OnInit {
+export class DriverProfileComponent implements OnInit {
+
+  vehicleTypes : String[] = ["ford fiesta", "audi a4", "bugati chiron","ford fiesta", "audi a4", "bugati chiron","ford fiesta", "audi a4", "bugati chiron",]
+  drivesBabies : boolean = true;
+  drivesPets : boolean = true;
 
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -20,6 +25,13 @@ export class PassengerProfileComponent implements OnInit {
     newPass: new FormControl(),
   });
 
+  VehicleForm = new FormGroup({
+    plates: new FormControl(),
+    numberOfSeats: new FormControl(),
+    drivesBabies: new FormControl(),
+    drivesPets: new FormControl()
+  });
+
   constructor() { }
 
   ngOnInit(): void {
@@ -30,11 +42,17 @@ export class PassengerProfileComponent implements OnInit {
   {
     console.log("change called");
   }
+  changeVehicle ()
+  {
+    console.log("change called");
+  }
 
   uploadPicture(event: any)
   {
     console.log("picture selected");
   }
+
+  
 
   loadForms()
   {
@@ -44,3 +62,4 @@ export class PassengerProfileComponent implements OnInit {
     this.ProfileForm.get('city')?.setValue("Grad1");
   }
 }
+
