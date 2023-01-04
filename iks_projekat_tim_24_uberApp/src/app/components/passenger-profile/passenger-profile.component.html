@@ -1,9 +1,15 @@
 <div class="wrapper">
     <div class="profile-wrapper">
-        <h1>Profil</h1>
+        <h1 id="profil">Profil</h1>
 
         <div class="profile-container">
-            <div class="profile-icon"></div>
+            <div class="upload">
+                <div class="profile-icon"></div>
+                <div class="round">
+                  <input type="file" (change)="uploadPicture($event)" accept="image/*">
+                  <i class="fa fa-plus" style="color: #fff;"></i>
+                </div>
+              </div>
         </div>
 
         <div class="side-panel">
