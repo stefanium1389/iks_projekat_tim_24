@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { UserService } from './user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import {RegisterComponent} from "./components/register/register.component";
+import {RegisterNotificationComponent} from "./components/register/register-notification/register-notification.component";
 import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -52,6 +53,7 @@ const appRoutes : Routes =
         LoginComponent,
         NavbarComponent,
         RegisterComponent,
+        RegisterNotificationComponent,
         DriverMainComponent,
         UnregisteredUserMainComponent,
         PassengerMainComponent,
