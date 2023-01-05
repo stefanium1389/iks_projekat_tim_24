@@ -166,3 +166,15 @@ button:hover{
     max-height: 200px;
     overflow-y: auto;
   }
+
+  .block-button
+  {
+    background-color: red;
+    color: white;
+  }
+
+  .block-button:hover
+  {
+    background-color: maroon;
+    color: white;
+  }
