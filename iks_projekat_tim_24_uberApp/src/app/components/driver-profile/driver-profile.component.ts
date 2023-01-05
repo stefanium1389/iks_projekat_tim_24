@@ -12,6 +12,7 @@ export class DriverProfileComponent implements OnInit {
   vehicleTypes : String[] = ["ford fiesta", "audi a4", "bugati chiron","ford fiesta", "audi a4", "bugati chiron","ford fiesta", "audi a4", "bugati chiron",]
   drivesBabies : boolean = true;
   drivesPets : boolean = true;
+  isAdmin: boolean = false;
 
   ProfileForm = new FormGroup({
     name: new FormControl(),
