@@ -42,6 +42,7 @@ import { ReportDialogComponent } from './components/report-dialog/report-dialog.
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { BlockDialogComponent } from './components/block-dialog/block-dialog.component';
 
 const appRoutes : Routes =
 [
@@ -73,6 +74,7 @@ const appRoutes : Routes =
         DriverProfileComponent,
         ReportDialogComponent,
         StatisticsComponent,
+        BlockDialogComponent,
         
     ],
     providers: [UserService],
