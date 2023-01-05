@@ -10,7 +10,7 @@
           <i class="fa fa-plus" style="color: #fff;"></i>
         </div>
       </div>
-      <button *ngIf="isAdmin" class="block-button">Blokiraj</button>
+      <button *ngIf="isAdmin" class="block-button" (click)="openBlockDialog()">Blokiraj</button>
     </div>
 
     <div class="sides">

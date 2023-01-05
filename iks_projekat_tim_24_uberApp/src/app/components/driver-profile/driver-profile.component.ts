@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
+import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BlockDialogComponent } from '../block-dialog/block-dialog.component';
 
 @Component({
   selector: 'app-driver-profile',
@@ -12,7 +16,8 @@ export class DriverProfileComponent implements OnInit {
   vehicleTypes : String[] = ["ford fiesta", "audi a4", "bugati chiron","ford fiesta", "audi a4", "bugati chiron","ford fiesta", "audi a4", "bugati chiron",]
   drivesBabies : boolean = true;
   drivesPets : boolean = true;
-  isAdmin: boolean = false;
+  isAdmin: boolean = true;
+  
 
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -33,7 +38,7 @@ export class DriverProfileComponent implements OnInit {
     drivesPets: new FormControl()
   });
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadForms()
@@ -61,6 +66,17 @@ export class DriverProfileComponent implements OnInit {
     this.ProfileForm.get('surname')?.setValue("Prezime1");
     this.ProfileForm.get('address')?.setValue("Adresa1");
     this.ProfileForm.get('city')?.setValue("Grad1");
+  }
+
+  openBlockDialog(): void {
+    const dialogRef = this.dialog.open(BlockDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 }
 
