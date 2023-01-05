@@ -7,7 +7,6 @@ import { MapModule } from '../components/map/map/map.module';
 import { RideHistoryDetailsComponent } from './ride-history-details/ride-history-details.component';
 
 
-
 @NgModule({
   declarations: [
     RideHistoryPassengerComponent,
@@ -18,8 +17,10 @@ import { RideHistoryDetailsComponent } from './ride-history-details/ride-history
   imports: [
     CommonModule, MapModule
   ],
-  exports:[
-    RideHistoryPassengerComponent
+  exports: [
+    RideHistoryPassengerComponent,
+    RideListComponent,
+    RideHistoryDetailsComponent
   ]
 })
 export class RideHistoryPassengerModule { }

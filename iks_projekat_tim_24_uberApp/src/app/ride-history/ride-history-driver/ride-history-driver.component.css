@@ -1,6 +1,6 @@
 div.map-container{
-    width: 45%;
-    height:30em;
+    width: 60%;
+    height: 60%;
     
 }
 div.list-container{
@@ -10,7 +10,7 @@ div.list-container{
 div.big-wrapper{
     display: flex;
     align-self: center;
-    height: 80%;
+    height: 100%;
     margin: 1em;
 }
 div.info-containter{
