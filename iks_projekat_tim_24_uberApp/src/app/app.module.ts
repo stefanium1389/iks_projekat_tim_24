@@ -38,6 +38,7 @@ import { NavbarUnregisteredComponent } from './components/navbar-unregistered/na
 import { NavbarRegisteredComponent } from './components/navbar-registered/navbar-registered.component';
 import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 
 const appRoutes : Routes =
 [
@@ -66,7 +67,8 @@ const appRoutes : Routes =
         NavbarUnregisteredComponent,
         NavbarRegisteredComponent,
         PassengerProfileComponent,
-        DriverProfileComponent
+        DriverProfileComponent,
+        ReportDialogComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent],

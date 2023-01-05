@@ -1,0 +1,11 @@
+<form>
+    <mat-form-field>
+      <mat-label>Report type</mat-label>
+      <mat-select [(ngModel)]="selectedType" name="reportType">
+        <mat-option *ngFor="let type of reportTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+  </form>
