@@ -1,0 +1,14 @@
+mat-form-field
+{
+  margin: 0px 10px;  
+}
+
+.date-picker-container
+{
+    display: flex;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #a6a4a4;
+    width: fit-content;
+    align-items: center;
+}

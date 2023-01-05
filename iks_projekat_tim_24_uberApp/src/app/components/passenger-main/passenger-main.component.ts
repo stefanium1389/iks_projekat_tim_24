@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 
 @Component({
   selector: 'app-passenger-main',
@@ -10,7 +12,7 @@ import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 })
 export class PassengerMainComponent implements OnInit {
 
-  inRide = false;
+  inRide = true;
   isFavorited = false;
   isTypeSelected = false;
   selectedType = '';
@@ -20,7 +22,7 @@ export class PassengerMainComponent implements OnInit {
   showTime = false;
   
 
-  constructor(private dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
   }
@@ -58,5 +60,15 @@ export class PassengerMainComponent implements OnInit {
     });
   }
   
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReportDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  }
 
 }

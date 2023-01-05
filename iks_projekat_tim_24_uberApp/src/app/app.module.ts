@@ -38,6 +38,10 @@ import { NavbarUnregisteredComponent } from './components/navbar-unregistered/na
 import { NavbarRegisteredComponent } from './components/navbar-registered/navbar-registered.component';
 import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const appRoutes : Routes =
 [
@@ -66,14 +70,17 @@ const appRoutes : Routes =
         NavbarUnregisteredComponent,
         NavbarRegisteredComponent,
         PassengerProfileComponent,
-        DriverProfileComponent
+        DriverProfileComponent,
+        ReportDialogComponent,
+        StatisticsComponent,
+        
     ],
     providers: [UserService],
     bootstrap: [AppComponent],
     imports: [
         MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
         MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
-        NotificationModule
+        NotificationModule, MatDatepickerModule, MatNativeDateModule
     ]
 })
 export class AppModule { }
