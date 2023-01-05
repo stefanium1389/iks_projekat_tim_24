@@ -37,6 +37,7 @@ import { NotificationPageComponent } from './components/notification/notificatio
 import { NavbarUnregisteredComponent } from './components/navbar-unregistered/navbar-unregistered.component';
 import { NavbarRegisteredComponent } from './components/navbar-registered/navbar-registered.component';
 import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
+import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
 
 const appRoutes : Routes =
 [
@@ -64,7 +65,8 @@ const appRoutes : Routes =
         RateRideComponent,
         NavbarUnregisteredComponent,
         NavbarRegisteredComponent,
-        PassengerProfileComponent
+        PassengerProfileComponent,
+        DriverProfileComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent],
