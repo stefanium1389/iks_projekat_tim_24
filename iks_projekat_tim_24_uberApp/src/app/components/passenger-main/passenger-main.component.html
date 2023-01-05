@@ -56,7 +56,7 @@
             <p *ngIf="!inRide">Pristiže u 5 minuta</p>
                 <button *ngIf="!inRide">Odustani</button>
                 <div *ngIf="inRide" class="u-voznji">
-                    <button>Odustani</button>
+                    <button (click)="openDialog()">Prijavi</button>
                     <button class="panic-dugme">PANIC</button>
                 </div>
         </div>
