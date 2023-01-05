@@ -1,19 +1,83 @@
-div.map-container{
-    width: 45%;
-    height:30em;
-    
+div.map-container
+{
+    width: 60%;
+    height: 60%;
 }
-div.list-container{
+
+div.list-container
+{
     width: 40%;
     margin: 2em;
 }
-div.big-wrapper{
+
+div.big-wrapper
+{
     display: flex;
     align-self: center;
-    height: 80%;
+    height: 90%;
     margin: 1em;
 }
-div.info-containter{
+
+div.info-containter
+{
     display: flex;
     width: 100%;
+}
+
+
+
+h1
+{
+    margin: 0;
+}
+
+div.driver
+{
+    display: inline-block;
+    background-color: #2E8B57;
+    border-radius: 10px;
+    width: 30%;
+    vertical-align: top;
+}
+
+div.profile-picture
+{
+    display: inline-block;
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    margin: 0;
+    background-color: #00B4FF;
+}
+
+div.profile-name
+{
+    display: inline-block;
+    margin-left: 20px;
+    background-color: #00B4FF;
+    vertical-align: top;
+}
+
+
+
+div.comments
+{
+    display: inline-block;
+    background-color: #2E8B57;
+    width: 40%;
+    margin-left: 2.5%;
+    border-radius: 10px;
+    vertical-align: top;
+}
+
+
+
+div.buttons
+{
+    display: inline-block;
+    background-color: #2E8B57;
+    width: 25%;
+    margin-left: 2.5%;
+    border-radius: 10px;
+    vertical-align: top;
 }
