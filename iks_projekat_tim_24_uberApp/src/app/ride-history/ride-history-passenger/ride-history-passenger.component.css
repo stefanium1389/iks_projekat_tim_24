@@ -18,9 +18,9 @@ div.big-wrapper
     margin: 1em;
 }
 
-div.info-containter
+div.info-container
 {
-    display: flex;
+    height: 50%;
     width: 100%;
 }
 
@@ -37,7 +37,9 @@ div.driver
     display: inline-block;
     background-color: #2E8B57;
     border-radius: 10px;
-    width: 30%;
+    padding: 5px;
+    width: 40%;
+    height: 100%;
     vertical-align: top;
 }
 
@@ -64,9 +66,11 @@ div.comments
 {
     display: inline-block;
     background-color: #2E8B57;
-    width: 40%;
+    width: 30%;
+    height: 100%;
     margin-left: 2.5%;
     border-radius: 10px;
+    padding: 5px;
     vertical-align: top;
 }
 
@@ -75,9 +79,24 @@ div.comments
 div.buttons
 {
     display: inline-block;
-    background-color: #2E8B57;
     width: 25%;
+    height: 100%;
     margin-left: 2.5%;
-    border-radius: 10px;
     vertical-align: top;
+}
+
+button
+{
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border-style: none;
+    background-color: #DDDBDB;
+    font-size: 30px;
+}
+
+button:hover
+{
+    background-color: #90D9A4;
 }
