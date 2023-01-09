@@ -8,6 +8,8 @@ import { Observable, of } from 'rxjs';
   data: Array<any>;
   labels: Array<any>;
   options: any;
+  total: string;
+  average: string;
 }
 
 export interface ChartRequest
@@ -29,6 +31,7 @@ export class ChartService {
   {
     //procesirati request, ovo je samo neki dummy
 
+
      let ChartType : ChartType = 'radar';
      let ChartData : Array<any> = [
       { data: [1000, 2000, 3000], label: 'dunno' }
@@ -37,6 +40,8 @@ export class ChartService {
      let ChartOptions: any = {
       responsive: true
     };
+    let ChartTotal = "-100";
+    let ChartAverage = "-50.5";
 
     if (chartRequest.topic === "kilometri")
     {
@@ -65,7 +70,9 @@ export class ChartService {
       data : ChartData,
       type : ChartType,
       options : ChartOptions,
-      labels : ChartLabels
+      labels : ChartLabels,
+      total : ChartTotal,
+      average : ChartAverage,
     }
 
     return of(response);
