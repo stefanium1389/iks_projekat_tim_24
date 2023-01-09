@@ -6,7 +6,7 @@
 
 .profile-wrapper
 {
-    min-width: 40%;
+    min-width: 50%;
     width:auto;
 }
 
@@ -40,6 +40,11 @@
 {
     display: flex;
     align-items: center;
+}
+
+.history-button-container
+{
+  margin-top: 10px;
 }
 
 .form-field, .checkbox-parameters
@@ -177,4 +182,14 @@ button:hover{
   {
     background-color: maroon;
     color: white;
+  }
+
+  .admin-options  button:hover
+  {
+    background-color: #878787;
+  }
+
+  .left-side
+  {
+    min-width: 320px
   }
