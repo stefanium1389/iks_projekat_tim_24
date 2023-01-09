@@ -18,4 +18,16 @@ canvas
   margin-top: 30px;
   max-width: 650px;
   max-height: 500px;
+  margin: 20px 0px;
+}
+
+.summaries {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.summaries p {
+  display: inline-block;
+  margin: 0 16px;
+  font-size: medium;
 }

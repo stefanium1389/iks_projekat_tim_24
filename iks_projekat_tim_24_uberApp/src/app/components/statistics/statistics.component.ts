@@ -16,6 +16,8 @@ export class StatisticsComponent implements OnInit {
   endDate: Date;
   selectedChartType: string;
   chartTypes : string[] = ["vožnje","kilometri","troškovi"]
+  total: string ="-5";
+  average: string = "-4.5";
 
     // Line chart configuration
     public TypeOfChart: ChartType = 'radar';
@@ -57,6 +59,8 @@ export class StatisticsComponent implements OnInit {
     this.ChartLabels = chartToRender.labels;
     this.ChartOptions = chartToRender.options;
     this.TypeOfChart = chartToRender.type;
+    this.total = chartToRender.total;
+    this.average = chartToRender.average;
   }
 
 }
