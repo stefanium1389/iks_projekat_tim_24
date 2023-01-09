@@ -14,7 +14,7 @@
     </div>
 
     <div class="sides">
-      <div>
+      <div class="left-side">
         <div class="side-panel">
           <form [formGroup]="ProfileForm" (ngSubmit)="changeProfile()">
             <mat-form-field class="form-field">
@@ -34,7 +34,7 @@
               <input matInput type="text" name="city" formControlName="city" />
             </mat-form-field>
           </form>
-          <button>Sačuvaj</button>
+          <button *ngIf="!isAdmin">Sačuvaj</button>
         </div>
         <div class="side-panel">
           <form [formGroup]="PasswordForm" (ngSubmit)="changeProfile()">
@@ -47,7 +47,7 @@
               <input matInput type="password" name="newPass" formControlName="newPass" />
             </mat-form-field>
           </form>
-          <button>Sačuvaj</button>
+          <button *ngIf="!isAdmin">Sačuvaj</button>
         </div>
       </div>
       <div>
@@ -74,7 +74,15 @@
               <mat-checkbox formControlName="drivesPets" label="pets" >Ljubimci</mat-checkbox>
             </div>
           </form>
-          <button>Sačuvaj</button>
+          <button *ngIf="!isAdmin">Sačuvaj</button>
+        </div>
+        <div class = "admin-options">
+          <button *ngIf="isAdmin">Sačuvaj izmene</button>
+          <button *ngIf="isAdmin"> Odabaci izmene</button>
+          <div class = "history-button-container">
+            <button *ngIf="isAdmin">Istorija vožnji</button>
+          </div>
+          
         </div>
       </div>
     </div>
