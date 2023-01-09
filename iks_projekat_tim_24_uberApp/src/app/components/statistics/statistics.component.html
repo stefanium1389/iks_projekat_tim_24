@@ -13,6 +13,16 @@
     <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #endDatePicker></mat-datepicker>
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Tip izveštaja</mat-label>
+    <mat-select [(ngModel)]="selectedChartType" name="selectedChartType" (ngModelChange)="onChartChange($event)">
+      <mat-option *ngFor="let type of chartTypes" [value]="type">
+        {{ type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
-<canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" type="pie" ></canvas>
+
+<canvas baseChart [datasets]="ChartData" [labels]="ChartLabels" [options]="ChartOptions" [type]="TypeOfChart" ></canvas>
