@@ -1,0 +1,36 @@
+.card 
+{
+    background-color: #DDDBDB;
+    border-radius: 20px;
+    display: flex;
+    padding: 20px 20px;
+    border-style: none;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #2196F3;
+}
+
+.pic-and-name
+{
+    display: flex;
+    align-items: center;
+}
+
+p
+{
+    font-size: large;
+    margin-left: 20px;
+
+}
+
+.fa 
+{
+    font-size: 26px;
+}
