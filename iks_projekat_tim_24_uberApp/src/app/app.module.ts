@@ -31,7 +31,7 @@ import { ResetPasswordComponent } from './components/login/reset-password/reset-
 import { AdminCreateDriverComponent } from './components/admin-create-driver/admin-create-driver.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { RateRideComponent } from './components/rate-ride/rate-ride.component';
-
+import { MapComponent } from './components/map/map/map.component';
 import { NotificationModule } from "./components/notification/notification.module";
 import { NotificationPageComponent } from './components/notification/notification-page/notification-page.component';
 import { NavbarUnregisteredComponent } from './components/navbar-unregistered/navbar-unregistered.component';
@@ -44,6 +44,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgChartsModule } from 'ng2-charts';
 
+import { BlockDialogComponent } from './components/block-dialog/block-dialog.component';
 
 const appRoutes : Routes =
 [
@@ -75,6 +76,7 @@ const appRoutes : Routes =
         DriverProfileComponent,
         ReportDialogComponent,
         StatisticsComponent,
+        BlockDialogComponent,
         
         
     ],
@@ -83,7 +85,7 @@ const appRoutes : Routes =
     imports: [
         MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
         MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
-        NotificationModule, MatDatepickerModule, MatNativeDateModule, NgChartsModule
+        NotificationModule, MatDatepickerModule, MatNativeDateModule, NgChartsModule,
     ]
 })
 export class AppModule { }
