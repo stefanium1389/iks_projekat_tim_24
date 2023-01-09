@@ -43,19 +43,19 @@
     width: 80%;
 }
 
-::ng-deep .mat-focused .mat-form-field-label {
+::ng-deep .profile-wrapper .mat-focused .mat-form-field-label {
     color: white !important;
    }
   
-   ::ng-deep.mat-form-field-underline {
+   ::ng-deep .profile-wrapper .mat-form-field-underline {
     background-color: white !important;
   } 
   
-  ::ng-deep.mat-form-field-ripple {
+  ::ng-deep .profile-wrapper .mat-form-field-ripple {
    background-color: white !important;
   }
 
-  mat-label{
+  .profile-wrapper mat-label{
     color: white;
   }
 

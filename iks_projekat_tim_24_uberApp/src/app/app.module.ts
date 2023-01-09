@@ -45,6 +45,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgChartsModule } from 'ng2-charts';
 
 import { BlockDialogComponent } from './components/block-dialog/block-dialog.component';
+import { AdminViewUsersComponent } from './components/admin-view-users/admin-view-users.component';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 
 const appRoutes : Routes =
 [
@@ -77,6 +79,8 @@ const appRoutes : Routes =
         ReportDialogComponent,
         StatisticsComponent,
         BlockDialogComponent,
+        AdminViewUsersComponent,
+        ProfileCardComponent,
         
         
     ],
