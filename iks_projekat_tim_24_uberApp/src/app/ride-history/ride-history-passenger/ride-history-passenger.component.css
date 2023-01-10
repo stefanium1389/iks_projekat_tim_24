@@ -60,6 +60,12 @@ div.profile-name
     vertical-align: top;
 }
 
+i
+{
+    font-size: 30px;
+    color: white;
+}
+
 
 
 div.comments
