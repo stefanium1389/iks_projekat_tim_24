@@ -34,7 +34,21 @@ export class LoginComponent implements OnInit {
     
     const response = await this.http.post(environment.apiBaseUrl+'api/user/login', {email:email, password:password}).toPromise() as loginResponse;
     this.jwtSetvice.setJwt(response.accessToken);
-    this.router.navigate(['/']);
+    //this.router.navigate(['/']);
+
+    let role = this.jwtSetvice.getRole();
+    if (role === "DRIVER")
+    {
+      this.router.navigate(['/driver-home']);
+    }
+    else if(role === "ADMIN")
+    {
+      this.router.navigate(['/admin-home'])
+    }
+    else if (role === "USER")
+    {
+      this.router.navigate(['/registered-home'])
+    }
 
     }
     catch (HttpErrorResponse){
