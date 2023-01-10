@@ -47,6 +47,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { BlockDialogComponent } from './components/block-dialog/block-dialog.component';
 import { AdminViewUsersComponent } from './components/admin-view-users/admin-view-users.component';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
+import { AdminMainComponent } from './components/admin-main/admin-main.component';
 
 const appRoutes : Routes =
 [
@@ -56,7 +57,7 @@ const appRoutes : Routes =
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'notifications', component: NotificationPageComponent},
   {path: 'driver-home', component: DriverMainComponent},
-  {path: 'admin-home' , component: UnregisteredUserMainComponent}, //OVO NE VALJAAAA
+  {path: 'admin-home' , component: AdminMainComponent},
   {path: 'registered-home', component: PassengerMainComponent}
 ]
 
@@ -84,6 +85,7 @@ const appRoutes : Routes =
         BlockDialogComponent,
         AdminViewUsersComponent,
         ProfileCardComponent,
+        AdminMainComponent,
         
         
     ],
