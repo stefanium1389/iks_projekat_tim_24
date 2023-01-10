@@ -39,7 +39,7 @@
     min-width: 160px;
     padding: 5px 0;
     margin: 2px 0 0;
-    font-size: 14px;
+    font-size: 24px;
     text-align: left;
     list-style: none;
     background-color: #fff;
@@ -70,4 +70,12 @@
   color: #262626;
   text-decoration: none;
   background-color : grey;
+}
+
+::ng-deep .mat-menu-panel {
+  background-color: #2E8B57;
+}
+
+::ng-deep .mat-menu-item {
+  color: white;
 }

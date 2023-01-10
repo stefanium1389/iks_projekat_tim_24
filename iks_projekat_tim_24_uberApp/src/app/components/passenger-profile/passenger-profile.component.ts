@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BlockDialogComponent } from '../block-dialog/block-dialog.component';
+import { ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-passenger-profile',
@@ -7,6 +12,8 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./passenger-profile.component.css']
 })
 export class PassengerProfileComponent implements OnInit {
+
+  isAdmin: boolean = true;
 
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -20,7 +27,7 @@ export class PassengerProfileComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadForms()
@@ -42,5 +49,16 @@ export class PassengerProfileComponent implements OnInit {
     this.ProfileForm.get('surname')?.setValue("Prezime1");
     this.ProfileForm.get('address')?.setValue("Adresa1");
     this.ProfileForm.get('city')?.setValue("Grad1");
+  }
+
+  openBlockDialog(): void {
+    const dialogRef = this.dialog.open(BlockDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 }

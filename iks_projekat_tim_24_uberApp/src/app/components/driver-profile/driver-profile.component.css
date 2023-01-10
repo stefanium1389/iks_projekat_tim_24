@@ -6,7 +6,7 @@
 
 .profile-wrapper
 {
-    min-width: 40%;
+    min-width: 50%;
     width:auto;
 }
 
@@ -42,6 +42,11 @@
     align-items: center;
 }
 
+.history-button-container
+{
+  margin-top: 10px;
+}
+
 .form-field, .checkbox-parameters
 {
     display: block;
@@ -65,27 +70,27 @@
     color: white !important;
    }
 
-::ng-deep .mat-select-min-line {
+::ng-deep .profile-wrapper .mat-select-min-line {
     color: white !important;
    }
 
-::ng-deep .mat-focused .mat-form-field-label {
+::ng-deep .profile-wrapper .mat-focused .mat-form-field-label {
     color: white !important;
    }
   
-   ::ng-deep.mat-form-field-underline {
+   ::ng-deep.profile-wrapper .mat-form-field-underline {
     background-color: white !important;
   } 
   
-  ::ng-deep.mat-form-field-ripple {
+  ::ng-deep .profile-wrapper .mat-form-field-ripple {
    background-color: white !important;
   }
 
-  mat-label{
+  .profile-wrapper mat-label{
     color: white;
   }
 
-  ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+  ::ng-deep .profile-wrapper .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
     background-color: transparent !important; 
     color: white;
 }
@@ -177,4 +182,14 @@ button:hover{
   {
     background-color: maroon;
     color: white;
+  }
+
+  .admin-options  button:hover
+  {
+    background-color: #878787;
+  }
+
+  .left-side
+  {
+    min-width: 320px
   }

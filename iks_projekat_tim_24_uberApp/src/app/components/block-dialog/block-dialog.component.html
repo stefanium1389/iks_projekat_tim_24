@@ -1,0 +1,9 @@
+<p mat-dialog-title>Unesite poruku o blokiranju</p>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="banNote">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+</div>
