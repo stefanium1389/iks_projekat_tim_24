@@ -37,7 +37,7 @@ div.driver
     display: inline-block;
     background-color: #2E8B57;
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
     width: 40%;
     height: 100%;
     vertical-align: top;
@@ -70,7 +70,39 @@ div.comments
     height: 100%;
     margin-left: 2.5%;
     border-radius: 10px;
+    padding: 10px;
+    vertical-align: top;
+}
+
+div.comment-list
+{
+    height: 85%;
+    overflow: auto;
+}
+
+div.comment
+{
+    background-color: #DDDBDB;
+    border-radius: 10px;
     padding: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+div.comment-profile-picture
+{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    margin: 0;
+    background-color: #00B4FF;
+}
+
+div.comment-profile-name
+{
+    display: inline-block;
+    margin-left: 10px;
     vertical-align: top;
 }
 
