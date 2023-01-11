@@ -63,11 +63,11 @@ export class UnregisteredUserMainComponent implements OnInit {
     console.log("iz unregistered "+this.time+" "+this.distance)
     if (which === "start")
     {
-      this.map.search2(this.destinationForm.get('start_location')?.value,"start");
+      this.map.search(this.destinationForm.get('start_location')?.value,"start");
     }
     else
     {
-      this.map.search2(this.destinationForm.get('end_location')?.value,"end");
+      this.map.search(this.destinationForm.get('end_location')?.value,"end");
     }
     
   }

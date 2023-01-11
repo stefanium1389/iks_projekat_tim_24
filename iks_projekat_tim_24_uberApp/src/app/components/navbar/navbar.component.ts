@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtService } from '../jwt-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,9 @@ export class NavbarComponent implements OnInit {
   role: string | null;
   routerLinkHome:string = "";
 
-  constructor(private jwtService : JwtService) {}
+  constructor(private jwtService : JwtService, private router: Router) {
+    this.setRole()
+  }
 
   ngOnInit() {
   }
@@ -47,6 +50,13 @@ export class NavbarComponent implements OnInit {
     {
       this.routerLinkHome = "";
     }
+  }
+
+  onClick()
+  {
+    this.router.navigate([this.routerLinkHome]).then(() => {
+      window.location.reload();
+    });
   }
 
 }

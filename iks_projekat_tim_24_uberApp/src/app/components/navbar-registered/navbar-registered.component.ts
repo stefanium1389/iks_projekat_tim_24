@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtService } from '../jwt-service.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class NavbarRegisteredComponent implements OnInit {
   showDropdown : boolean;
   role : string | null;
 
-  constructor(private jwtService : JwtService, private router: Router) { }
+  constructor(private jwtService : JwtService, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.showDropdown = false;
@@ -30,7 +31,14 @@ export class NavbarRegisteredComponent implements OnInit {
   logout()
   {
     this.jwtService.logout();
-    this.router.navigate(['/']);
+    this.onClickOption("");
+  }
+
+  onClickOption(route : string)
+  {
+    this.router.navigate([route]).then(() => {
+      window.location.reload();
+    });
   }
 
 }

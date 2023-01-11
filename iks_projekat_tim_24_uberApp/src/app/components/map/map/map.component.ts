@@ -4,7 +4,6 @@ import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
 import { EventEmitter, Input, Output } from '@angular/core';
 import { icon } from 'leaflet';
-import { placements } from '@popperjs/core';
 
 export interface TimeAndDistance {
   time: number;
@@ -25,7 +24,6 @@ export class MapComponent implements AfterViewInit {
   totalDistance: number;
   totalTime: number;
   locationType: string;
-  mapIsInitialized: boolean = false;
 
   @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
   @Output() out_start_location = new EventEmitter<string>();
@@ -40,32 +38,22 @@ export class MapComponent implements AfterViewInit {
     });
 
     L.Marker.prototype.options.icon = DefaultIcon;
-    if (!this.mapIsInitialized) {
-      this.initMap();
-    }
+    
+    this.initMap();
   }
 
   ngOnInit() {
-
-  }
-
-  ngOnChanges() {
-    if (!this.mapIsInitialized) {
-      this.initMap();
-    }
   }
 
   ngOnDestroy() {
-    if (this.map) {
-      this.map.remove();
-      this.mapIsInitialized = false;
-      /*this.start_location.remove();
-      this.end_location.remove();
-      this.ride_route.remove();*/
-    }
-  }
+    
+}
 
   private initMap(): void {
+
+     console.log("MAPA JE "+ this.map);
+     let xd = Math.floor(Math.random() * 100).toString();
+
     this.map = L.map('map', {
       center: [45.2396, 19.8227],
       zoom: 13,
@@ -83,7 +71,7 @@ export class MapComponent implements AfterViewInit {
     tiles.addTo(this.map);
 
     this.registerOnClick();
-    this.mapIsInitialized = true;
+    console.log(" MAPA NA KRAJU INIT JE "+ this.map);
 
   }
   
