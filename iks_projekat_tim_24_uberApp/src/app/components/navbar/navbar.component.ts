@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { JwtService } from '../jwt-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +10,10 @@ export class NavbarComponent implements OnInit {
 
   companyName : string = "UberApp"
   isLoggedIn: boolean;
-  constructor(private authService: AuthService) { }
+  constructor(private jwtService : JwtService) { }
 
   ngOnInit() {
-    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+    this.jwtService.isLoggedIn$.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
     });
   }
