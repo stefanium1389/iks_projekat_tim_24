@@ -1,0 +1,14 @@
+<form
+[formGroup]="searchForm" 
+(ngSubmit)="onSubmit()"
+>
+    <div>
+      <p>Pretraga korisnika</p>
+      <input type="text" formControlName="q"/>
+      <br>
+    </div>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <div class="search-results">
+      <div *ngFor="let user of results" class="user-result" (click)="addUser(user);">{{user.name}} {{user.surname}} <span class="email">{{user.email}}</span></div>
+    </div>
+  </form>

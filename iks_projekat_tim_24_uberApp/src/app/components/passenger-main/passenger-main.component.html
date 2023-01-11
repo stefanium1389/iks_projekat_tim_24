@@ -37,6 +37,20 @@
                     <div id="display-time" *ngIf="showTime">{{ "selektovano vreme: " + selectedTime }}</div>
         </div>
 
+        <div class="driver-side-panel" id="linked-users">
+            <p>Uvezani korisnici</p>
+            <div class="linked-users-container">
+                <div *ngFor="let user of linkedUsers" class="profil-pregled" id="linked-user">
+                    <div class="profile-pic"></div> 
+                    <p>{{user.name}} {{user.surname}}</p>
+                    <div class="scoring">
+                        <i class="fa fa-user" (click)='removeUser(user);'></i>
+                    </div>
+                </div>
+            </div>
+            <button (click)='openUserSearch()'>Dodaj</button>
+        </div>
+
         <div class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
                 <div class="profile-pic"></div> 
