@@ -1,0 +1,103 @@
+div.big-wrapper
+{
+    display: flex;
+    align-self: center;
+    height: 90%;
+    margin: 1em;
+}
+
+div.list-container
+{
+    width: 40%;
+    margin: 2em;
+}
+
+div.route-list-container
+{
+    overflow-y: scroll;
+    max-height: 100%;
+    margin-top: 40px;
+}
+
+div.item
+{
+    display: flex;
+    background-color: #DDDBDB;
+    border-radius: 10px;
+    flex-direction: row;
+    margin-bottom: 20px;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+div.column
+{
+    flex:auto;
+    display: block;
+    margin-left: 5em;
+    margin-right: 5em;
+}
+
+i.fa-arrow-right, i.fa-arrow-left
+{
+    margin-right: 15px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+p
+{
+    display: inline;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+i.fa-star-o
+{
+    margin-top: 10px;
+    color: black;
+    font-size: 50px;
+}
+
+i.fa-star-o:hover
+{
+    color: #878787;
+    cursor: pointer;
+}
+
+div.info-container
+{
+    height: 50%;
+    width: 100%;
+}
+
+div.map-container
+{
+    width: 60%;
+    height: 80%;
+}
+
+h1
+{
+    margin: 0;
+    color: white;
+}
+
+
+
+button
+{
+    width: 150px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border-style: none;
+    background-color: #DDDBDB;
+    font-size: 30px;
+}
+
+button:hover
+{
+    background-color: #90D9A4;
+}
