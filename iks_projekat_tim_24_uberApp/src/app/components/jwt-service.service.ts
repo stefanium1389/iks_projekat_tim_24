@@ -7,34 +7,13 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class JwtService {
-  private _isLoggedIn = false;
-  private _isLoggedInSubject = new Subject<boolean>();
-  isLoggedIn$ = this._isLoggedInSubject.asObservable();
-
-  get isLoggedIn() {
-    return this._isLoggedIn;
-  }
-
-  set isLoggedIn(value: boolean) {
-    this._isLoggedIn = value;
-    this._isLoggedInSubject.next(value);
-  }
 
   setJwt(jwt: string){
     localStorage.setItem('jwt',jwt);
-    this.updateLoggedIn();
   }
 
   getJwt(){
     return localStorage.getItem('jwt');
-  }
-
-  updateLoggedIn()
-  {
-    let role = this.getRole();
-    if (role === "DRIVER" || role === "ADMIN" || role==="USER") {
-      this.isLoggedIn = true;
-    }
   }
 
   getEmail() : string | null{
@@ -65,7 +44,6 @@ export class JwtService {
   }
   logout(){
     localStorage.removeItem('jwt');
-    this.isLoggedIn = false;
   }
   constructor() { }
 }

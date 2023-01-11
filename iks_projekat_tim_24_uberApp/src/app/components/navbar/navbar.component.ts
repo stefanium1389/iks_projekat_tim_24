@@ -12,13 +12,19 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean;
   role: string | null;
   routerLinkHome:string = "";
-  constructor(private jwtService : JwtService) { }
+
+  constructor(private jwtService : JwtService) {}
 
   ngOnInit() {
-    this.jwtService.isLoggedIn$.subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-      this.setRole();
-    });
+  }
+
+  checkLoggedIn() 
+  {
+      if (this.jwtService.getJwt())
+      {
+        return true;
+      }
+      return false;
   }
 
   setRole()
