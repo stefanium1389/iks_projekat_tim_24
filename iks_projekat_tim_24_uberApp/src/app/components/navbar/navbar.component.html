@@ -1,5 +1,5 @@
 <header>
-    <a id="navbar_logo" routerLink="">{{companyName}}</a>
+    <a id="navbar_logo" [routerLink]="routerLinkHome">{{companyName}}</a>
     <app-navbar-registered *ngIf="isLoggedIn"></app-navbar-registered>
     <app-navbar-unregistered *ngIf="!isLoggedIn"></app-navbar-unregistered>
 </header>

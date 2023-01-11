@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { JwtService } from '../jwt-service.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar-registered',
@@ -7,17 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarRegisteredComponent implements OnInit {
 
-  hasNotification : boolean = false;
-  showDropdown : boolean = false;
+  hasNotification : boolean;
+  showDropdown : boolean;
+  role : string | null;
 
-  constructor() { }
+  constructor(private jwtService : JwtService, private router: Router) { }
 
   ngOnInit(): void {
+    this.showDropdown = false;
+    this.hasNotification = false; //za sad
+    this.role = this.jwtService.getRole();
   }
 
   dropdownClick(item : string)
   {
+    console.log(item);
+  }
 
+  logout()
+  {
+    this.jwtService.logout();
+    this.router.navigate(['/']);
   }
 
 }

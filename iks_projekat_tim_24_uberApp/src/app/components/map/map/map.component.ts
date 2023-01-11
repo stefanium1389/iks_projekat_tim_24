@@ -187,6 +187,7 @@ export class MapComponent implements AfterViewInit {
       .bindPopup('Trenutno se nalazite ovde.')
       .openPopup();
   }
+  
 
   ngAfterViewInit(): void {
     let DefaultIcon = L.icon({

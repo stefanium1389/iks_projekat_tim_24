@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
     }
     else if (role === "USER")
     {
-      this.router.navigate(['/registered-home'])
+      this.router.navigate(['/user-home'])
     }
   }
   

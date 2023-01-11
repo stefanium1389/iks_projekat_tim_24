@@ -10,12 +10,37 @@ export class NavbarComponent implements OnInit {
 
   companyName : string = "UberApp"
   isLoggedIn: boolean;
+  role: string | null;
+  routerLinkHome:string = "";
   constructor(private jwtService : JwtService) { }
 
   ngOnInit() {
     this.jwtService.isLoggedIn$.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
+      this.setRole();
     });
+  }
+
+  setRole()
+  {
+    this.role = this.jwtService.getRole();
+    if (this.role === null)
+    {
+      this.routerLinkHome = "";
+    }
+    else if (this.role === "USER"){
+       this.routerLinkHome = "/user-home";
+    }
+    else if (this.role === "DRIVER"){
+       this.routerLinkHome = "/driver-home";
+    }
+    else if (this.role === "ADMIN"){
+       this.routerLinkHome = "/admin-home";
+    }
+    else //ovo nije preterano promišljeno xd
+    {
+      this.routerLinkHome = "";
+    }
   }
 
 }

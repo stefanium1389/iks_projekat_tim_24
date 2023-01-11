@@ -65,6 +65,7 @@ export class JwtService {
   }
   logout(){
     localStorage.removeItem('jwt');
+    this.isLoggedIn = false;
   }
   constructor() { }
 }
