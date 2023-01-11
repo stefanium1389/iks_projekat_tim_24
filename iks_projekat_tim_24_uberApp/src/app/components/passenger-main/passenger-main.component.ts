@@ -4,6 +4,9 @@ import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+import { User } from 'src/app/user';
+import { dtoUser, SearchUserDialogComponent } from '../search-user-dialog/search-user-dialog.component';
+import { LinkUsersService } from '../search-user-dialog/link-users.service';
 
 @Component({
   selector: 'app-passenger-main',
@@ -12,17 +15,19 @@ import { ReportDialogComponent } from '../report-dialog/report-dialog.component'
 })
 export class PassengerMainComponent implements OnInit {
 
-  inRide = true;
-  isFavorited = false;
-  isTypeSelected = false;
-  selectedType = '';
+  inRide: boolean = true;
+  isFavorited: boolean = false;
+  isTypeSelected: boolean = false;
+  selectedType: string = '';
   hasBaby = false;
-  hasPet = false;
+  hasPet: boolean = false;
   selectedTime: string = "xddd";
-  showTime = false;
+  showTime: boolean = false;
+  linkedUsers: dtoUser[] = [];
+
   
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService) {}
 
   ngOnInit(): void {
   }
@@ -70,5 +75,19 @@ export class PassengerMainComponent implements OnInit {
       console.log('The dialog was closed', result);
     });
   }
-
+  openUserSearch(): void {
+    const dialogRef = this.dialog.open(SearchUserDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      this.linkedUsers=this.linkUsersService.usersList;
+    });
+  }
+  removeUser(user:dtoUser){
+    console.log('xd');
+    this.linkUsersService.removeUser(user);
+    this.linkedUsers=this.linkUsersService.usersList;
+  }
 }

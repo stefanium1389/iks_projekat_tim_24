@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UserService } from './user.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -47,6 +47,8 @@ import { NgChartsModule } from 'ng2-charts';
 import { BlockDialogComponent } from './components/block-dialog/block-dialog.component';
 import { AdminViewUsersComponent } from './components/admin-view-users/admin-view-users.component';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
+import { SearchUserDialogComponent } from './components/search-user-dialog/search-user-dialog.component';
+import { JwtInterceptorService } from './components/jwt-interceptor.service';
 
 const appRoutes : Routes =
 [
@@ -81,10 +83,15 @@ const appRoutes : Routes =
         BlockDialogComponent,
         AdminViewUsersComponent,
         ProfileCardComponent,
+        SearchUserDialogComponent,
         
         
     ],
-    providers: [UserService],
+    providers: [UserService,{
+        provide: HTTP_INTERCEPTORS,
+        useClass: JwtInterceptorService,
+        multi: true
+      }],
     bootstrap: [AppComponent],
     imports: [
         MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,

@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   companyName : string = "UberApp"
-  isLoggedIn = true;
+  isLoggedIn = false;
   constructor() { }
 
   ngOnInit(): void {
