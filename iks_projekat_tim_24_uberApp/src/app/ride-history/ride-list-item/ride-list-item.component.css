@@ -17,12 +17,23 @@ div.column
     margin-right: 5em;
 }
 
-i
+i.fa-arrow-right, i.fa-arrow-left
+{
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+
+p.inline
+{
+    display: inline;
+}
+
+i.fa-star-o
 {
     color: black;
 }
 
-i:hover
+i.fa-star-o:hover
 {
     color: #878787;
     cursor: pointer;
