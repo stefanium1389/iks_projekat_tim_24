@@ -6,6 +6,7 @@ import { UserService } from 'src/app/user.service';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../jwt-service.service';
 import { loginResponse } from './loginResponse';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   
-  constructor(private http: HttpClient, private jwtSetvice: JwtService, private router:Router, private userService:UserService) { 
+  constructor(private http: HttpClient, private jwtSetvice: JwtService, private router:Router, private userService:UserService, private authService:AuthService) { 
   }
 
   ngOnInit(): void {
@@ -37,6 +38,11 @@ export class LoginComponent implements OnInit {
     //this.router.navigate(['/']);
 
     let role = this.jwtSetvice.getRole();
+
+    if (role === "DRIVER" || role === "ADMIN" || role==="USER") {
+      this.authService.isLoggedIn = true;
+    }
+
     if (role === "DRIVER")
     {
       this.router.navigate(['/driver-home']);
