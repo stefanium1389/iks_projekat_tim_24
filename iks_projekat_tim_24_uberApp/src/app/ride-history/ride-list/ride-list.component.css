@@ -1,14 +1,23 @@
-div.list-container{
+div.list-container
+{
     overflow-y:scroll;
     max-height: 100%;
+    margin-top: 40px;
 }
-div.sort-select{
+
+div.sort-select
+{
     background-color: #DDDBDB;
     width: fit-content;
-    margin: 1em;
     padding: 1em;
     padding-left: 5em;
     padding-right: 5em;
     align-self: center;
-    border-radius: 1em;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+div.sort-select:hover
+{
+    background-color: #90D9A4;
 }
