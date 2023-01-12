@@ -1,12 +1,15 @@
 <div class = "real-wrapper">
     <div class="wrapper">
         <div class="driver-side-panel">
-            <p>Status: Aktivan</p>
-            <p>Danasnjih sati rada: 5h</p>
-            <button>Pauziraj</button>
+            <p *ngIf="isActive()">Status: Aktivan</p>
+            <p *ngIf="!isActive()">Status: Pauziran</p>
+            <p>Danasnjih sati rada: {{time}}h</p>
+            <button *ngIf="isActive()" (click)="activeButtonClick()">Pauziraj</button>
+            <button *ngIf="!isActive()" (click)="activeButtonClick()">Aktiviraj</button>
+
         </div>
 
-        <div class="driver-side-panel" id = "destination-parameters">
+        <div *ngIf='hasAcceptedRide()' class="driver-side-panel" id = "destination-parameters">
             
                     <input type="text" placeholder="pocetna destinacija"/>
                     <input type="text" placeholder="krajnja destinacija"/>
@@ -28,7 +31,7 @@
                     </div>
         </div>
 
-        <div class="driver-side-panel" id="driver-accept-container">
+        <div *ngIf='hasAcceptedRide()'class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
                 <div class="profile-pic"></div> 
                 <p>Ime Prezime</p>
