@@ -16,7 +16,7 @@ export class UnregisteredUserMainComponent implements OnInit {
   dobijena : string;
   time : number;
   distance : string;
-  locationType : string;
+  locationType : string = "departure";
 
 
   constructor() {
@@ -27,21 +27,12 @@ export class UnregisteredUserMainComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {}
+
+  onTypeChange(type : string)
+  {
+    this.map.locationType = type;
   }
-
-  /*ngOnChanges() {
-    console.log(this.timeAndDistance);
-    this.time = this.timeAndDistance.time;
-    this.distance = this.timeAndDistance.distance;
-  }*/
-
-  getLocationType(locationTypeSelect: HTMLSelectElement): void {
-    this.locationType = locationTypeSelect.value;
-    this.map.locationType = this.locationType;
-  }
-
 
   locStartHandler(loc:string)
   {
@@ -63,11 +54,11 @@ export class UnregisteredUserMainComponent implements OnInit {
     console.log("iz unregistered "+this.time+" "+this.distance)
     if (which === "start")
     {
-      this.map.search2(this.destinationForm.get('start_location')?.value,"start");
+      this.map.search(this.destinationForm.get('start_location')?.value,"start");
     }
     else
     {
-      this.map.search2(this.destinationForm.get('end_location')?.value,"end");
+      this.map.search(this.destinationForm.get('end_location')?.value,"end");
     }
     
   }

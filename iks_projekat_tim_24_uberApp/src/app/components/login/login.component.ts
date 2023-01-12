@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   
-  constructor(private http: HttpClient, private jwtSetvice: JwtService, private router:Router, private userService:UserService) { 
+  constructor(private http: HttpClient, private jwtService: JwtService, private router:Router, private userService:UserService) { 
   }
 
   ngOnInit(): void {
@@ -33,14 +33,33 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.get('password')?.value;
     
     const response = await this.http.post(environment.apiBaseUrl+'api/user/login', {email:email, password:password}).toPromise() as loginResponse;
-    this.jwtSetvice.setJwt(response.accessToken);
-    this.router.navigate(['/']);
+    this.jwtService.setJwt(response.accessToken);
+
+    this.routeUsers();
 
     }
     catch (HttpErrorResponse){
       console.error(HttpErrorResponse);
     }
   };
+
+  routeUsers()
+  {
+    let role = this.jwtService.getRole();
+
+    if (role === "DRIVER")
+    {
+      this.router.navigate(['/driver-home']);
+    }
+    else if(role === "ADMIN")
+    {
+      this.router.navigate(['/admin-home'])
+    }
+    else if (role === "USER")
+    {
+      this.router.navigate(['/user-home'])
+    }
+  }
   
 }
 

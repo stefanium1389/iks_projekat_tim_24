@@ -3,8 +3,23 @@
     <i class="fa fa-solid fa-bell" [ngClass]="{'no-notifications': !hasNotification, 'has-notifications': hasNotification}" [routerLink]="['/notifications']"></i>
     <div class="profile-pic" mat-raised-button  [matMenuTriggerFor]="menu"></div>
 </div>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['/notifications']">jozsefe</button>
-    <button mat-menu-item>vlaf</button>
-    <button mat-menu-item>mjehao</button>
+<mat-menu #menu="matMenu" >
+    <!-- USER - profil, istorija voznji, omiljene putanje, chat -->
+    <button mat-menu-item  (click)="onClickOption('/user-profile')"  *ngIf="role === 'USER'">Profil</button>
+    <button mat-menu-item  (click)="onClickOption('/user-ride-history')" *ngIf="role === 'USER'">Istorija vožnjI</button>
+    <button mat-menu-item  (click)="onClickOption('/favorite-routes')"  *ngIf="role === 'USER'">Omiljene putanje</button>
+    <button mat-menu-item *ngIf="role === 'USER'">Poruke</button>
+
+    <!-- DRIVER - profil, istorija voznji, chat -->
+    <button mat-menu-item (click)="onClickOption('/driver-profile')" *ngIf="role === 'DRIVER'">Profil</button>
+    <button mat-menu-item (click)="onClickOption('/driver-ride-history')" *ngIf="role === 'DRIVER'">Istorija vožnji</button>
+    <button mat-menu-item *ngIf="role === 'DRIVER'">Poruke</button>
+
+    <!-- ADMIN - upravljanje nalozima, chat -->
+    <button mat-menu-item (click)="onClickOption('/account-management')" *ngIf="role === 'ADMIN'">Upravljanje nalozima</button>
+    <button mat-menu-item *ngIf="role === 'ADMIN'">Poruke</button>
+
+    <button mat-menu-item (click)="logout()">Izlogujte se</button>
+
 </mat-menu>
+

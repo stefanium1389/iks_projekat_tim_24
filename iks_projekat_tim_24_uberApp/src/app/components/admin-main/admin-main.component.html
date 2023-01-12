@@ -1,0 +1,52 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
+<div class = "real-wrapper">
+    <div class="wrapper">
+
+        <div class="driver-side-panel" id = "destination-parameters">
+            
+                    <input type="text" placeholder="pocetna destinacija"/>
+                    <input type="text" placeholder="krajnja destinacija"/>
+
+                    <div class="estimate-box">
+                        <p class="estimate">Oko 10 minuta</p>
+                        <p class="estimate">Oko 300 RSD</p>
+                    </div>
+
+                    <div class="checkbox-parameters">
+                        <mat-checkbox [(ngModel)]="hasBaby" label="baby" >Beba</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="hasPet" label="pets" >Ljubimci</mat-checkbox>
+                    </div>
+        </div>
+
+        <div class="driver-side-panel" id="driver-accept-container">
+            <div class="profil-pregled">
+                <div class="profile-pic"></div> 
+                <p>Ime Prezime</p>
+                <div class="scoring">
+                    <p> 4.4</p>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+            <div class="profil-pregled">
+                <p>Ford Fiesta</p>
+                <div class="scoring">
+                    <p> 4.9</p>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>  
+        </div>
+
+        <div class="driver-side-panel">
+            <div class="profil-pregled">
+                <div class="profile-pic"></div> 
+                <p>Ime Prezime</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class = "map-container">
+        <app-map></app-map>
+    </div>
+</div>
