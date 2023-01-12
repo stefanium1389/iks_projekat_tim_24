@@ -189,3 +189,11 @@ button:hover{
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+
+  #location-type-selection
+  {
+    border-radius: 10px;
+    border-style: none;
+    margin: 5px;
+    height: 26px;
+  }

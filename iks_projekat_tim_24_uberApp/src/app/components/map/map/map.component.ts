@@ -23,7 +23,7 @@ export class MapComponent implements AfterViewInit {
   ride_route: L.Routing.Control;
   totalDistance: number;
   totalTime: number;
-  locationType: string;
+  locationType: string = "departure";
 
   @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
   @Output() out_start_location = new EventEmitter<string>();
@@ -51,9 +51,6 @@ export class MapComponent implements AfterViewInit {
 
   private initMap(): void {
 
-     console.log("MAPA JE "+ this.map);
-     let xd = Math.floor(Math.random() * 100).toString();
-
     this.map = L.map('map', {
       center: [45.2396, 19.8227],
       zoom: 13,
@@ -71,7 +68,6 @@ export class MapComponent implements AfterViewInit {
     tiles.addTo(this.map);
 
     this.registerOnClick();
-    console.log(" MAPA NA KRAJU INIT JE "+ this.map);
 
   }
   

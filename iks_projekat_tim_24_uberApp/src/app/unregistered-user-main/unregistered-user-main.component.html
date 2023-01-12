@@ -12,11 +12,11 @@
                     <input type="text" placeholder="krajnja destinacija" formControlName="end_location"/>
                     <i (click)="search('end')" class="fa fa-search"></i>
                 </div>
-                <select #locationTypeSelect id="location-type-selection" (change)="getLocationType(locationTypeSelect)">
-                    <option value="departure">Polazište</option>
-                    <option value="destination">Odredište</option>
-                </select>
             </form>
+            <select [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
+                <option value="departure">Polazište</option>
+                <option value="destination" selected>Odredište</option>
+            </select>
 
             <div class="estimate-box">
                 <p class="estimate">Oko {{ time }} minuta</p>
