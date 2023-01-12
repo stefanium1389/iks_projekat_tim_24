@@ -3,7 +3,8 @@
         <div class="driver-side-panel">
             <p>Status: {{activityStatus}}</p>
             <p>Danasnjih sati rada: {{workHours}}</p>
-            <button>Pauziraj</button>
+            <button *ngIf="isDriverActive" (click)="onClickEndDriverHour()">Pauziraj</button>
+            <button *ngIf="!isDriverActive" (click)="onClickStartDriverHour()">Nastavi</button>
         </div>
 
         <div class="driver-side-panel" id = "destination-parameters">
