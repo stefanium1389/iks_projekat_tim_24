@@ -17,20 +17,35 @@ export class DriverMainComponent implements OnInit {
   constructor(private http: HttpClient, private jwtService: JwtService) { }
 
   ngOnInit(): void {
-    this.http.post(`${environment.apiBaseUrl}/api/driver/${this.jwtService.getId()}/working-hour`, {})
+    let date = new Date();
+    let isoDate = date.toISOString();
+    this.http.post(`${environment.apiBaseUrl}api/driver/${this.jwtService.getId()}/working-hour`, {start:isoDate})
         .subscribe(
-            response => { console.log(response) },
-            error => { console.error(error) }
+            response => { this.activateDrivingSession() },
+            error => { this.handleWorkingHourError() }
         );
 }
 
   startRide(){
     this.inRide=true;
   }
+
   stopRide(){
     this.inRide=false;
   }
+
+  activateDrivingSession()
+  {
+    this.activityStatus = "aktivan";
+  }
+
+  handleWorkingHourError()
+  {
+    console.log("greška kod pravljenja working hour");
+  }
+
   panic(){
     alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   }
+  
 }
