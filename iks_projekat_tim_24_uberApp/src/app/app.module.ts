@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UserService } from './user.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import {RegisterComponent} from "./components/register/register.component";
-import {RegisterNotificationComponent} from "./components/register/register-notification/register-notification.component";
+import { RegisterComponent } from "./components/register/register.component";
+import { RegisterNotificationComponent } from "./components/register/register-notification/register-notification.component";
 import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -43,13 +43,15 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgChartsModule } from 'ng2-charts';
-
 import { BlockDialogComponent } from './components/block-dialog/block-dialog.component';
 import { AdminViewUsersComponent } from './components/admin-view-users/admin-view-users.component';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
 import { RideHistoryPassengerComponent } from './ride-history/ride-history-passenger/ride-history-passenger.component';
 import { RideHistoryDriverComponent } from './ride-history/ride-history-driver/ride-history-driver.component';
+import { SearchUserDialogComponent } from './components/search-user-dialog/search-user-dialog.component';
+import { JwtInterceptorService } from './components/jwt-interceptor.service';
+import { FavouriteRoutesComponent } from "./components/favourite-routes/favourite-routes.component";
 
 const appRoutes : Routes =
 [
@@ -63,7 +65,7 @@ const appRoutes : Routes =
   {path: 'user-home', component: PassengerMainComponent},
   {path: 'user-profile', component: PassengerProfileComponent},
   {path: 'user-ride-history', component: RideHistoryPassengerComponent},
-  //{path: 'favorite-routes', component: },
+  {path: 'favorite-routes', component: FavouriteRoutesComponent},
   {path:'driver-profile', component: DriverProfileComponent},
   {path:'driver-ride-history', component:RideHistoryDriverComponent},
   {path:'account-management', component:AdminViewUsersComponent},
@@ -94,10 +96,15 @@ const appRoutes : Routes =
         AdminViewUsersComponent,
         ProfileCardComponent,
         AdminMainComponent,
-        
+        SearchUserDialogComponent,
+        FavouriteRoutesComponent
         
     ],
-    providers: [UserService],
+    providers: [UserService,{
+        provide: HTTP_INTERCEPTORS,
+        useClass: JwtInterceptorService,
+        multi: true
+      }],
     bootstrap: [AppComponent],
     imports: [
         MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,

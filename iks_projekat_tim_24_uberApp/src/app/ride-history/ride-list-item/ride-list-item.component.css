@@ -1,13 +1,40 @@
-div {
+div.item
+{
     display: flex;
     background-color: #DDDBDB;
-    border-radius: 2em;
+    border-radius: 10px;
     flex-direction: row;
-    margin: 1em;
+    margin-bottom: 20px;
+    margin-right: 5px;
+    padding: 5px;
 }
-div.column{
+
+div.column
+{
     flex:auto;
     display: block;
     margin-left: 5em;
     margin-right: 5em;
+}
+
+i.fa-arrow-right, i.fa-arrow-left
+{
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+
+p.inline
+{
+    display: inline;
+}
+
+i.fa-star-o
+{
+    color: black;
+}
+
+i.fa-star-o:hover
+{
+    color: #878787;
+    cursor: pointer;
 }
