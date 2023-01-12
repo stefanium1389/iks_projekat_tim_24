@@ -46,6 +46,9 @@ import { NgChartsModule } from 'ng2-charts';
 import { BlockDialogComponent } from './components/block-dialog/block-dialog.component';
 import { AdminViewUsersComponent } from './components/admin-view-users/admin-view-users.component';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
+import { AdminMainComponent } from './components/admin-main/admin-main.component';
+import { RideHistoryPassengerComponent } from './ride-history/ride-history-passenger/ride-history-passenger.component';
+import { RideHistoryDriverComponent } from './ride-history/ride-history-driver/ride-history-driver.component';
 import { SearchUserDialogComponent } from './components/search-user-dialog/search-user-dialog.component';
 import { JwtInterceptorService } from './components/jwt-interceptor.service';
 import { FavouriteRoutesComponent } from "./components/favourite-routes/favourite-routes.component";
@@ -56,7 +59,16 @@ const appRoutes : Routes =
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
-  {path: 'notifications', component: NotificationPageComponent}
+  {path: 'notifications', component: NotificationPageComponent},
+  {path: 'driver-home', component: DriverMainComponent},
+  {path: 'admin-home' , component: AdminMainComponent},
+  {path: 'user-home', component: PassengerMainComponent},
+  {path: 'user-profile', component: PassengerProfileComponent},
+  {path: 'user-ride-history', component: RideHistoryPassengerComponent},
+  {path: 'favorite-routes', component: FavouriteRoutesComponent},
+  {path:'driver-profile', component: DriverProfileComponent},
+  {path:'driver-ride-history', component:RideHistoryDriverComponent},
+  {path:'account-management', component:AdminViewUsersComponent},
 ]
 
 @NgModule({
@@ -83,6 +95,7 @@ const appRoutes : Routes =
         BlockDialogComponent,
         AdminViewUsersComponent,
         ProfileCardComponent,
+        AdminMainComponent,
         SearchUserDialogComponent,
         FavouriteRoutesComponent
         

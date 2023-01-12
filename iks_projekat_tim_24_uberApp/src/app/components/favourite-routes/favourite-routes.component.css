@@ -23,11 +23,12 @@ div.item
 {
     display: flex;
     background-color: #DDDBDB;
+    align-content: center;
     border-radius: 10px;
     flex-direction: row;
     margin-bottom: 20px;
     margin-right: 5px;
-    padding: 5px;
+    padding: 8px;
 }
 
 div.column
@@ -56,7 +57,7 @@ i.fa-star-o
 {
     margin-top: 10px;
     color: black;
-    font-size: 50px;
+    font-size: 30px;
 }
 
 i.fa-star-o:hover
@@ -87,14 +88,14 @@ h1
 
 button
 {
-    width: 150px;
-    padding: 20px;
+    width: 120px;
+    padding: 15px;
     margin-top: 10px;
     margin-right: 10px;
     border-radius: 10px;
     border-style: none;
     background-color: #DDDBDB;
-    font-size: 30px;
+    font-size: 24px;
 }
 
 button:hover

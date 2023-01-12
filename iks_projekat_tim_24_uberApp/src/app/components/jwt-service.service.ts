@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { User } from '../user';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService {
+
   setJwt(jwt: string){
     localStorage.setItem('jwt',jwt);
   }
+
   getJwt(){
     return localStorage.getItem('jwt');
   }
