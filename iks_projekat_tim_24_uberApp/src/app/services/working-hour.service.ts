@@ -108,6 +108,7 @@ export class WorkingHourService {
     if (response !== undefined && response !== null) {
       if (response.totalCount === 1)
       this.endDrivingWorkingHour(response);
+      this.removeFromLocal();
     }
   }
   
