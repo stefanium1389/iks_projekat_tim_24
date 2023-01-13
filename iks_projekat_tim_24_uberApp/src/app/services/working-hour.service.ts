@@ -40,6 +40,7 @@ export class WorkingHourService {
         );
   }
 
+  //ako postoji element u listi onda vozac već jeste aktivan, ako nije pravimo mu wh
   initialOnResponse(response : ListOfWorkingHours)
   {
     if (response.totalCount === 0)
@@ -52,7 +53,7 @@ export class WorkingHourService {
   handleWorkingHourError(error : any)
   {
     console.log("greška kod working hour");
-    console.log(error) //lel
+    console.log(error) //troll opera
   }
   
   createNewWorkingHour()
@@ -101,6 +102,18 @@ export class WorkingHourService {
     );
   }
 
+  //ista stvar ali se ne upisuje u local storage
+  async onLogout() {
+    const response = await this.http.get<ListOfWorkingHours>(`${environment.apiBaseUrl}api/driver/${this.jwtService.getId()}/last-active-working-hour`).toPromise();
+    if (response !== undefined && response !== null) {
+      if (response.totalCount === 1)
+      this.endDrivingWorkingHour(response);
+    }
+  }
+  
+  
+  
+
   onClickStart()
   {
     let date = new Date();
@@ -124,6 +137,5 @@ export class WorkingHourService {
   {
     localStorage.setItem('userPausedWorkingHour','true');
   }
-
-
+  
 }

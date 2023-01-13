@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtService } from '../jwt-service.service';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { WorkingHourService } from 'src/app/services/working-hour.service';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class NavbarRegisteredComponent implements OnInit {
   showDropdown : boolean;
   role : string | null;
 
-  constructor(private jwtService : JwtService, private router: Router, private location: Location) { }
+  constructor(private jwtService : JwtService, private router: Router, private whService: WorkingHourService) { }
 
   ngOnInit(): void {
     this.showDropdown = false;
@@ -28,11 +28,16 @@ export class NavbarRegisteredComponent implements OnInit {
     console.log(item);
   }
 
-  logout()
-  {
+  async logout() {
+    console.log(this.role);
+    if (this.role === "DRIVER") {
+      console.log("logout i whservice")
+      await this.whService.onLogout();
+    }
     this.jwtService.logout();
     this.onClickOption("");
   }
+  
 
   onClickOption(route : string)
   {

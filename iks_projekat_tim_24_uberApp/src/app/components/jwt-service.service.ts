@@ -44,6 +44,7 @@ export class JwtService {
   }
   logout(){
     localStorage.removeItem('jwt');
+    console.log("jwt je obrisan")
   }
   constructor() { }
 }
