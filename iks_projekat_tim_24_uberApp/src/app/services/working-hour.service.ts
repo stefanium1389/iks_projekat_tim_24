@@ -20,8 +20,7 @@ export interface ListOfWorkingHours {
 @Injectable({
   providedIn: 'root'
 })
-export class DriverService {
-
+export class WorkingHourService {
   statusChanged = new EventEmitter<string>();
 
   constructor(private http: HttpClient, private jwtService: JwtService) { }

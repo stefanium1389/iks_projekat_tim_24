@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DriverService } from '../services/driver.service';
+import { WorkingHourService } from '../services/working-hour.service';
 
 @Component({
   selector: 'app-driver-main',
@@ -13,14 +13,14 @@ export class DriverMainComponent implements OnInit {
   isDriverActive:boolean;
   inRide:boolean;
 
-  constructor(private driverService: DriverService) { }
+  constructor(private whService: WorkingHourService) { }
 
   ngOnInit(): void 
   {
-    this.driverService.statusChanged.subscribe(status => {
+    this.whService.statusChanged.subscribe(status => {
       this.handleStatusChange(status);
     });
-    this.driverService.initialCheckForWorkingHour();
+    this.whService.initialCheckForWorkingHour();
   }
 
   handleStatusChange(status: string) {
@@ -46,12 +46,12 @@ export class DriverMainComponent implements OnInit {
   //ovome treba krpljenje xd
   onClickEndDriverHour()
   {
-    this.driverService.onClickEnd();
+    this.whService.onClickEnd();
   }
 
   onClickStartDriverHour()
   {
-    this.driverService.onClickStart();
+    this.whService.onClickStart();
   }
 
   panic(){
