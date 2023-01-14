@@ -1,0 +1,13 @@
+<div>
+    <div class="verification-box">
+        <div [ngClass]="{'green': success, 'red': !success}">
+            <h1>Email Verification</h1>
+        </div>
+        <div class="message-box">
+            <p>{{message}}</p>
+            <div *ngIf="isExpired">
+                <button class="btn btn-outline-light btn-lg btn-block px-5" (click)="resendEmail()">Resend email!</button>
+            </div>
+        </div>
+    </div>
+</div>

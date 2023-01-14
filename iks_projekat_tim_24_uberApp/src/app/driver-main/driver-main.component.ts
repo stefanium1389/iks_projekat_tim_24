@@ -23,7 +23,7 @@ export class DriverMainComponent implements OnInit {
       if(!this.acceptedRide){
         this.getAcceptedRide();
       }
-  });
+    });
   }
   startRide(){
     if(this.acceptedRide){

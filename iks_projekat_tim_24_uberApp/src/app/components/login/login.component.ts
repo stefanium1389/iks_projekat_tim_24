@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, RequiredValidator } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user.service';
 import { environment } from 'src/environments/environment';
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   
-  constructor(private http: HttpClient, private jwtService: JwtService, private router:Router, private userService:UserService) { 
+  constructor(private http: HttpClient, private jwtService: JwtService, private router:Router, private snackBar:MatSnackBar) { 
   }
 
   ngOnInit(): void {
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
   async login() {
     try {
-      const email = this.loginForm.get('email')?.value;
+    const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     
     const response = await this.http.post(environment.apiBaseUrl+'api/user/login', {email:email, password:password}).toPromise() as loginResponse;
@@ -38,8 +39,12 @@ export class LoginComponent implements OnInit {
     this.routeUsers();
 
     }
-    catch (HttpErrorResponse){
-      console.error(HttpErrorResponse);
+    catch (error) {
+      if (error instanceof HttpErrorResponse) {
+        this.snackBar.open(error.error.message, 'Ok', {
+          duration: 3000
+        });
+      }  
     }
   };
 
