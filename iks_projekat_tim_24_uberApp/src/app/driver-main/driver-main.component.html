@@ -7,7 +7,7 @@
             <button *ngIf="!isDriverActive" (click)="onClickStartDriverHour()"  [disabled]="isWorkingHourButtonDisabled">Nastavi</button>
         </div>
 
-        <div class="driver-side-panel" id = "destination-parameters">
+        <div *ngIf='hasAcceptedRide()' class="driver-side-panel" id = "destination-parameters">
             
                     <input type="text" placeholder="pocetna destinacija"/>
                     <input type="text" placeholder="krajnja destinacija"/>
@@ -29,7 +29,7 @@
                     </div>
         </div>
 
-        <div class="driver-side-panel" id="driver-accept-container">
+        <div *ngIf='hasAcceptedRide()'class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
                 <div class="profile-pic"></div> 
                 <p>Ime Prezime</p>

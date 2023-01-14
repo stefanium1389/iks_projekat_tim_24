@@ -52,6 +52,7 @@ import { RideHistoryDriverComponent } from './ride-history/ride-history-driver/r
 import { SearchUserDialogComponent } from './components/search-user-dialog/search-user-dialog.component';
 import { JwtInterceptorService } from './components/jwt-interceptor.service';
 import { FavouriteRoutesComponent } from "./components/favourite-routes/favourite-routes.component";
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const appRoutes : Routes =
 [
@@ -69,6 +70,8 @@ const appRoutes : Routes =
   {path:'driver-profile', component: DriverProfileComponent},
   {path:'driver-ride-history', component:RideHistoryDriverComponent},
   {path:'account-management', component:AdminViewUsersComponent},
+  {path:'activate', component:VerifyEmailComponent},
+  {path:'register-success',component:RegisterNotificationComponent}
 ]
 
 @NgModule({
@@ -97,7 +100,8 @@ const appRoutes : Routes =
         ProfileCardComponent,
         AdminMainComponent,
         SearchUserDialogComponent,
-        FavouriteRoutesComponent
+        FavouriteRoutesComponent,
+        VerifyEmailComponent
         
     ],
     providers: [UserService,{

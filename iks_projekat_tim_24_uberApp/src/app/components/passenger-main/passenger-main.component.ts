@@ -7,6 +7,11 @@ import { ReportDialogComponent } from '../report-dialog/report-dialog.component'
 import { User } from 'src/app/user';
 import { dtoUser, SearchUserDialogComponent } from '../search-user-dialog/search-user-dialog.component';
 import { LinkUsersService } from '../search-user-dialog/link-users.service';
+import { interval } from 'rxjs';
+import { JwtService } from '../jwt-service.service';
+import { environment } from 'src/environments/environment';
+import { dtoRide } from 'src/app/driver-main/driver-main.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-passenger-main',
@@ -24,12 +29,38 @@ export class PassengerMainComponent implements OnInit {
   selectedTime: string = "xddd";
   showTime: boolean = false;
   linkedUsers: dtoUser[] = [];
-
+  ride: dtoRide | null;
+  rideStatus: string | null;//PENDING, CANCELED, STARTED, ACCEPTED, FINISHED, REJECTED
+  previousRideStatus:string | null = "xd";
   
 
-  constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService) {}
+  constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService, private jwtService: JwtService, private http: HttpClient) {}
 
   ngOnInit(): void {
+    interval(5000).subscribe(() => {
+        this.getRide();
+        if(this.ride){
+          this.rideStatus=this.ride.status;
+        }
+        else{
+          this.rideStatus=null;
+        }
+        if(this.previousRideStatus!=this.rideStatus){
+          this.previousRideStatus=this.rideStatus;
+          if(this.ride?.status=="PENDING"){
+            alert('Voznja je kreirana i na cekanju');
+          }
+          if(this.ride?.status=="ACCEPTED"){
+            alert('Voznja je prihvacena');
+          }
+          if(this.ride?.status=="REJECTED"){
+            alert('Voznja je odbijena');
+          }
+          if(this.ride?.status=="STARTED"){
+            alert('Voznja je pocela');
+          }
+        }
+    });
   }
 
   toggleFavorite() {
@@ -89,5 +120,17 @@ export class PassengerMainComponent implements OnInit {
     console.log('xd');
     this.linkUsersService.removeUser(user);
     this.linkedUsers=this.linkUsersService.usersList;
+  }
+
+  async getRide(){
+    const userId = this.jwtService.getId();
+    try{
+      const response = await this.http.get(environment.apiBaseUrl + `api/ride/passenger/${userId}/active`).toPromise() as dtoRide;
+      this.ride = response;
+      console.log(this.ride)
+    }
+    catch (HttpErrorResponse){
+      this.ride=null;
+    }
   }
 }
