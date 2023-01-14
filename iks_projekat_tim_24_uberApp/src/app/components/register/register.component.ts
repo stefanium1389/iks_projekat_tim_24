@@ -60,21 +60,12 @@ export class RegisterComponent implements OnInit
   }
     catch (error) {
       if (error instanceof HttpErrorResponse) {
-        this.snackBar.open(error.error, 'Ok', {
+        this.snackBar.open(error.error.message, 'Ok', {
           duration: 3000
         });
       }  
     }
   }
-
-  // static checkPasswords(): ValidatorFn {
-  //   console.log('pozvan sam!!')
-  //   return (c: AbstractControl): ValidationErrors | null => {
-  //     const pass = c.get('password')?.value;
-  //     const confirmPass = c.get('repeatPassword')?.value;
-  //     return pass === confirmPass ? null : { notSame: true };
-  //   };
-  // }
 }
 
 export function matchPasswords(control: AbstractControl) {

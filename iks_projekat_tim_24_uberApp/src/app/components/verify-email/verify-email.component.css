@@ -15,6 +15,7 @@ div{
     align-items: center;
     justify-items: center;
     flex-direction: column;
+    padding: 2em;
 }
 div.verification-box{
     width: 50%;
@@ -25,4 +26,7 @@ div.verification-box{
 div.message-box{
     background-color: #DDDBDB;
     width:100%;
+}
+button{
+    background-color: gray
 }

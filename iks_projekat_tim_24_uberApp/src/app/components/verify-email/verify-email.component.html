@@ -5,6 +5,9 @@
         </div>
         <div class="message-box">
             <p>{{message}}</p>
+            <div *ngIf="isExpired">
+                <button class="btn btn-outline-light btn-lg btn-block px-5" (click)="resendEmail()">Resend email!</button>
+            </div>
         </div>
     </div>
 </div>
