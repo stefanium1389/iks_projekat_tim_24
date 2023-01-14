@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { JwtService } from '../components/jwt-service.service';
 import { environment } from 'src/environments/environment';
 import { EventEmitter } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs';
 
 
 export interface WorkingHourResponse
@@ -17,11 +20,16 @@ export interface ListOfWorkingHours {
   results: Array<WorkingHourResponse>
 }
 
+export interface WorkingHourDuration {
+  duration: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class WorkingHourService {
   statusChanged = new EventEmitter<string>();
+  errorEmitter = new EventEmitter<string>();
 
   constructor(private http: HttpClient, private jwtService: JwtService) { }
 
@@ -50,11 +58,15 @@ export class WorkingHourService {
     this.setActiveInComponent(); //ovde bi možda trebalo koristiti subscribe
   }
 
-  handleWorkingHourError(error : any)
-  {
-    console.log("greška kod working hour");
-    console.log(error) //troll opera
-  }
+  handleWorkingHourError(error: any) {
+    if (error.status === 400) {
+        if(error.error.message === "Cannot start shift because you exceeded the 8 hours limit in last 24 hours!") {
+            this.errorEmitter.emit('exceeded');
+        }
+    } else {
+        console.log("error creating working hour");
+    }
+}
   
   createNewWorkingHour()
   {
@@ -97,23 +109,29 @@ export class WorkingHourService {
   {
     this.http.get<ListOfWorkingHours>(`${environment.apiBaseUrl}api/driver/${this.jwtService.getId()}/last-active-working-hour`)
     .subscribe(
-        response => { this.endDrivingWorkingHour(response); this.addToLocal(); },
+        response => { this.endDrivingWorkingHour(response); this.addPausedToLocal(); },
         error => { this.handleWorkingHourError(error) }
     );
   }
 
-  //ista stvar ali se ne upisuje u local storage
+
   async onLogout() {
-    const response = await this.http.get<ListOfWorkingHours>(`${environment.apiBaseUrl}api/driver/${this.jwtService.getId()}/last-active-working-hour`).toPromise();
-    if (response !== undefined && response !== null) {
-      if (response.totalCount === 1)
-      this.endDrivingWorkingHour(response);
-      this.removeFromLocal();
-    }
+    this.http.get<ListOfWorkingHours>(`${environment.apiBaseUrl}api/driver/${this.jwtService.getId()}/last-active-working-hour`)
+      .pipe(catchError(error => {
+        alert(error);
+        console.log(error);
+        return throwError(error);
+      }))
+      .toPromise()
+      .then(response => {
+        if (response !== undefined && response !== null) {
+          if (response.totalCount === 1)
+            this.endDrivingWorkingHour(response);
+          this.removePausedFromLocal();
+        }
+      });
   }
-  
-  
-  
+
 
   onClickStart()
   {
@@ -121,12 +139,12 @@ export class WorkingHourService {
     let isoDate = date.toISOString();
     this.http.post(`${environment.apiBaseUrl}api/driver/${this.jwtService.getId()}/working-hour`, {start:isoDate} )
         .subscribe(
-            response => { this.setActiveInComponent(); this.removeFromLocal()},
+            response => { this.setActiveInComponent(); this.removePausedFromLocal()},
             error => { this.handleWorkingHourError(error) }
         );
   }
 
-  removeFromLocal()
+  removePausedFromLocal()
   {
     if (localStorage.getItem('userPausedWorkingHour'))
     {
@@ -134,9 +152,30 @@ export class WorkingHourService {
     }
   }
 
-  addToLocal()
+  addPausedToLocal()
   {
     localStorage.setItem('userPausedWorkingHour','true');
   }
+
+  async getActiveTime() {
+    try {
+        let duration = await this.http.get<WorkingHourDuration>(`${environment.apiBaseUrl}api/driver/${this.jwtService.getId()}/working-hours-of-last-24h`).toPromise();
+        console.log("dobavio sam duration joooj");
+        return duration;
+        
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+}
+
+
+  handleActiveTimeError(error:any)
+  {
+
+  }
+
+
+  
   
 }

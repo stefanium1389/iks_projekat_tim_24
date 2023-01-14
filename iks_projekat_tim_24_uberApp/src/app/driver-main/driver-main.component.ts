@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { WorkingHourService } from '../services/working-hour.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class DriverMainComponent implements OnInit {
   workHours="";
   isDriverActive:boolean;
   inRide:boolean;
+  isWorkingHourButtonDisabled:boolean;
 
   constructor(private whService: WorkingHourService) { }
 
@@ -20,7 +22,13 @@ export class DriverMainComponent implements OnInit {
     this.whService.statusChanged.subscribe(status => {
       this.handleStatusChange(status);
     });
+
+    this.whService.errorEmitter.subscribe(status => {
+      this.handleError(status);
+    });
+
     this.whService.initialCheckForWorkingHour();
+    this.getAndSetActiveHours();
   }
 
   handleStatusChange(status: string) {
@@ -28,6 +36,17 @@ export class DriverMainComponent implements OnInit {
         this.activateDrivingSession();
     } else if (status === 'inactive') {
         this.endDrivingSession();
+    }
+  }
+
+  handleError(status: string) {
+    if (status === 'exceeded') {
+        this.hoursExceeded();
+    } else if (status === 'revert') {
+        this.revertExceeded();
+    }else
+    {
+      alert(status);
     }
   }
 
@@ -43,15 +62,44 @@ export class DriverMainComponent implements OnInit {
     this.activityStatus = "neaktivan";
   }
 
+  hoursExceeded()
+  {
+    this.isDriverActive = false;
+    this.activityStatus = "premašeno je 8h rada!"
+    this.isWorkingHourButtonDisabled = true;
+
+  }
+
+  async getAndSetActiveHours() {
+    try {
+        const duration = await this.whService.getActiveTime();
+        if (duration)
+        {
+          this.workHours = duration.duration;
+        }
+        
+    } catch (error) {
+        alert(error);
+    }
+}
+
+
+  revertExceeded()
+  {
+    //za sad nemamo ovo, refreshujte xd
+  }
+
   //ovome treba krpljenje xd
   onClickEndDriverHour()
   {
     this.whService.onClickEnd();
+    this.getAndSetActiveHours();
   }
 
   onClickStartDriverHour()
   {
     this.whService.onClickStart();
+    this.getAndSetActiveHours();
   }
 
   panic(){

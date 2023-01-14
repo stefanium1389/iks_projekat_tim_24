@@ -32,7 +32,7 @@ export class NavbarRegisteredComponent implements OnInit {
     console.log(this.role);
     if (this.role === "DRIVER") {
       console.log("logout i whservice")
-      await this.whService.onLogout();
+      await this.whService.onLogout(); //ovde može doći do problema
     }
     this.jwtService.logout();
     this.onClickOption("");

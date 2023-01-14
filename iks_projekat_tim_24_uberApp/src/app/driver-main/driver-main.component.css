@@ -86,6 +86,11 @@ button:hover{
     color : black;
     background-color: white;
 }
+button:disabled {
+    background-color: rgb(110, 110, 110);
+    color: white;
+    cursor: not-allowed;
+}
 
 .profile-pic{
     width: 50px;
