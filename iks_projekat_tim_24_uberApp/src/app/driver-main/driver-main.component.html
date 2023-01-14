@@ -1,12 +1,10 @@
 <div class = "real-wrapper">
     <div class="wrapper">
         <div class="driver-side-panel">
-            <p *ngIf="isActive()">Status: Aktivan</p>
-            <p *ngIf="!isActive()">Status: Pauziran</p>
-            <p>Danasnjih sati rada: {{time}}h</p>
-            <button *ngIf="isActive()" (click)="activeButtonClick()">Pauziraj</button>
-            <button *ngIf="!isActive()" (click)="activeButtonClick()">Aktiviraj</button>
-
+            <p>Status: {{activityStatus}}</p>
+            <p>Danasnjih sati rada: {{workHours}}</p>
+            <button *ngIf="isDriverActive" (click)="onClickEndDriverHour()">Pauziraj</button>
+            <button *ngIf="!isDriverActive" (click)="onClickStartDriverHour()"  [disabled]="isWorkingHourButtonDisabled">Nastavi</button>
         </div>
 
         <div *ngIf='hasAcceptedRide()' class="driver-side-panel" id = "destination-parameters">
