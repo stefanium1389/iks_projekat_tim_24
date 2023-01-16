@@ -20,7 +20,7 @@ export class DriverMainComponent implements OnInit {
   workHours="";
   isDriverActive:boolean;
   isWorkingHourButtonDisabled:boolean;
-  acceptedRide:dtoRide;
+  acceptedRide:dtoRide | null;
   inRide:boolean=false;
   _isActive:boolean=true;
   time:number = 5;
@@ -31,9 +31,7 @@ export class DriverMainComponent implements OnInit {
   {
     
     interval(5000).subscribe(() => {
-      if(!this.acceptedRide){
-        this.getAcceptedRide();
-      }
+      this.getAcceptedRide();
     });
 
     this.whService.statusChanged.subscribe(status => {
@@ -136,8 +134,17 @@ export class DriverMainComponent implements OnInit {
     }
   }
 
-  stopRide(){
-    this.inRide=false;
+  async stopRide(){
+    if(this.acceptedRide){
+      const id = this.acceptedRide.id;
+      try{
+        this.http.put(environment.apiBaseUrl + `api/ride/${id}/end`, {}).toPromise();
+        this.inRide=true;
+      }
+      catch (HttpErrorResponse){
+        console.error(HttpErrorResponse);
+      }
+    }
   }
   
   hasAcceptedRide():boolean{
