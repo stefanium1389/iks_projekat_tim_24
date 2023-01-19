@@ -5,6 +5,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BlockDialogComponent } from '../block-dialog/block-dialog.component';
 import { ViewChild, ElementRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { JwtService } from '../jwt-service.service';
+import { environment } from 'src/environments/environment';
+
+export interface PassengerGetResponse
+{
+  name: string,
+  surname: string,
+  profilePicture: string,
+  telephoneNumber: string,
+  email: string,
+  address: string
+}
 
 @Component({
   selector: 'app-passenger-profile',
@@ -14,6 +27,9 @@ import { ViewChild, ElementRef } from '@angular/core';
 export class PassengerProfileComponent implements OnInit {
 
   isAdmin: boolean = true;
+  validFile: boolean = true;
+  base64String : string | undefined;
+  pictureReader: FileReader;
 
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -27,10 +43,23 @@ export class PassengerProfileComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private http: HttpClient, private jwtService: JwtService) { }
 
   ngOnInit(): void {
-    this.loadForms()
+    this.pictureReader = new FileReader();
+    this.loadForms();
+    this.setReader();
+    this.getAndSetProfilePicture();
+  }
+
+  getAndSetProfilePicture()
+  { 
+    
+    this.http.get<PassengerGetResponse>(`${environment.apiBaseUrl}api/passenger/${this.jwtService.getId()}`)
+        .subscribe(
+            response => { this.changePicture(response); },
+            error => { console.log(error); }
+        );
   }
 
   changeProfile ()
@@ -38,10 +67,37 @@ export class PassengerProfileComponent implements OnInit {
     console.log("change called");
   }
 
-  uploadPicture(event: any)
+  changePicture(response : PassengerGetResponse)
   {
-    console.log("picture selected");
+    if (response.profilePicture === null)
+    {
+      console.log("todo: postavi default sliku ako nema nijedne");
+    }
+    this.base64String = response.profilePicture;
   }
+
+  uploadPicture(event:any) {
+    const file = event.target.files[0];
+    if (file.type.split('/')[0] !== 'image') {
+     this.validFile = false;
+    }
+     this.pictureReader.readAsDataURL(file);
+   }
+
+   setReader ()
+   {
+    this.pictureReader.onloadend = () => {
+      if (this.pictureReader === null)
+      {
+        throw new Error("No reader!");
+      }else
+      {
+        this.base64String = this.pictureReader.result?.toString();
+        console.log(this.base64String);
+      }
+      
+   };
+   }
 
   loadForms()
   {
