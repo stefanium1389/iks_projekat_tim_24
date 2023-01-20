@@ -5,7 +5,9 @@ import { WorkingHourService } from 'src/app/services/working-hour.service';
 import { environment } from '../../../environments/environment';
 import { SocketService } from '../../services/socket.service';
 
+// @ts-ignore
 import * as Stomp from 'stompjs';
+// @ts-ignore
 import * as SockJS from 'sockjs-client';
 
 
@@ -22,6 +24,7 @@ export class NavbarRegisteredComponent implements OnInit {
   
   private serverUrl = environment.apiBaseUrl + 'socket'
   private stompClient: any;
+  isLoaded: boolean = false;
 
   constructor(private jwtService : JwtService, private router: Router, private whService: WorkingHourService, private socketService: SocketService) { }
 
@@ -42,7 +45,7 @@ export class NavbarRegisteredComponent implements OnInit {
     
     this.stompClient.connect({}, function () {
       that.isLoaded = true;
-      that.openGlobalSocket()
+      that.openSocket()
     });
     
   }
@@ -69,5 +72,21 @@ export class NavbarRegisteredComponent implements OnInit {
       window.location.reload();
     });
   }
-
+  
+  // Funkcija za pretplatu na topic /notification/user-id
+  openSocket() {
+    if (this.isLoaded) {
+      this.stompClient.subscribe("/notification/" + this.jwtService.getId(), (message: { body: string; }) => {
+        this.handleResult(message);
+      });
+    }
+  }
+  
+  // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
+  handleResult(message: { body: string; }) {
+    if (message.body) {
+      let messageResult: Message = JSON.parse(message.body);
+      this.messages.push(messageResult);
+    }
+  }
 }
