@@ -25,3 +25,8 @@ export interface UserUpdateDTO{
 	address:string;
 	password:string;
 }
+
+export interface UserRef{
+	id:number;
+	email:string;
+}

@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DTOList } from './DTO/DTOList';
 import { UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
+import { VehicleDTO } from './DTO/VehicleDTO';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DriverDataService {
+  
 
   constructor(private http:HttpClient) { }
 
@@ -24,5 +26,8 @@ export class DriverDataService {
   }
   putDriverUpdateById(id: number, dto: UserUpdateDTO): Observable<UserDTO>{
     return this.http.put<UserDTO>(environment.apiBaseUrl+`api/driver/${id}`, dto);
+  }
+  getVehicleByDriverId(id: number): Observable<VehicleDTO> {
+    return this.http.get<VehicleDTO>(environment.apiBaseUrl+`api/driver/${id}/vehicle`);
   }
 }
