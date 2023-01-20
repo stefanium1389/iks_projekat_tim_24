@@ -40,6 +40,7 @@ export class NavbarRegisteredComponent implements OnInit {
   // Funkcija za otvaranje konekcije sa serverom
   initializeWebSocketConnection() {
     // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
+    window.alert(this.serverUrl);
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
@@ -85,6 +86,7 @@ export class NavbarRegisteredComponent implements OnInit {
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
   handleResult(notification: { body: string; }) {
+    window.alert("111");
     if (notification.body) {
       let notificationResult: NotificationDTO = JSON.parse(notification.body);
       window.alert(notificationResult.note);
