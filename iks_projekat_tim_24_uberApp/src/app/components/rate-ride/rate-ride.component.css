@@ -35,6 +35,7 @@ h1{
     padding: 1%;
     flex-direction: column;
     align-items: center;
+    
 }
 .top-row{
     flex-direction: row;

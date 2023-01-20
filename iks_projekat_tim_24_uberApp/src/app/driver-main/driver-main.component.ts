@@ -6,7 +6,7 @@ import { NgbDatepickerKeyboardService } from '@ng-bootstrap/ng-bootstrap';
 import { interval, takeWhile } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../components/jwt-service.service';
-import { dtoUser } from '../components/search-user-dialog/search-user-dialog.component';
+import { UserDTO } from '../backend-services/DTO/UserDTO'; 
 
 
 @Component({
@@ -178,8 +178,8 @@ export interface dtoRide{
   startTime:string;
   endTime:string;
   totalCost:number;
-  driver:dtoUser;
-  passengers:dtoUser[];
+  driver:UserDTO;
+  passengers:UserDTO[];
   estimatedTimeInMinutes:number;
   vehicleType:string;
   babyTransport:boolean;

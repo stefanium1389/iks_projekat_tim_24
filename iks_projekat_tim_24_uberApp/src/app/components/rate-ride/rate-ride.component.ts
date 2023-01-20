@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DriverDataService } from 'src/app/backend-services/driver-data-service.service';
+import { environment } from 'src/environments/environment';
+import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-rate-ride',
@@ -10,12 +14,24 @@ export class RateRideComponent implements OnInit {
   vozacRating:number=0;
   voziloRating:number=0;
   vehicle:string="Ford Mondeo";
-  driver:string="Ime Prezime";
+  driver:UserDTO;
+
+  driverId:number;
 
 
-  constructor() { }
+  constructor(private driverCall: DriverDataService) { }
 
   ngOnInit(): void {
+    this.driverCall.getDriverById(3).subscribe({
+      next: (result) => {
+        this.driver = result;
+      },
+      error: (error) => {
+        if (error instanceof HttpErrorResponse) {
+          console.error(error);
+        } 
+      },
+    })
   }
 
   vozacRatingFunc(rating: number){
@@ -25,12 +41,12 @@ export class RateRideComponent implements OnInit {
     this.voziloRating=rating;
   }
 
-  confirm(){
-    console.log(this.vozacRating);
+  rateVehicle(){
     console.log(this.voziloRating);
+    console.log
   }
-  back(){
-    
+  rateDriver(){
+    console.log(this.vozacRating);
   }
 
 }
