@@ -1,5 +1,11 @@
+import {UserRef} from "./UserRef";
+
+
 export interface NotificationDTO {
-    message: string,
-    fromId: string,
-    toId: string,
+    id: number,
+    note: string,
+    date: string,
+    read: boolean,
+    notificationType: string,
+    receiver: UserRef,
 }

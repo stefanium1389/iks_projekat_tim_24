@@ -86,8 +86,8 @@ export class NavbarRegisteredComponent implements OnInit {
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
   handleResult(notification: { body: string; }) {
     if (notification.body) {
-      let messageResult: NotificationDTO = JSON.parse(notification.body);
-      //this.messages.push(messageResult);
+      let notificationResult: NotificationDTO = JSON.parse(notification.body);
+      window.alert(notificationResult.note);
     }
   }
 }

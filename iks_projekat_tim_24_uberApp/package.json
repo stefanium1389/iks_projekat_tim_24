@@ -35,6 +35,7 @@
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.3",
     "leaflet-routing-machine": "^3.2.12",
+    "net": "^1.0.2",
     "ng2-charts": "^4.1.1",
     "rxjs": "~7.5.0",
     "sockjs-client": "^1.6.1",
