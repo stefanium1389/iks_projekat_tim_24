@@ -9,6 +9,7 @@ import { SocketService } from '../../services/socket.service';
 import * as Stomp from 'stompjs';
 // @ts-ignore
 import * as SockJS from 'sockjs-client';
+import {NotificationDTO} from "../../DTO/NotificationDTO";
 
 
 @Component({
@@ -76,17 +77,17 @@ export class NavbarRegisteredComponent implements OnInit {
   // Funkcija za pretplatu na topic /notification/user-id
   openSocket() {
     if (this.isLoaded) {
-      this.stompClient.subscribe("/notification/" + this.jwtService.getId(), (message: { body: string; }) => {
-        this.handleResult(message);
+      this.stompClient.subscribe("/notification/" + this.jwtService.getId(), (notification: { body: string; }) => {
+        this.handleResult(notification);
       });
     }
   }
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
-  handleResult(message: { body: string; }) {
-    if (message.body) {
-      let messageResult: Message = JSON.parse(message.body);
-      this.messages.push(messageResult);
+  handleResult(notification: { body: string; }) {
+    if (notification.body) {
+      let messageResult: NotificationDTO = JSON.parse(notification.body);
+      //this.messages.push(messageResult);
     }
   }
 }
