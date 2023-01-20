@@ -1,5 +1,5 @@
 .profile-data{
-    width: 15%;
+    width: 20%;
     margin: 1em;
     padding: 1%;
     justify-content: center;
@@ -35,6 +35,7 @@ h1{
     padding: 1%;
     flex-direction: column;
     align-items: center;
+    
 }
 .top-row{
     flex-direction: row;
