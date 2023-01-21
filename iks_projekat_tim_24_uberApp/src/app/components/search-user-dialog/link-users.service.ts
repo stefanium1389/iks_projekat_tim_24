@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { dtoUser } from './search-user-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
+
 
 
 @Injectable({
@@ -9,9 +10,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class LinkUsersService {
 
   constructor(private snackBar: MatSnackBar) { }
-  usersList:dtoUser[] = []
+  usersList:UserDTO[] = []
 
-  addUser(user:dtoUser){
+  addUser(user:UserDTO){
     for(let xd of this.usersList){
       if(xd){
         if(xd.id == user.id){
@@ -25,7 +26,7 @@ export class LinkUsersService {
     this.usersList.push(user);
     //console.log(this.usersList);
   }
-  removeUser(user:dtoUser){
+  removeUser(user:UserDTO){
     this.usersList = this.usersList.filter(function(item) {
       return item !== user;
     })
