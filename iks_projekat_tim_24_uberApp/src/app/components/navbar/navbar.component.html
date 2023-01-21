@@ -1,4 +1,4 @@
-<header>
+<header id="header">
     <a id="navbar_logo" (click)="onClick()">{{companyName}}</a>
     <app-navbar-registered *ngIf="checkLoggedIn()"></app-navbar-registered>
     <app-navbar-unregistered *ngIf="!checkLoggedIn()"></app-navbar-unregistered>
