@@ -18,8 +18,8 @@ export interface TimeAndDistance {
 
 export class MapComponent implements AfterViewInit {
   private map: L.Map;
-  start_location: L.Marker;
-  end_location: L.Marker;
+  @Input() start_location: L.Marker;
+  @Input() end_location: L.Marker;
   ride_route: L.Routing.Control;
   totalDistance: number;
   totalTime: number;
@@ -43,6 +43,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   ngOnInit() {
+    this.route();
   }
 
   ngOnDestroy() {

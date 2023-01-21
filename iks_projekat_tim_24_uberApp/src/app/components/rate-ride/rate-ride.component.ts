@@ -10,6 +10,8 @@ import { RideDataService } from 'src/app/backend-services/ride-data.service';
 import { ReviewRequestDTO } from 'src/app/backend-services/DTO/ReviewDTO';
 import { ReviewDataService } from 'src/app/backend-services/review-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Params } from '@angular/router';
+import { ShareRideIdService } from 'src/app/services/share-ride-id.service';
 
 @Component({
   selector: 'app-rate-ride',
@@ -30,10 +32,12 @@ export class RateRideComponent implements OnInit {
   
 
 
-  constructor(private driverCall: DriverDataService, private rideCall: RideDataService, private rds:ReviewDataService, private snackBar:MatSnackBar) { }
+  constructor(private driverCall: DriverDataService, private rideCall: RideDataService, private rds:ReviewDataService, private snackBar:MatSnackBar, private route:ActivatedRoute, private share:ShareRideIdService) { }
 
   ngOnInit(): void {
 
+    this.rideId = this.share.getRideId();
+    console.log(this.rideId);
     this.rideCall.getRideById(this.rideId).subscribe({
       next: (result)=>{
         this.ride = result;

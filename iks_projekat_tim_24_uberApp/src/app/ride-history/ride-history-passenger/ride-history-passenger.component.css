@@ -38,7 +38,7 @@ div.driver
     background-color: #2E8B57;
     border-radius: 10px;
     padding: 10px;
-    width: 40%;
+    width: 30%;
     height: 100%;
     vertical-align: top;
 }
@@ -46,8 +46,8 @@ div.driver
 div.profile-picture
 {
     display: inline-block;
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     border-radius: 50px;
     margin: 0;
     background-color: #00B4FF;
@@ -72,7 +72,7 @@ div.comments
 {
     display: inline-block;
     background-color: #2E8B57;
-    width: 30%;
+    width: 40%;
     height: 100%;
     margin-left: 2.5%;
     border-radius: 10px;
@@ -137,4 +137,62 @@ button
 button:hover
 {
     background-color: #90D9A4;
+}
+
+div.scrollable
+{
+    overflow-y:scroll;
+}
+
+div.sort-select
+{
+    background-color: #DDDBDB;
+    width: fit-content;
+    padding: 1em;
+    padding-left: 5em;
+    padding-right: 5em;
+    align-self: center;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+div.sort-select:hover
+{
+    background-color: #90D9A4;
+}
+div.item
+{
+    display: flex;
+    background-color: #DDDBDB;
+    border-radius: 10px;
+    flex-direction: row;
+    margin-bottom: 20px;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+div.item:hover{
+    background-color:#90D9A4;
+    cursor:pointer;
+}
+
+div.column
+{
+    flex:auto;
+    display: block;
+    margin-left: 3em;
+    margin-right: 3em;
+}
+
+i.fa-arrow-right, i.fa-arrow-left
+{   
+    height:1em;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    color: black;
+}
+
+p.inline
+{
+    display: inline;
 }

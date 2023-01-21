@@ -80,8 +80,7 @@ export class JwtService {
         }
       }
   });
-
-   }
+  }
 
   async refreshToken() {
     try {

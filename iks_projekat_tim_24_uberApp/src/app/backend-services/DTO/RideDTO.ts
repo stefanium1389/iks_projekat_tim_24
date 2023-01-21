@@ -16,6 +16,7 @@ export interface RideDTO{
     rejection:RejectionDTO | null;
     locations:RouteDTO[];
     status:string;
+    totalCost:number;
 }
 
 export interface RideRequestDTO{
