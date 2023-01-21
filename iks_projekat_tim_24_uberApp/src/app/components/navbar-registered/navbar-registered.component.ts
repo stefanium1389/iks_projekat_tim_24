@@ -9,9 +9,9 @@ import { SocketService } from '../../services/socket.service';
 import * as Stomp from 'stompjs';
 // @ts-ignore
 import * as SockJS from 'sockjs-client';
-import {NotificationDTO} from "../../DTO/NotificationDTO";
 import {NavbarRegisteredService} from "../../backend-services/navbar-registered.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {NotificationDTO} from "../../backend-services/DTO/NotificationDTO";
 
 
 @Component({
@@ -96,10 +96,35 @@ export class NavbarRegisteredComponent implements OnInit {
   }
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
-  handleResult(notification: { body: string; }) {
-    if (notification.body) {
+  handleResult(notification: { body: string; })
+  {
+    if (notification.body)
+    {
       let notificationResult: NotificationDTO = JSON.parse(notification.body);
-      window.alert(notificationResult.note);
+      
+      let header = document.getElementById("header");
+      let div = document.createElement('div');
+      div.classList.add("notification");
+      
+      let h1 = document.createElement('h1');
+      h1.textContent = notificationResult.notificationType;
+      div.appendChild(h1);
+      
+      let text = document.createElement('p');
+      text.textContent = notificationResult.note;
+      div.appendChild(text);
+  
+      let date = document.createElement('p');
+      date.textContent = notificationResult.date;
+      date.classList.add("date");
+      div.appendChild(date);
+      
+      let button = document.createElement('button');
+      button.textContent = "OK";
+      div.appendChild(button);
+      
+      if(header != null)
+        header.appendChild(div);
     }
   }
 }

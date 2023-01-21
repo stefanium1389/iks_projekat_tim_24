@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs';
-import {NotificationDTO} from "../DTO/NotificationDTO";
+import {NotificationDTO} from "../backend-services/DTO/NotificationDTO";
 
 @Injectable({
   providedIn: 'root',
