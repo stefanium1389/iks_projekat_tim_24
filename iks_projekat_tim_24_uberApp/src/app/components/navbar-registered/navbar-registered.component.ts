@@ -10,6 +10,8 @@ import * as Stomp from 'stompjs';
 // @ts-ignore
 import * as SockJS from 'sockjs-client';
 import {NotificationDTO} from "../../DTO/NotificationDTO";
+import {NavbarRegisteredService} from "../../backend-services/navbar-registered.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 @Component({
@@ -27,11 +29,21 @@ export class NavbarRegisteredComponent implements OnInit {
   private stompClient: any;
   isLoaded: boolean = false;
 
-  constructor(private jwtService : JwtService, private router: Router, private whService: WorkingHourService, private socketService: SocketService) { }
+  constructor(private jwtService : JwtService, private router: Router, private whService: WorkingHourService, private navbarRegisteredCall: NavbarRegisteredService) { }
 
   ngOnInit(): void {
     this.showDropdown = false;
-    this.hasNotification = false; //za sad
+    this.navbarRegisteredCall.getHasUnread().subscribe({
+      next: (result) => {
+        this.hasNotification = result;
+      },
+      error: (error) => {
+        if (error instanceof HttpErrorResponse) {
+          console.error(error);
+          this.hasNotification = false;
+        }
+      },
+    })
     this.role = this.jwtService.getRole();
     
     this.initializeWebSocketConnection();
@@ -40,7 +52,6 @@ export class NavbarRegisteredComponent implements OnInit {
   // Funkcija za otvaranje konekcije sa serverom
   initializeWebSocketConnection() {
     // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
-    window.alert(this.serverUrl);
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
@@ -86,7 +97,6 @@ export class NavbarRegisteredComponent implements OnInit {
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
   handleResult(notification: { body: string; }) {
-    window.alert("111");
     if (notification.body) {
       let notificationResult: NotificationDTO = JSON.parse(notification.body);
       window.alert(notificationResult.note);
