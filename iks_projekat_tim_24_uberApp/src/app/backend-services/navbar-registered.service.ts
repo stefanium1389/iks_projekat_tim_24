@@ -10,8 +10,13 @@ export class NavbarRegisteredService {
     
     constructor(private http:HttpClient) { }
     
-    getHasUnread(): Observable<boolean> {
+    getHasUnread(): Observable<boolean>
+    {
         return this.http.get<boolean>(environment.apiBaseUrl+'api/notification/unread');
     }
     
+    readNotification(id: number): void
+    {
+        this.http.put<any>(environment.apiBaseUrl+'api/notification/read/${id}', null);
+    }
 }

@@ -24,6 +24,7 @@ export class NavbarRegisteredComponent implements OnInit {
   hasNotification : boolean;
   showDropdown : boolean;
   role : string | null;
+  notifications: any = [];
   
   private serverUrl = environment.apiBaseUrl + 'socket'
   private stompClient: any;
@@ -101,30 +102,12 @@ export class NavbarRegisteredComponent implements OnInit {
     if (notification.body)
     {
       let notificationResult: NotificationDTO = JSON.parse(notification.body);
-      
-      let header = document.getElementById("header");
-      let div = document.createElement('div');
-      div.classList.add("notification");
-      
-      let h1 = document.createElement('h1');
-      h1.textContent = notificationResult.notificationType;
-      div.appendChild(h1);
-      
-      let text = document.createElement('p');
-      text.textContent = notificationResult.note;
-      div.appendChild(text);
-  
-      let date = document.createElement('p');
-      date.textContent = notificationResult.date;
-      date.classList.add("date");
-      div.appendChild(date);
-      
-      let button = document.createElement('button');
-      button.textContent = "OK";
-      div.appendChild(button);
-      
-      if(header != null)
-        header.appendChild(div);
+      this.notifications.push(notificationResult);
     }
+  }
+  
+  buttonOk()
+  {
+    this.navbarRegisteredCall.readNotification(this.notifications.pop().id);
   }
 }
