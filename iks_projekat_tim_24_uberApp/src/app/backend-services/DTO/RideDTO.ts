@@ -25,5 +25,5 @@ export interface RideRequestDTO{
     vehicleType:string;
     babyTransport:boolean;
     petTransport:boolean;
-    scheduledTime:string;
+    scheduledTime:string | null;
 }

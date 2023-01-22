@@ -3,7 +3,7 @@
         <h2>Ride history:</h2>
         <select class="sort-select" (change)="onChange($event)">
         <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option></select>
-        <!-- <div >Sort by: {{sort}}</div> -->
+        <br>
         <br>
         <div class="scrollable">
             <div *ngFor='let ride of rides' (click)='selectRide(ride)' class="item">
@@ -15,7 +15,7 @@
                 <div id="right-column" class="column">
                     <p>{{ride.startTime}}</p>
                     <p>{{ride.endTime}}</p>
-                    <i class="fa fa-star-o"></i>
+                    <i (click)="makeFavorite(ride)"class="fa fa-star-o fav_star"></i>
                 </div>
             </div>
         </div>
@@ -51,17 +51,18 @@
 
                             </div>
                             <div class="comment-profile-name">
-                                <h2>{{review.passenger.email}} {{review.rating}}</h2>
+                                <h2>{{review.passenger.email}}</h2>
                             </div>                          
                         </div>
                         <p>{{review.comment}}</p>
+                        <h3 class="black">Rating: {{review.rating}}</h3>
                     </div>
                 </div>
             </div>
 
             <div class="buttons">
-                <button>Begin</button>
-                <button>Book</button>
+                <button (click)="createRide(selectedRide)">Begin</button>
+                <button (click)="openTimePicker(selectedRide)">Book</button>
                 <button (click)="openComment(selectedRide.id)">Comment</button>
             </div>
         </div>

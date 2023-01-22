@@ -105,7 +105,7 @@ export class RateRideComponent implements OnInit {
   }
 
   rateDriver(){
-    if(this.driverRating > 0 && (this.vehicleComment.length > 0 || this.vehicleComment != undefined)){
+    if(this.driverRating > 0 && (this.driverComment.length > 0 || this.driverComment != undefined)){
       const dto:ReviewRequestDTO = {
         rating:this.driverRating,
         comment:this.driverComment

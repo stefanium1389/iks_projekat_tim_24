@@ -23,9 +23,9 @@ div.info-container
     height: 50%;
     width: 100%;
 }
-
-
-
+.fav_star:hover{
+    color:yellow;
+}
 h1
 {
     margin: 0;
@@ -142,13 +142,14 @@ button:hover
 div.scrollable
 {
     overflow-y:scroll;
+    height: 30em;
 }
 
-div.sort-select
+select.sort-select
 {
     background-color: #DDDBDB;
     width: fit-content;
-    padding: 1em;
+    padding: 0.5em;
     padding-left: 5em;
     padding-right: 5em;
     align-self: center;
@@ -156,9 +157,9 @@ div.sort-select
     font-size: 20px;
 }
 
-div.sort-select:hover
+select.sort-select:hover
 {
-    background-color: #90D9A4;
+    background-color: white;
 }
 div.item
 {
@@ -195,4 +196,8 @@ i.fa-arrow-right, i.fa-arrow-left
 p.inline
 {
     display: inline;
+}
+
+.black{
+    color: black;
 }
