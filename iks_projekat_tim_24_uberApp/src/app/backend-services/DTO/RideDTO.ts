@@ -16,6 +16,7 @@ export interface RideDTO{
     rejection:RejectionDTO | null;
     locations:RouteDTO[];
     status:string;
+    totalCost:number;
 }
 
 export interface RideRequestDTO{
@@ -24,5 +25,5 @@ export interface RideRequestDTO{
     vehicleType:string;
     babyTransport:boolean;
     petTransport:boolean;
-    scheduledTime:string;
+    scheduledTime:string | null;
 }

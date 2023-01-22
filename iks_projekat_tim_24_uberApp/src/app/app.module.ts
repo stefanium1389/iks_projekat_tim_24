@@ -54,6 +54,7 @@ import { JwtInterceptorService } from './components/jwt-interceptor.service';
 import { FavouriteRoutesComponent } from "./components/favourite-routes/favourite-routes.component";
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { BackendServicesModule } from './backend-services/backend-services.module';
+import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
 
 const appRoutes : Routes =
 [
@@ -103,7 +104,8 @@ const appRoutes : Routes =
         AdminMainComponent,
         SearchUserDialogComponent,
         FavouriteRoutesComponent,
-        VerifyEmailComponent
+        VerifyEmailComponent,
+        StringDialogComponent
         
     ],
     providers: [UserService,{

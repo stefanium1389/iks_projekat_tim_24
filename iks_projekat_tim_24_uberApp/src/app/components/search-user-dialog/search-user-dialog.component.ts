@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MAT_DRAWER_DEFAULT_AUTOSIZE_FACTORY } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
-import { LinkUsersService } from './link-users.service';
+import { LinkUsersService } from 'src/app/services/link-users.service';
 import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { DTOList } from 'src/app/backend-services/DTO/DTOList';
 

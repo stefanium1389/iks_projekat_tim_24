@@ -12,6 +12,8 @@ import * as SockJS from 'sockjs-client';
 import {NavbarRegisteredService} from "../../backend-services/navbar-registered.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NotificationDTO} from "../../backend-services/DTO/NotificationDTO";
+import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
+import { defaultPicture } from 'src/app/user';
 
 
 @Component({
@@ -25,6 +27,7 @@ export class NavbarRegisteredComponent implements OnInit {
   showDropdown : boolean;
   role : string | null;
   notifications: any = [];
+  base64String = defaultPicture;
   
   private serverUrl = environment.apiBaseUrl + 'socket'
   private stompClient: any;
@@ -33,6 +36,7 @@ export class NavbarRegisteredComponent implements OnInit {
   constructor(private jwtService : JwtService, private router: Router, private whService: WorkingHourService, private navbarRegisteredCall: NavbarRegisteredService) { }
 
   ngOnInit(): void {
+    this.loadPicture();
     this.showDropdown = false;
     this.navbarRegisteredCall.getHasUnread().subscribe({
       next: (result) => {
@@ -62,6 +66,29 @@ export class NavbarRegisteredComponent implements OnInit {
       that.openSocket()
     });
     
+  }
+
+  loadPicture()
+  {
+    let id = this.jwtService.getId();
+    if (id != null)
+    {
+      this.navbarRegisteredCall.getById(id).subscribe(
+        {
+          next: (result) => 
+          {
+            if (result.profilePicture !== null)
+            {
+              this.base64String = result.profilePicture;
+            }
+          },
+          error: (error) =>
+          {
+            alert(error);
+          }
+        }
+        );
+    }
   }
 
   dropdownClick(item : string)

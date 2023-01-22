@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DTOList } from './DTO/DTOList';
+import { RideDTO } from './DTO/RideDTO';
 import { UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
 import { VehicleDTO } from './DTO/VehicleDTO';
 
@@ -29,5 +30,8 @@ export class DriverDataService {
   }
   getVehicleByDriverId(id: number): Observable<VehicleDTO> {
     return this.http.get<VehicleDTO>(environment.apiBaseUrl+`api/driver/${id}/vehicle`);
+  }
+  getDriverRidesPaginated(id:number, page:number,size:number,sort:string,fromDate:string,toDate:string):Observable<DTOList<RideDTO>>{
+    return this.http.get<DTOList<RideDTO>>(environment.apiBaseUrl+`api/driver/${id}/ride?page=${page}&size=${size}&sort=${sort}&from=${fromDate}&to=${toDate}`)
   }
 }
