@@ -37,6 +37,7 @@ export class RideHistoryPassengerComponent implements OnInit {
   selectedRideReviews:ReviewDTO[];
   selectedRideDriverAvgRating:number;
   selectedRideVehicleAvgRating:number;  
+  markers: any[];
 
   constructor(private reviews:ReviewDataService,
      private passengerData:PassengerDataService,
@@ -63,6 +64,7 @@ export class RideHistoryPassengerComponent implements OnInit {
   }
   selectRide(ride:RideDTO){
     this.selectedRide = ride;
+    this.markers = [{lat:ride.locations[0].departure.latitude,lon:ride.locations[0].departure.longitude},{lat:ride.locations[0].destination.latitude,lon:ride.locations[0].destination.longitude}]
     console.log(ride);
     this.driverData.getDriverById(ride.driver.id).subscribe({
       next: (result) => {
