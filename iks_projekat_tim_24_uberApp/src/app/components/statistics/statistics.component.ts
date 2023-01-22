@@ -61,8 +61,8 @@ export class StatisticsComponent implements OnInit {
   changeChart(chartToRender: ChartToRender) {
     this.ChartData = chartToRender.data;
     this.TypeOfChart = chartToRender.type;
-    this.total = "" + chartToRender.total;
-    this.average = "" + chartToRender.average;
+    this.total = "" + chartToRender.total.toFixed(2);
+    this.average = "" + chartToRender.average.toFixed(2);
 }
 
 

@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DTOList } from './DTO/DTOList';
 import { RideDTO } from './DTO/RideDTO';
 import { SuccessDTO } from './DTO/SuccessDTO';
-import { UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
+import { PasswordChangeDTO, UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
 import { PassengerUpdateDTO } from './DTO/UserDTO';
 
 @Injectable({
@@ -38,4 +38,8 @@ export class PassengerDataService {
   resendActivationPassenger(activationId:string):Observable<SuccessDTO>{
     return this.http.get<SuccessDTO>(environment.apiBaseUrl+`api/passenger/activate/resend/${activationId}`);
   }
+  updatePassengerPassword(id: number, dto: PasswordChangeDTO): Observable<HttpResponse<any>> {
+    return this.http.put<HttpResponse<any>>(environment.apiBaseUrl + `api/user/${id}/changePassword`, dto, { observe: 'response' });
+  }
+
 }

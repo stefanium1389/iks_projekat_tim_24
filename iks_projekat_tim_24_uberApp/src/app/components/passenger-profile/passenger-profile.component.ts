@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BlockDialogComponent } from '../block-dialog/block-dialog.component';
-import { ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtService } from '../jwt-service.service';
-import { environment } from 'src/environments/environment';
 import { defaultPicture } from 'src/app/user';
 import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
 import { PassengerUpdateDTO } from 'src/app/backend-services/DTO/UserDTO';
+import { PasswordChangeDTO } from 'src/app/backend-services/DTO/UserDTO';
 
 @Component({
   selector: 'app-passenger-profile',
@@ -50,7 +47,7 @@ export class PassengerProfileComponent implements OnInit {
     let id = this.jwtService.getId();
     if (id != null)
     {
-      let user  = this.passengerService.getPassengerById(id).subscribe(
+      this.passengerService.getPassengerById(id).subscribe(
         {
           next: (result) => 
           {
@@ -81,7 +78,6 @@ export class PassengerProfileComponent implements OnInit {
       }else
       {
         this.base64String = this.pictureReader.result?.toString();
-        console.log(this.base64String);
       }
       
    };
@@ -110,11 +106,6 @@ export class PassengerProfileComponent implements OnInit {
       alert("missing telephone number in form!");
       return;
     } 
-    /*if (this.ProfileForm.get('email')!.value === "")
-    {
-      alert("missing email in form!");
-      return;
-    }*/
     if (this.ProfileForm.get('address')!.value === "")
     {
       alert("missing address in form!");
@@ -150,7 +141,34 @@ export class PassengerProfileComponent implements OnInit {
 
   onPasswordFormSubmit ()
   {
-    console.log("change called");
+    
+    if (this.PasswordForm.get('oldPass')!.value === "")
+    {
+      alert("missing old password in form!");
+      return;
+    }
+    if (this.PasswordForm.get('newPass')!.value === "")
+    {
+      alert("missing new password in form!");
+      return;
+    }
+
+    let id = this.jwtService.getId();
+    let mail = this.jwtService.getEmail();
+    if (id != null && mail!=null && this.base64String!=null)
+    {
+      let userUpdate: PasswordChangeDTO = {
+        oldPassword: this.PasswordForm.get('oldPass')!.value,
+        newPassword: this.PasswordForm.get('newPass')!.value,
+      }
+      this.passengerService.updatePassengerPassword(id,userUpdate).subscribe(response => {
+        if (response.status === 204) {
+            console.log("password changed successfully");
+        } else {
+            console.log("error changing password");
+        }
+    });
+    }
   }
 
   onChangePicture(event:any) {
