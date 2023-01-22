@@ -26,6 +26,21 @@ export interface UserUpdateDTO{
 	password:string;
 }
 
+export interface PassengerUpdateDTO{
+	name:string;
+	surname:string;
+	profilePicture:string;
+	telephoneNumber: string,
+	email:string;
+	address:string;
+}
+
+export interface PasswordChangeDTO
+{
+	oldPassword: string;
+	newPassword: string;
+}
+
 export interface UserRef{
 	id:number;
 	email:string;

@@ -1,7 +1,9 @@
 <script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
 <div class="bell-and-profile-container">
     <i class="fa fa-solid fa-bell" [ngClass]="{'no-notifications': !hasNotification, 'has-notifications': hasNotification}" [routerLink]="['/notifications']"></i>
-    <div class="profile-pic" mat-raised-button  [matMenuTriggerFor]="menu"></div>
+    <div class="profile-pic" mat-raised-button  [matMenuTriggerFor]="menu">
+        <img class="actual-image" src="{{base64String}}">
+    </div>
     <div *ngFor="let notification of notifications" class="notification">
         <h1>
             {{notification.notificationType}}
