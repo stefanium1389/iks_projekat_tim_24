@@ -26,10 +26,10 @@
     
   </div>
 
-  <canvas baseChart [datasets]="ChartData" [labels]="ChartLabels" [options]="ChartOptions" [type]="TypeOfChart" ></canvas>
+  <canvas baseChart [data]="ChartData" [options]="ChartOptions" [type]="TypeOfChart" ></canvas>
 
   <div class="summaries">
     <p id="stat-sum">Ukupno: {{total}}</p>
-    <p id="stat-average">Prosečno {{average}}</p>
+    <p id="stat-average">Prosečno: {{average}}</p>
   </div>
 </div>
