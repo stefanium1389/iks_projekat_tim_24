@@ -6,6 +6,7 @@ import { DTOList } from './DTO/DTOList';
 import { RideDTO } from './DTO/RideDTO';
 import { SuccessDTO } from './DTO/SuccessDTO';
 import { UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
+import { PassengerUpdateDTO } from './DTO/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,9 @@ export class PassengerDataService {
     return this.http.get<UserDTO>(environment.apiBaseUrl+`api/passenger/${id}`);
   }
   updatePassenger(id:number, dto:UserUpdateDTO):Observable<UserDTO>{
+    return this.http.put<UserDTO>(environment.apiBaseUrl+`api/passenger/${id}`,dto);
+  }
+  updatePassengerNoPassword(id:number, dto:PassengerUpdateDTO):Observable<UserDTO>{
     return this.http.put<UserDTO>(environment.apiBaseUrl+`api/passenger/${id}`,dto);
   }
   getPassengerRidesPaginated(id:number, page:number,size:number,sort:string,fromDate:string,toDate:string):Observable<DTOList<RideDTO>>{

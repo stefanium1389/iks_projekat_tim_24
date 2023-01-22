@@ -8,16 +8,9 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtService } from '../jwt-service.service';
 import { environment } from 'src/environments/environment';
-
-export interface PassengerGetResponse
-{
-  name: string,
-  surname: string,
-  profilePicture: string,
-  telephoneNumber: string,
-  email: string,
-  address: string
-}
+import { defaultPicture } from 'src/app/user';
+import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
+import { PassengerUpdateDTO } from 'src/app/backend-services/DTO/UserDTO';
 
 @Component({
   selector: 'app-passenger-profile',
@@ -35,7 +28,7 @@ export class PassengerProfileComponent implements OnInit {
     name: new FormControl(),
     surname: new FormControl(),
     address: new FormControl(),
-    city: new FormControl()
+    phone: new FormControl()
   });
 
   PasswordForm = new FormGroup({
@@ -43,48 +36,43 @@ export class PassengerProfileComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog, private http: HttpClient, private jwtService: JwtService) { }
+  constructor(public dialog: MatDialog, private http: HttpClient, private jwtService: JwtService, private passengerService : PassengerDataService) { }
 
   ngOnInit(): void {
+    this.base64String = defaultPicture;
     this.pictureReader = new FileReader();
     this.loadForms();
     this.setReader();
-    this.getAndSetProfilePicture();
   }
 
-  getAndSetProfilePicture()
-  { 
-    
-    this.http.get<PassengerGetResponse>(`${environment.apiBaseUrl}api/passenger/${this.jwtService.getId()}`)
-        .subscribe(
-            response => { this.changePicture(response); },
-            error => { console.log(error); }
-        );
-  }
-
-  changeProfile ()
+  loadForms()
   {
-    console.log("change called");
-  }
-
-  changePicture(response : PassengerGetResponse)
-  {
-    if (response.profilePicture === null)
+    let id = this.jwtService.getId();
+    if (id != null)
     {
-      console.log("todo: postavi default sliku ako nema nijedne");
+      let user  = this.passengerService.getPassengerById(id).subscribe(
+        {
+          next: (result) => 
+          {
+            if (result.profilePicture !== null)
+            {
+              this.base64String = result.profilePicture;
+            }
+            this.ProfileForm.get('name')?.setValue(result.name);
+            this.ProfileForm.get('surname')?.setValue(result.surname);
+            this.ProfileForm.get('address')?.setValue(result.address);
+            this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
+          },
+          error: (error) =>
+          {
+            alert(error);
+          }
+        }
+        );
     }
-    this.base64String = response.profilePicture;
   }
 
-  uploadPicture(event:any) {
-    const file = event.target.files[0];
-    if (file.type.split('/')[0] !== 'image') {
-     this.validFile = false;
-    }
-     this.pictureReader.readAsDataURL(file);
-   }
-
-   setReader ()
+  setReader ()
    {
     this.pictureReader.onloadend = () => {
       if (this.pictureReader === null)
@@ -99,13 +87,80 @@ export class PassengerProfileComponent implements OnInit {
    };
    }
 
-  loadForms()
+  onProfileFormSubmit ()
   {
-    this.ProfileForm.get('name')?.setValue("Ime1");
-    this.ProfileForm.get('surname')?.setValue("Prezime1");
-    this.ProfileForm.get('address')?.setValue("Adresa1");
-    this.ProfileForm.get('city')?.setValue("Grad1");
+
+    if (this.ProfileForm.get('name')!.value === "")
+    {
+      alert("missing name in form!");
+      return;
+    }
+    if (this.ProfileForm.get('surname')!.value === "")
+    {
+      alert("missing surname in form!");
+      return;
+    }
+    if (this.validFile === false)
+    {
+      alert("picture not valid!");
+      return;
+    }
+    if (this.ProfileForm.get('phone')!.value === "")
+    {
+      alert("missing telephone number in form!");
+      return;
+    } 
+    /*if (this.ProfileForm.get('email')!.value === "")
+    {
+      alert("missing email in form!");
+      return;
+    }*/
+    if (this.ProfileForm.get('address')!.value === "")
+    {
+      alert("missing address in form!");
+      return;
+    }
+
+    let id = this.jwtService.getId();
+    let mail = this.jwtService.getEmail();
+    if (id != null && mail!=null && this.base64String!=null)
+    {
+      let userUpdate: PassengerUpdateDTO = {
+        name: this.ProfileForm.get('name')!.value,
+        surname: this.ProfileForm.get('surname')!.value,
+        profilePicture: this.base64String,
+        telephoneNumber: this.ProfileForm.get('phone')!.value,
+        email: mail,
+        address: this.ProfileForm.get('address')!.value,
+      }
+      this.passengerService.updatePassengerNoPassword(id,userUpdate).subscribe(
+        { next: (result) => 
+          {
+            alert("profile changed");
+          },
+          error: (error) =>
+          {
+            alert(error);
+          }
+        }
+      );
+    }
+    
   }
+
+  onPasswordFormSubmit ()
+  {
+    console.log("change called");
+  }
+
+  onChangePicture(event:any) {
+    const file = event.target.files[0];
+    if (file.type.split('/')[0] !== 'image') {
+     this.validFile = false;
+    }
+     this.pictureReader.readAsDataURL(file);
+   }
+
 
   openBlockDialog(): void {
     const dialogRef = this.dialog.open(BlockDialogComponent, {
