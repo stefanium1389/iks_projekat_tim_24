@@ -5,13 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { User } from 'src/app/user';
-import { dtoUser, SearchUserDialogComponent } from '../search-user-dialog/search-user-dialog.component';
-import { LinkUsersService } from '../search-user-dialog/link-users.service';
+import { SearchUserDialogComponent } from '../search-user-dialog/search-user-dialog.component';
+import { LinkUsersService } from 'src/app/services/link-users.service';
 import { interval } from 'rxjs';
 import { JwtService } from '../jwt-service.service';
 import { environment } from 'src/environments/environment';
 import { dtoRide } from 'src/app/driver-main/driver-main.component';
 import { HttpClient } from '@angular/common/http';
+import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
 
 @Component({
   selector: 'app-passenger-main',
@@ -28,7 +29,7 @@ export class PassengerMainComponent implements OnInit {
   hasPet: boolean = false;
   selectedTime: string = "xddd";
   showTime: boolean = false;
-  linkedUsers: dtoUser[] = [];
+  linkedUsers: UserDTO[] = [];
   ride: dtoRide | null;
   rideStatus: string | null;//PENDING, CANCELED, STARTED, ACCEPTED, FINISHED, REJECTED
   previousRideStatus:string | null = "xd";
@@ -116,7 +117,7 @@ export class PassengerMainComponent implements OnInit {
       this.linkedUsers=this.linkUsersService.usersList;
     });
   }
-  removeUser(user:dtoUser){
+  removeUser(user:UserDTO){
     console.log('xd');
     this.linkUsersService.removeUser(user);
     this.linkedUsers=this.linkUsersService.usersList;

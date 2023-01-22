@@ -2,6 +2,20 @@
 <div class="bell-and-profile-container">
     <i class="fa fa-solid fa-bell" [ngClass]="{'no-notifications': !hasNotification, 'has-notifications': hasNotification}" [routerLink]="['/notifications']"></i>
     <div class="profile-pic" mat-raised-button  [matMenuTriggerFor]="menu"></div>
+    <div *ngFor="let notification of notifications" class="notification">
+        <h1>
+            {{notification.notificationType}}
+        </h1>
+        <p>
+            {{notification.note}}
+        </p>
+        <p class="date">
+            {{notification.date}}
+        </p>
+        <button (click)="buttonOk()">
+            OK
+        </button>
+    </div>
 </div>
 <mat-menu #menu="matMenu" >
     <!-- USER - profil, istorija voznji, omiljene putanje, chat -->

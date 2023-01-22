@@ -5,7 +5,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MAT_DRAWER_DEFAULT_AUTOSIZE_FACTORY } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
-import { LinkUsersService } from './link-users.service';
+import { LinkUsersService } from 'src/app/services/link-users.service';
+import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
+import { DTOList } from 'src/app/backend-services/DTO/DTOList';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { LinkUsersService } from './link-users.service';
 })
 export class SearchUserDialogComponent implements OnInit {
 
-  results: dtoUser[] = [];
+  results: UserDTO[] = [];
   searchForm: FormGroup;
 
   constructor(private http: HttpClient, private linkUsersService: LinkUsersService) {  }
@@ -30,29 +32,17 @@ export class SearchUserDialogComponent implements OnInit {
     this.results = [];
     const querry = this.searchForm.get('q')?.value;
     if(querry){
-      const response = await this.http.get(environment.apiBaseUrl+`api/user/search?querry=${querry}`).toPromise() as dtoList;
+      const response = await this.http.get(environment.apiBaseUrl+`api/user/search?querry=${querry}`).toPromise() as DTOList<UserDTO>;
       for(let user of response.results){
         this.results.push(user);
       };
     }
   }
   
-  addUser(user: dtoUser){
+  addUser(user: UserDTO){
     //console.log(user);
     this.linkUsersService.addUser(user);
   }
 }
 
-export interface dtoList{
-  totalCount:number;
-  results:dtoUser[];
-}
-export interface dtoUser{
-  id:number;
-	name:string;
-	surname:string;
-	profilePicture:string;
-	telephoneNumber: string,
-	email:string;
-	address:string;
-}
+

@@ -25,6 +25,9 @@ export class MapComponent implements AfterViewInit {
   totalTime: number;
   locationType: string = "departure";
 
+  @Input() disableClick = false;
+  @Input() markers: any[];
+
   @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
   @Output() out_start_location = new EventEmitter<string>();
   @Output() out_end_location = new EventEmitter<string>();
@@ -43,11 +46,13 @@ export class MapComponent implements AfterViewInit {
   }
 
   ngOnInit() {
+    this.route();
   }
 
   ngOnDestroy() {
     
 }
+
 
   private initMap(): void {
 
@@ -104,6 +109,11 @@ export class MapComponent implements AfterViewInit {
   }
 
   registerOnClick(): void {
+    
+    if(this.disableClick){
+      return;
+    }
+
     this.map.on('click', (e: any) => {
       const coord = e.latlng;
       const lat = coord.lat;
@@ -176,4 +186,21 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+  ngOnChanges() {
+    if(this.markers.length==0){
+      return;
+    }
+    if(this.start_location){
+      this.start_location.removeFrom(this.map);
+    }
+    this.start_location = new L.Marker([this.markers[0].lat,this.markers[0].lon],{ icon: this.newIcon }).addTo(this.map);
+
+    if(this.end_location){
+      this.end_location.removeFrom(this.map);
+    }
+    this.end_location = new L.Marker([this.markers[1].lat,this.markers[1].lon],{ icon: this.newIcon }).addTo(this.map);
+
+    this.route();
+  }
+    
 }

@@ -4,8 +4,9 @@ import { FormControl, FormGroup, Validators, AbstractControlOptions, ValidatorFn
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DefaultDataPoint } from 'chart.js';
+import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { environment } from 'src/environments/environment';
-import { dtoUser } from '../search-user-dialog/search-user-dialog.component';
+
 
 @Component({
   selector: 'app-register',
@@ -53,7 +54,7 @@ export class RegisterComponent implements OnInit
       profilePicture: "default.png"
     } as RegistrationDTO
 
-    const response = await this.http.post(environment.apiBaseUrl+'api/passenger', dto).toPromise() as dtoUser;
+    const response = await this.http.post(environment.apiBaseUrl+'api/passenger', dto).toPromise() as UserDTO;
     this.router.navigate(['register-success']);
 
 

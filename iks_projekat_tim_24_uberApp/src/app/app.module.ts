@@ -53,6 +53,8 @@ import { SearchUserDialogComponent } from './components/search-user-dialog/searc
 import { JwtInterceptorService } from './components/jwt-interceptor.service';
 import { FavouriteRoutesComponent } from "./components/favourite-routes/favourite-routes.component";
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { BackendServicesModule } from './backend-services/backend-services.module';
+import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
 
 const appRoutes : Routes =
 [
@@ -67,11 +69,12 @@ const appRoutes : Routes =
   {path: 'user-profile', component: PassengerProfileComponent},
   {path: 'user-ride-history', component: RideHistoryPassengerComponent},
   {path: 'favorite-routes', component: FavouriteRoutesComponent},
-  {path:'driver-profile', component: DriverProfileComponent},
-  {path:'driver-ride-history', component:RideHistoryDriverComponent},
-  {path:'account-management', component:AdminViewUsersComponent},
-  {path:'activate', component:VerifyEmailComponent},
-  {path:'register-success',component:RegisterNotificationComponent}
+  {path: 'driver-profile', component: DriverProfileComponent},
+  {path: 'driver-ride-history', component:RideHistoryDriverComponent},
+  {path: 'account-management', component:AdminViewUsersComponent},
+  {path: 'activate', component:VerifyEmailComponent},
+  {path: 'register-success',component:RegisterNotificationComponent},
+  {path: 'rate-ride',component:RateRideComponent}
 ]
 
 @NgModule({
@@ -101,7 +104,8 @@ const appRoutes : Routes =
         AdminMainComponent,
         SearchUserDialogComponent,
         FavouriteRoutesComponent,
-        VerifyEmailComponent
+        VerifyEmailComponent,
+        StringDialogComponent
         
     ],
     providers: [UserService,{
