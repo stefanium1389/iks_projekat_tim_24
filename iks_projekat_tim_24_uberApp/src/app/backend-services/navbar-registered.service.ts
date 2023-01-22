@@ -17,6 +17,6 @@ export class NavbarRegisteredService {
     
     readNotification(id: number): void
     {
-        this.http.put<any>(environment.apiBaseUrl+'api/notification/read/${id}', null);
+        this.http.get<any>(environment.apiBaseUrl + `api/notification/read/${id}`);
     }
 }
