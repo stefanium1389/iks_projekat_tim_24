@@ -17,9 +17,9 @@ export class NavbarRegisteredService {
         return this.http.get<boolean>(environment.apiBaseUrl+'api/notification/unread');
     }
     
-    readNotification(id: number): void
+    readNotification(id: number): Observable<any>
     {
-        this.http.put<any>(environment.apiBaseUrl+'api/notification/read/${id}', null);
+        return this.http.put<any>(environment.apiBaseUrl+`api/notification/read/${id}`, null);
     }
 
     getById(id:number):Observable<UserDTO>{

@@ -135,6 +135,6 @@ export class NavbarRegisteredComponent implements OnInit {
   
   buttonOk()
   {
-    this.navbarRegisteredCall.readNotification(this.notifications.pop().id);
+    this.navbarRegisteredCall.readNotification(this.notifications.pop().id).subscribe();
   }
 }
