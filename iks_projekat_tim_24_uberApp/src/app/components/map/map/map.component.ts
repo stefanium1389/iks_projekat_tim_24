@@ -25,6 +25,7 @@ export class MapComponent implements AfterViewInit {
   totalTime: number;
   locationType: string = "departure";
 
+  @Input() disableClick = false;
   @Input() markers: any[];
 
   @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
@@ -108,9 +109,11 @@ export class MapComponent implements AfterViewInit {
   }
 
   registerOnClick(): void {
-    if(this.markers.length>0){
+    
+    if(this.disableClick){
       return;
     }
+
     this.map.on('click', (e: any) => {
       const coord = e.latlng;
       const lat = coord.lat;
@@ -182,7 +185,11 @@ export class MapComponent implements AfterViewInit {
       this.ride_route.addTo(this.map);
     }
   }
+
   ngOnChanges() {
+    if(this.markers.length==0){
+      return;
+    }
     if(this.start_location){
       this.start_location.removeFrom(this.map);
     }
