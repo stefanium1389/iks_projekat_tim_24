@@ -6,7 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { User } from 'src/app/user';
 import { SearchUserDialogComponent } from '../search-user-dialog/search-user-dialog.component';
-import { LinkUsersService } from '../search-user-dialog/link-users.service';
+import { LinkUsersService } from 'src/app/services/link-users.service';
 import { interval } from 'rxjs';
 import { JwtService } from '../jwt-service.service';
 import { environment } from 'src/environments/environment';
