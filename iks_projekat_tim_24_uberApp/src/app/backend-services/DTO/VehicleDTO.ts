@@ -11,3 +11,13 @@ export interface VehicleDTO{
     babyTransport:boolean;
     petTransport:boolean;
 }
+
+export interface VehicleChangeDTO{
+    driverId:number;
+    vehicleType:string;
+    model:string;
+    licenseNumber:string;
+    passengerSeats:number;
+    babyTransport:boolean;
+    petTransport:boolean;
+}

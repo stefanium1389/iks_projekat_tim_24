@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BlockDialogComponent } from '../block-dialog/block-dialog.component';
-import { HttpClient } from '@angular/common/http';
 import { JwtService } from '../jwt-service.service';
 import { defaultPicture } from 'src/app/user';
 import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
@@ -33,7 +32,7 @@ export class PassengerProfileComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog, private http: HttpClient, private jwtService: JwtService, private passengerService : PassengerDataService) { }
+  constructor(public dialog: MatDialog, private jwtService: JwtService, private passengerService : PassengerDataService) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;

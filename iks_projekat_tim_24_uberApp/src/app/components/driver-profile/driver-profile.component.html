@@ -4,9 +4,11 @@
 
     <div class="profile-container">
       <div class="upload">
-        <div class="profile-icon"></div>
+        <div class="profile-icon">
+          <img class="actual-image" src="{{base64String}}">
+        </div>
         <div class="round">
-          <input type="file" (change)="uploadPicture($event)" accept="image/*">
+          <input type="file" (change)="onChangePicture($event)" accept="image/*">
           <i class="fa fa-plus" style="color: #fff;"></i>
         </div>
       </div>
@@ -16,7 +18,7 @@
     <div class="sides">
       <div class="left-side">
         <div class="side-panel">
-          <form [formGroup]="ProfileForm" (ngSubmit)="changeProfile()">
+          <form [formGroup]="ProfileForm" (ngSubmit)="onProfileFormSubmit()">
             <mat-form-field class="form-field">
               <mat-label>Ime</mat-label>
               <input matInput type="text" name="name" formControlName="name" />
@@ -30,14 +32,15 @@
               <input matInput type="text" name="address" formControlName="address" />
             </mat-form-field>
             <mat-form-field class="form-field">
-              <mat-label>Grad</mat-label>
-              <input matInput type="text" name="city" formControlName="city" />
+              <mat-label>Broj telefona</mat-label>
+              <input matInput type="text" name="phone" formControlName="phone" />
             </mat-form-field>
+            <button *ngIf="!isAdmin" type="input">Sačuvaj</button>
           </form>
-          <button *ngIf="!isAdmin">Sačuvaj</button>
+          
         </div>
         <div class="side-panel">
-          <form [formGroup]="PasswordForm" (ngSubmit)="changeProfile()">
+          <form [formGroup]="PasswordForm" (ngSubmit)="onPasswordFormSubmit()">
             <mat-form-field class="form-field">
               <mat-label>Stara lozinka</mat-label>
               <input matInput type="password" name="oldPass" formControlName="oldPass" />
@@ -46,20 +49,24 @@
               <mat-label>Nova lozinka</mat-label>
               <input matInput type="password" name="newPass" formControlName="newPass" />
             </mat-form-field>
+            <button *ngIf="!isAdmin" type="input">Sačuvaj</button>
           </form>
-          <button *ngIf="!isAdmin">Sačuvaj</button>
         </div>
       </div>
       <div>
         <div class="side-panel" id="vehicle-panel">
-          <form [formGroup]="VehicleForm" (ngSubmit)="changeVehicle()">
-            <mat-form-field class="form-field">
+          <form [formGroup]="VehicleForm" (ngSubmit)="onVehicleFormSubmit()">
+            <mat-form-field  class="form-field">
               <mat-label>Tip vozila</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">
+              <mat-select formControlName="selectedVehicleType">
+                <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle" >
                   {{ vehicle }}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Model vozila</mat-label>
+              <input matInput type="text" name="model" formControlName="model" />
             </mat-form-field>
             <mat-form-field class="form-field">
               <mat-label>Registarske tablice</mat-label>
@@ -70,11 +77,11 @@
               <input matInput type="number" name="numberOfSeats" formControlName="numberOfSeats" />
             </mat-form-field>
             <div class="checkbox-parameters">
-              <mat-checkbox formControlName="drivesBabies" label="baby">Beba</mat-checkbox>
-              <mat-checkbox formControlName="drivesPets" label="pets" >Ljubimci</mat-checkbox>
+              <mat-checkbox formControlName="drivesBabies" label="baby" [(ngModel)]="drivesBabies">Beba</mat-checkbox>
+              <mat-checkbox formControlName="drivesPets" label="pets" [(ngModel)]="drivesPets">Ljubimci</mat-checkbox>
             </div>
+            <button *ngIf="!isAdmin" type="input">Sačuvaj</button>
           </form>
-          <button *ngIf="!isAdmin">Sačuvaj</button>
         </div>
         <div class = "admin-options">
           <button *ngIf="isAdmin">Sačuvaj izmene</button>
