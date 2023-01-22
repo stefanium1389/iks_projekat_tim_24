@@ -17,8 +17,8 @@ export class NotificationPageService {
         return this.http.get<DTOList<NotificationDTO>>(environment.apiBaseUrl+'api/notification');
     }
     
-    readNotification(id: number): void
+    readNotification(id: number): Observable<any>
     {
-        this.http.get<any>(environment.apiBaseUrl + `api/notification/read/1`);
+        return this.http.put<any>(environment.apiBaseUrl+`api/notification/read/${id}`, null);
     }
 }

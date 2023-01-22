@@ -20,7 +20,7 @@ export class NotificationPageComponent implements OnInit {
         this.notifications = result.results;
         for (let i = 0; i < this.notifications.length; i++)
         {
-          this.notificationPageCall.readNotification(this.notifications[i].id);
+          this.notificationPageCall.readNotification(this.notifications[i].id).subscribe();
         }
       },
       error: (error) => {
