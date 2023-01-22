@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { JwtService } from '../components/jwt-service.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs';
+import { map, throwError } from 'rxjs';
 import { registerLocaleData } from '@angular/common';
 import { AdminViewingService } from './admin-viewing.service';
 
@@ -34,17 +34,18 @@ export interface ChartRequest {
 })
 export class ChartService {
 
-  constructor(private jwtService: JwtService, private http: HttpClient, private adminViewingService: AdminViewingService) { }
+  constructor(private jwtService: JwtService, private http: HttpClient) { }
+  // private adminViewingService: AdminViewingService
 
   public getTypesOfChart() {
     let role = this.jwtService.getRole();
 
     if (role === "ADMIN") {
-      let adminViewingRole = this.adminViewingService.getAdminViewingRole();
-      if (adminViewingRole === null) {
+      //let adminViewingRole = this.adminViewingService.getAdminViewingRole();
+      //if (adminViewingRole === null) {
         return ["globalni broj vožnji", "globalni broj kilometara", "globalni troškovi"];
-      }
-      role = adminViewingRole;
+      //}
+      //role = adminViewingRole;
     }
     if (role === "DRIVER") {
       return ["broj obavljenih vožnji", "broj voženih kilometara"];
@@ -58,19 +59,23 @@ export class ChartService {
   }
 
   getChart(chartRequest: ChartRequest): Observable<ChartToRender> {
-    let id: number | null;
-    let adminViewingId = this.adminViewingService.getAdminViewingId();
-    if (adminViewingId == null) {
-      id = this.jwtService.getId();
-      console.log("ADMIN VIEWING JE NULL");
-    }
-    else {
-      id = adminViewingId;
-      console.log("ADMIN VIEWING NIJE NULL");
+
+    if (chartRequest.startDate == null || chartRequest.endDate == null || chartRequest.topic == null)
+    {
+      console.log("chart request is missing parameters, aborting");
+      return new Observable<ChartToRender>;
     }
 
+    let id: number | null;
+    //let adminViewingId = this.adminViewingService.getAdminViewingId();
+    //if (adminViewingId == null) {
+      id = this.jwtService.getId();
+    //}
+    /*else {
+      id = adminViewingId;
+    }*/
+
     let addressPiece: string = this.getAddress(chartRequest.topic, id);
-    console.error(environment.apiBaseUrl + `api/statistics/` + addressPiece);
     return this.http.post<ChartDTO>(environment.apiBaseUrl + `api/statistics/` + addressPiece, { startDate: chartRequest.startDate, endDate: chartRequest.endDate }).pipe(
       map(result => {
         let chartType: ChartType;
@@ -111,7 +116,6 @@ export class ChartService {
   }
 
   getAddress(topic: string, id: number | null) {
-    //["globalni broj vožnji","globalni broj kilometara","globalni troškovi"];
     let address: string = "";
     switch (topic) {
       case "globalni broj vožnji":

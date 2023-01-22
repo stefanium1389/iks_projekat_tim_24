@@ -31,7 +31,7 @@ export class StatisticsComponent implements OnInit {
 
   onDateChange()
   {
-    console.log(this.startDate, this.endDate);
+    this.onChartChange(this.selectedChartType);
   }
 
   onChartChange(option : string)
@@ -52,7 +52,7 @@ export class StatisticsComponent implements OnInit {
           },
           error: (error) =>
           {
-            console.error(error);
+            alert(error);
           }
         }
         );
