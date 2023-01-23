@@ -14,6 +14,7 @@ export interface UserForCard
   role: string,
   nameAndSurname: string
   picture:string|null;
+  email:string;
 }
 
 @Component({

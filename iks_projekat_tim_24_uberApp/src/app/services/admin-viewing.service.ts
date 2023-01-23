@@ -5,12 +5,13 @@ import { Injectable } from '@angular/core';
 })
 export class AdminViewingService {
 
-  roleThatAdminWatches: string | null;
-  idThatAdminWatches: number | null;
+  private roleThatAdminWatches: string | null;
+  private idThatAdminWatches: number | null;
+  private mailThatAdminWatches: string | null;
 
   constructor() { }
 
-  setAdminViewing(role: string, id: number)
+  setAdminViewing(role: string, id: number, mail:string)
   {
     this.roleThatAdminWatches = role;
     this.idThatAdminWatches = id;
@@ -24,6 +25,11 @@ export class AdminViewingService {
   getAdminViewingRole()
   {
     return this.roleThatAdminWatches;
+  }
+
+  getAdminViewingMail()
+  {
+    return this.mailThatAdminWatches;
   }
 
   

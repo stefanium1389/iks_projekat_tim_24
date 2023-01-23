@@ -16,7 +16,6 @@ export class AdminViewUsersComponent implements OnInit {
 
   searchWord : string = "";
   selectedType: string = 'both';
-
   users: UserForCard[] = [];
 
   constructor(private adminViewingService: AdminViewingService, private router:Router, private passengerService : PassengerDataService, private driverService : DriverDataService) {
@@ -28,10 +27,10 @@ export class AdminViewUsersComponent implements OnInit {
   }
 
   onUserClicked(user: UserForCard) {
-    this.adminViewingService.setAdminViewing(user.role, user.userId);
+    this.adminViewingService.setAdminViewing(user.role, user.userId,user.email);
     if (user.role === "DRIVER")
     {
-      //this.router.navigate(['/admin-view-user']);
+      this.router.navigate(['/driver-profile-admin']);
     }
     else if (user.role ==="USER")
     {
@@ -55,7 +54,8 @@ export class AdminViewUsersComponent implements OnInit {
           userId: card.id,
           role: card.role,
           nameAndSurname: card.name + " " + card.surname,
-          picture: card.profilePicture
+          picture: card.profilePicture,
+          email: card.email,
         }
         usersForCard.push(user);
         
