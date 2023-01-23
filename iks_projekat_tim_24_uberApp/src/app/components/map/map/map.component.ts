@@ -34,6 +34,7 @@ export class MapComponent implements AfterViewInit {
   locationType: string = "departure";
   private vehicleLocations: any[];
   private vehicleMarkers: L.Marker[];
+  private carIcon: L.Icon;
   
   private serverUrl = environment.apiBaseUrl + 'socket'
   private stompClient: any;
@@ -64,6 +65,13 @@ export class MapComponent implements AfterViewInit {
     this.route();
     this.vehicleLocations = [];
     this.vehicleMarkers = [];
+  
+    this.carIcon = L.icon({
+      iconUrl: '../../../../assets/icons/carIcon.png',
+    
+      iconSize:     [20, 20], // size of the icon
+      iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+    });
     
     this.initializeWebSocketConnection();
   }
@@ -273,7 +281,7 @@ export class MapComponent implements AfterViewInit {
       console.log(this.vehicleLocations);
       let lat = this.vehicleLocations[i].latitude;
       let lng = this.vehicleLocations[i].longitude;
-      this.vehicleMarkers[i] = new L.Marker([lat, lng], { icon: this.newIcon });
+      this.vehicleMarkers[i] = new L.Marker([lat, lng], { icon: this.carIcon });
       this.vehicleMarkers[i].addTo(this.map).openPopup();
     }
   }
