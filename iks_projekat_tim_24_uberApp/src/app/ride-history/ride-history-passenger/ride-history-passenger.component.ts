@@ -190,6 +190,12 @@ export class RideHistoryPassengerComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
+        if(result == undefined || result.length < 1){
+          this.snackBar.open('Morate uneti naziv!', 'Ok', {
+            duration: 3000
+          });
+          return;
+        }
         const fav:FavoriteRideDTO = {
           favoriteName:result,
           locations: ride.locations,

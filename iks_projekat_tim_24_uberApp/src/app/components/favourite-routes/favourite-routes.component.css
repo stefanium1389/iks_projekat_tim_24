@@ -15,7 +15,7 @@ div.list-container
 div.route-list-container
 {
     overflow-y: scroll;
-    max-height: 100%;
+    max-height: 40em;
     margin-top: 40px;
 }
 
@@ -35,8 +35,8 @@ div.column
 {
     flex:auto;
     display: block;
-    margin-left: 5em;
-    margin-right: 5em;
+    margin-left: 3em;
+    margin-right: 3em;
 }
 
 i.fa-arrow-right, i.fa-arrow-left
@@ -99,4 +99,9 @@ button
 button:hover
 {
     background-color: #90D9A4;
+}
+
+.fa-minus:hover{
+    color:#878787;
+    cursor: pointer;
 }

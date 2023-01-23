@@ -13,6 +13,9 @@ import { environment } from 'src/environments/environment';
 import { dtoRide } from 'src/app/driver-main/driver-main.component';
 import { HttpClient } from '@angular/common/http';
 import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
+import {PanicDialogComponent} from "../panic-dialog/panic-dialog.component";
+import _default from "chart.js/dist/plugins/plugin.tooltip";
+import numbers = _default.defaults.animations.numbers;
 
 @Component({
   selector: 'app-passenger-main',
@@ -84,7 +87,6 @@ export class PassengerMainComponent implements OnInit {
   }
 
   openTimePicker() {
-    console.log("lmaooo");
     const dialogRef = this.dialog.open(TimeDialogComponent, {
       width: '250px',
       data: {}
@@ -118,7 +120,6 @@ export class PassengerMainComponent implements OnInit {
     });
   }
   removeUser(user:UserDTO){
-    console.log('xd');
     this.linkUsersService.removeUser(user);
     this.linkedUsers=this.linkUsersService.usersList;
   }
@@ -128,10 +129,21 @@ export class PassengerMainComponent implements OnInit {
     try{
       const response = await this.http.get(environment.apiBaseUrl + `api/ride/passenger/${userId}/active`).toPromise() as dtoRide;
       this.ride = response;
-      console.log(this.ride)
     }
     catch (HttpErrorResponse){
       this.ride=null;
     }
+  }
+  
+  panic()
+  {
+    const dialogRef = this.dialog.open(PanicDialogComponent, {
+      width: '250px',
+      data: {rideId: this.ride?.id}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 }
