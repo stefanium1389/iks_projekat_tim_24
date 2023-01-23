@@ -1,9 +1,19 @@
 import { Component, OnInit, Input} from '@angular/core';
+import { defaultPicture } from 'src/app/user';
+import { Output,EventEmitter } from '@angular/core';
 
-export interface UserForCard 
+/*export interface UserForCard 
 {
   isDriver: boolean,
   nameAndSurname: string
+}*/
+
+export interface UserForCard 
+{
+  userId: number;
+  role: string,
+  nameAndSurname: string
+  picture:string|null;
 }
 
 @Component({
@@ -15,9 +25,17 @@ export interface UserForCard
 export class ProfileCardComponent implements OnInit {
 
   @Input() user: UserForCard;
+  @Output() userClicked = new EventEmitter<UserForCard>();
   constructor() { }
 
   ngOnInit(): void {
+    if (!this.user.picture) {
+      this.user.picture = defaultPicture;
+    }
+  }
+
+  onCardClick() {
+    this.userClicked.emit(this.user);
   }
 
 }

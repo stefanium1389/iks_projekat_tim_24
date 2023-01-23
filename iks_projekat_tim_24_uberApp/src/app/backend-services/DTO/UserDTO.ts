@@ -1,47 +1,54 @@
-export interface UserDTO{
-  id:number;
-	name:string;
-	surname:string;
-	profilePicture:string;
+export interface UserDTO {
+	id: number;
+	name: string;
+	surname: string;
+	profilePicture: string;
 	telephoneNumber: string,
-	email:string;
-	address:string;
+	email: string;
+	address: string;
 }
-export interface UserRegistrationDTO{
-	name:string;
-	surname:string;
-	profilePicture:string;
+export interface UserRegistrationDTO {
+	name: string;
+	surname: string;
+	profilePicture: string;
 	telephoneNumber: string,
-	email:string;
-	address:string;
-	password:string;
+	email: string;
+	address: string;
+	password: string;
 }
-export interface UserUpdateDTO{
-	name:string;
-	surname:string;
-	profilePicture:string;
+export interface UserUpdateDTO {
+	name: string;
+	surname: string;
+	profilePicture: string;
 	telephoneNumber: string,
-	email:string;
-	address:string;
-	password:string;
-}
-
-export interface PassengerUpdateDTO{
-	name:string;
-	surname:string;
-	profilePicture:string;
-	telephoneNumber: string,
-	email:string;
-	address:string;
+	email: string;
+	address: string;
+	password: string;
 }
 
-export interface PasswordChangeDTO
-{
+export interface PassengerUpdateDTO {
+	name: string;
+	surname: string;
+	profilePicture: string;
+	telephoneNumber: string,
+	email: string;
+	address: string;
+}
+
+export interface PasswordChangeDTO {
 	oldPassword: string;
 	newPassword: string;
 }
 
-export interface UserRef{
-	id:number;
-	email:string;
+export interface UserRef {
+	id: number;
+	email: string;
+}
+
+export interface UserCardDTO {
+	id: number;
+	name: string;
+	surname: string;
+	profilePicture: string;
+	role:string;
 }
