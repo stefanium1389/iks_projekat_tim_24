@@ -32,6 +32,8 @@ export class MapComponent implements AfterViewInit {
   totalDistance: number;
   totalTime: number;
   locationType: string = "departure";
+  private vehicleLocations: any[];
+  private vehicleMarkers: L.Marker[];
   
   private serverUrl = environment.apiBaseUrl + 'socket'
   private stompClient: any;
@@ -39,6 +41,8 @@ export class MapComponent implements AfterViewInit {
 
   @Input() disableClick = false;
   @Input() markers: any[];
+  @Input() mapType = "EMPTY"; //ALL - sva vozila | RIDE - trenutna voznja | EMPTY - prazna mapa
+  @Input() vehicleId = null;
 
   @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
   @Output() out_start_location = new EventEmitter<string>();
@@ -58,7 +62,9 @@ export class MapComponent implements AfterViewInit {
 
   ngOnInit() {
     this.route();
-  
+    this.vehicleLocations = [];
+    this.vehicleMarkers = [];
+    
     this.initializeWebSocketConnection();
   }
   
@@ -239,12 +245,36 @@ export class MapComponent implements AfterViewInit {
   }
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
-  handleResult(vehicles: { body: string; })
+  handleResult(vehiclesList: { body: string; })
   {
-    if(vehicles.body)
+    if(vehiclesList.body)
     {
-      let vehiclesResult: DTOList<VehicleDTO> = JSON.parse(vehicles.body);
+      this.vehicleLocations = [];
+      let vehiclesResult: DTOList<VehicleDTO> = JSON.parse(vehiclesList.body);
+      let vehicles = vehiclesResult.results;
+      for (let i = 0; i < vehicles.length; i++)
+      {
+        if(this.mapType === "ALL")
+          this.vehicleLocations.push(vehicles[i].location);
+        else if(this.mapType === "RIDE" && vehicles[i].id === this.vehicleId)
+          this.vehicleLocations.push(vehicles[i].location);
+      }
+    }
+    this.drawVehicles();
+  }
+  
+  drawVehicles()
+  {
+    for (let i = 0; i < this.vehicleMarkers.length; i++)
+      this.vehicleMarkers[i].removeFrom(this.map);
+    this.vehicleMarkers = [];
+    for (let i = 0; i < this.vehicleLocations.length; i++)
+    {
+      console.log(this.vehicleLocations);
+      let lat = this.vehicleLocations[i].latitude;
+      let lng = this.vehicleLocations[i].longitude;
+      this.vehicleMarkers[i] = new L.Marker([lat, lng], { icon: this.newIcon });
+      this.vehicleMarkers[i].addTo(this.map).openPopup();
     }
   }
-    
 }
