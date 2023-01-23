@@ -57,6 +57,8 @@ import { BackendServicesModule } from './backend-services/backend-services.modul
 import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
 import {PanicDialogComponent} from "./components/panic-dialog/panic-dialog.component";
 import { DriverProfileForAdminComponent } from './components/driver-profile-for-admin/driver-profile-for-admin.component';
+import { StatisticsAdminComponent } from './components/statistics-admin/statistics-admin.component';
+import { PassengerProfileAdminComponent } from './components/passenger-profile-admin/passenger-profile-admin.component';
 
 const appRoutes : Routes =
 [
@@ -78,6 +80,7 @@ const appRoutes : Routes =
   {path: 'register-success',component:RegisterNotificationComponent},
   {path: 'rate-ride',component:RateRideComponent},
   {path: 'driver-profile-admin',component:DriverProfileForAdminComponent},
+  {path: 'passenger-profile-admin',component:PassengerProfileAdminComponent},
 ]
 
 @NgModule({
@@ -110,7 +113,9 @@ const appRoutes : Routes =
         FavouriteRoutesComponent,
         VerifyEmailComponent,
         StringDialogComponent,
-        DriverProfileForAdminComponent
+        DriverProfileForAdminComponent,
+        StatisticsAdminComponent,
+        PassengerProfileAdminComponent
         
     ],
     providers: [UserService,{

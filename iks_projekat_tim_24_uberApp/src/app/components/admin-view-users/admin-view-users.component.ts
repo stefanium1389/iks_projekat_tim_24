@@ -34,7 +34,7 @@ export class AdminViewUsersComponent implements OnInit {
     }
     else if (user.role ==="USER")
     {
-      //this.router.navigate(['/admin-view-driver']);
+      this.router.navigate(['/passenger-profile-admin']);
     }
     else
     {
