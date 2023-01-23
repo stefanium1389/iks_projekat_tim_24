@@ -1,0 +1,78 @@
+<div class="wrapper">
+  <div class="profile-wrapper">
+    <h1 id="profil">Profil</h1>
+
+    <div class="profile-container">
+      <div class="upload">
+        <div class="profile-icon">
+          <img class="actual-image" src="{{base64String}}">
+        </div>
+      </div>
+      <button class="block-button" (click)="openBlockDialog()">Blokiraj</button>
+
+      <button *ngIf="this.thereIsChange" (click)="saveChanges()">Sačuvaj izmene</button>
+      <button *ngIf="this.thereIsChange" (click)="denyChanges()">Odabaci izmene</button>
+      <button>Istorija vožnji</button>
+
+    </div>
+
+    <div class="sides">
+      <div class="left-side">
+        <div class="side-panel">
+          <form [formGroup]="ProfileForm" >
+            <mat-form-field class="form-field">
+              <mat-label>Ime</mat-label>
+              <input [readonly]="true" matInput type="text" name="name" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Prezime</mat-label>
+              <input [readonly]="true" matInput type="text" name="surname" formControlName="surname" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Adresa</mat-label>
+              <input [readonly]="true" matInput type="text" name="address" formControlName="address" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Broj telefona</mat-label>
+              <input [readonly]="true" matInput type="text" name="phone" formControlName="phone" />
+            </mat-form-field>
+          </form>
+
+        </div>
+      </div>
+      <div>
+        <div class="side-panel" id="vehicle-panel">
+          <form [formGroup]="VehicleForm">
+            <mat-form-field class="form-field">
+              <mat-label>Tip vozila</mat-label>
+              <input [readonly]="true" matInput type="text" name="type" formControlName="type" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Model vozila</mat-label>
+              <input [readonly]="true" matInput type="text" name="model" formControlName="model" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Registarske tablice</mat-label>
+              <input [readonly]="true" matInput type="text" name="plates" formControlName="plates" />
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Broj mesta</mat-label>
+              <input [readonly]="true" matInput type="number" name="numberOfSeats" formControlName="numberOfSeats" />
+            </mat-form-field>
+            <div class="checkbox-parameters">
+              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" formControlName="drivesBabies" label="baby" [(ngModel)]="drivesBabies">Beba</mat-checkbox>
+              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" formControlName="drivesPets" label="pets" [(ngModel)]="drivesPets">Ljubimci</mat-checkbox>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stats-wrapper">
+    <h1>Statistika</h1>
+    <app-statistics></app-statistics>
+  </div>
+
+</div>

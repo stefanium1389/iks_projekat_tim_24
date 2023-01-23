@@ -1,6 +1,7 @@
 import { UserRef } from "./UserDTO";
 
 export interface DriverChangeDTO {
+    id : number,
     name : string;
     surname : string;
     profilePicture : string;

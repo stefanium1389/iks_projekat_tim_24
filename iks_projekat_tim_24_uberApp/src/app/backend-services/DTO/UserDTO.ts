@@ -51,4 +51,5 @@ export interface UserCardDTO {
 	surname: string;
 	profilePicture: string;
 	role:string;
+	email:string;
 }

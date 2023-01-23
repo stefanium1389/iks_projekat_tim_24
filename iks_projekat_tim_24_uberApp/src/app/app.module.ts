@@ -56,6 +56,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { BackendServicesModule } from './backend-services/backend-services.module';
 import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
 import {PanicDialogComponent} from "./components/panic-dialog/panic-dialog.component";
+import { DriverProfileForAdminComponent } from './components/driver-profile-for-admin/driver-profile-for-admin.component';
 
 const appRoutes : Routes =
 [
@@ -75,7 +76,8 @@ const appRoutes : Routes =
   {path: 'account-management', component:AdminViewUsersComponent},
   {path: 'activate', component:VerifyEmailComponent},
   {path: 'register-success',component:RegisterNotificationComponent},
-  {path: 'rate-ride',component:RateRideComponent}
+  {path: 'rate-ride',component:RateRideComponent},
+  {path: 'driver-profile-admin',component:DriverProfileForAdminComponent},
 ]
 
 @NgModule({
@@ -107,7 +109,8 @@ const appRoutes : Routes =
         SearchUserDialogComponent,
         FavouriteRoutesComponent,
         VerifyEmailComponent,
-        StringDialogComponent
+        StringDialogComponent,
+        DriverProfileForAdminComponent
         
     ],
     providers: [UserService,{
