@@ -71,7 +71,7 @@
                 <button *ngIf="!inRide">Odustani</button>
                 <div *ngIf="inRide" class="u-voznji">
                     <button (click)="openDialog()">Prijavi</button>
-                    <button class="panic-dugme">PANIC</button>
+                    <button (click)="panic()" class="panic-dugme">PANIC</button>
                 </div>
         </div>
 

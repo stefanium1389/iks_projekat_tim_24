@@ -55,6 +55,7 @@ import { FavouriteRoutesComponent } from "./components/favourite-routes/favourit
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { BackendServicesModule } from './backend-services/backend-services.module';
 import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
+import {PanicDialogComponent} from "./components/panic-dialog/panic-dialog.component";
 
 const appRoutes : Routes =
 [
@@ -97,6 +98,7 @@ const appRoutes : Routes =
         PassengerProfileComponent,
         DriverProfileComponent,
         ReportDialogComponent,
+        PanicDialogComponent,
         StatisticsComponent,
         BlockDialogComponent,
         AdminViewUsersComponent,

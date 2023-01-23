@@ -6,7 +6,9 @@ import { NgbDatepickerKeyboardService } from '@ng-bootstrap/ng-bootstrap';
 import { interval, takeWhile } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../components/jwt-service.service';
-import { UserDTO } from '../backend-services/DTO/UserDTO'; 
+import { UserDTO } from '../backend-services/DTO/UserDTO';
+import {PanicDialogComponent} from "../components/panic-dialog/panic-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -25,7 +27,7 @@ export class DriverMainComponent implements OnInit {
   _isActive:boolean=true;
   time:number = 5;
 
-  constructor(private whService: WorkingHourService, private http:HttpClient, private jwtService:JwtService) { }
+  constructor(public dialog: MatDialog, private whService: WorkingHourService, private http:HttpClient, private jwtService:JwtService) { }
 
   ngOnInit(): void 
   {
@@ -117,10 +119,6 @@ export class DriverMainComponent implements OnInit {
     this.getAndSetActiveHours();
   }
 
-  panic(){
-    alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  }
-
   startRide(){
     if(this.acceptedRide){
       const id = this.acceptedRide.id;
@@ -170,6 +168,18 @@ export class DriverMainComponent implements OnInit {
   }
   activeButtonClick(){
     this._isActive=!this._isActive;
+  }
+  
+  panic()
+  {
+    const dialogRef = this.dialog.open(PanicDialogComponent, {
+      width: '250px',
+      data: {rideId: this.acceptedRide?.id}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 
 }
