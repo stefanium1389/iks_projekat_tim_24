@@ -65,7 +65,6 @@ export class NavbarRegisteredComponent implements OnInit {
       that.isLoaded = true;
       that.openSocket()
     });
-    
   }
 
   loadPicture()

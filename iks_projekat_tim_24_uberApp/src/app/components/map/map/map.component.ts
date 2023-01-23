@@ -4,6 +4,14 @@ import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
 import { EventEmitter, Input, Output } from '@angular/core';
 import { icon } from 'leaflet';
+import {environment} from "../../../../environments/environment";
+import {VehicleDTO} from "../../../backend-services/DTO/VehicleDTO";
+import {DTOList} from "../../../backend-services/DTO/DTOList";
+
+// @ts-ignore
+import * as Stomp from 'stompjs';
+// @ts-ignore
+import * as SockJS from 'sockjs-client';
 
 export interface TimeAndDistance {
   time: number;
@@ -24,6 +32,10 @@ export class MapComponent implements AfterViewInit {
   totalDistance: number;
   totalTime: number;
   locationType: string = "departure";
+  
+  private serverUrl = environment.apiBaseUrl + 'socket'
+  private stompClient: any;
+  isLoaded: boolean = false;
 
   @Input() disableClick = false;
   @Input() markers: any[];
@@ -32,8 +44,7 @@ export class MapComponent implements AfterViewInit {
   @Output() out_start_location = new EventEmitter<string>();
   @Output() out_end_location = new EventEmitter<string>();
 
-  constructor(private mapService: MapService) {
-  }
+  constructor(private mapService: MapService) { }
 
   ngAfterViewInit(): void {
     let DefaultIcon = L.icon({
@@ -47,6 +58,21 @@ export class MapComponent implements AfterViewInit {
 
   ngOnInit() {
     this.route();
+  
+    this.initializeWebSocketConnection();
+  }
+  
+  // Funkcija za otvaranje konekcije sa serverom
+  initializeWebSocketConnection() {
+    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
+    let ws = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    
+    this.stompClient.connect({}, function () {
+      that.isLoaded = true;
+      that.openSocket()
+    });
   }
 
   ngOnDestroy() {
@@ -201,6 +227,24 @@ export class MapComponent implements AfterViewInit {
     this.end_location = new L.Marker([this.markers[1].lat,this.markers[1].lon],{ icon: this.newIcon }).addTo(this.map);
 
     this.route();
+  }
+  
+  // Funkcija za pretplatu na topic /notification/user-id
+  openSocket() {
+    if (this.isLoaded) {
+      this.stompClient.subscribe("/map", (vehicles: { body: string; }) => {
+        this.handleResult(vehicles);
+      });
+    }
+  }
+  
+  // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
+  handleResult(vehicles: { body: string; })
+  {
+    if(vehicles.body)
+    {
+      let vehiclesResult: DTOList<VehicleDTO> = JSON.parse(vehicles.body);
+    }
   }
     
 }
