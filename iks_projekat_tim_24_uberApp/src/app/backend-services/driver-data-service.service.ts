@@ -54,4 +54,14 @@ export class DriverDataService {
   searchDrivers(key:string):Observable<DTOList<UserCardDTO>> {
     return this.http.get<DTOList<UserCardDTO>>(environment.apiBaseUrl+ `api/driver/search?key=${key}`);
   }
+  getLatestDriverChange(driverId: number): Observable<DriverChangeDTO> {
+    return this.http.get<DriverChangeDTO>(environment.apiBaseUrl + `api/driver/changes/${driverId}`);
+  }
+  acceptChange(id: number): Observable<DriverChangeDTO> {
+    return this.http.put<DriverChangeDTO>(environment.apiBaseUrl + `api/driver/changes/${id}/accept`,null);
+  }
+  declineChange(id: number): Observable<DriverChangeDTO> {
+    return this.http.put<DriverChangeDTO>(environment.apiBaseUrl + `api/driver/changes/${id}/decline`,null);
+  }
+  
 }

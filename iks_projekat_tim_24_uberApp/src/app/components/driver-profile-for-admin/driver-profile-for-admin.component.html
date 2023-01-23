@@ -10,8 +10,8 @@
       </div>
       <button class="block-button" (click)="openBlockDialog()">Blokiraj</button>
 
-      <button>Sačuvaj izmene</button>
-      <button> Odabaci izmene</button>
+      <button *ngIf="this.thereIsChange" (click)="saveChanges()">Sačuvaj izmene</button>
+      <button *ngIf="this.thereIsChange" (click)="denyChanges()">Odabaci izmene</button>
       <button>Istorija vožnji</button>
 
     </div>
@@ -19,7 +19,7 @@
     <div class="sides">
       <div class="left-side">
         <div class="side-panel">
-          <form [formGroup]="ProfileForm" (ngSubmit)="onProfileFormSubmit()">
+          <form [formGroup]="ProfileForm" >
             <mat-form-field class="form-field">
               <mat-label>Ime</mat-label>
               <input [readonly]="true" matInput type="text" name="name" formControlName="name" />
@@ -42,7 +42,7 @@
       </div>
       <div>
         <div class="side-panel" id="vehicle-panel">
-          <form [formGroup]="VehicleForm" (ngSubmit)="onVehicleFormSubmit()">
+          <form [formGroup]="VehicleForm">
             <mat-form-field class="form-field">
               <mat-label>Tip vozila</mat-label>
               <input [readonly]="true" matInput type="text" name="type" formControlName="type" />

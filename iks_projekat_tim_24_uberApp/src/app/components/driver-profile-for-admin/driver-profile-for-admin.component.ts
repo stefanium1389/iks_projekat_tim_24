@@ -9,6 +9,7 @@ import { PasswordChangeDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { DriverDataService } from 'src/app/backend-services/driver-data-service.service';
 import { VehicleChangeDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
+import { DriverChangeDTO } from 'src/app/backend-services/DTO/DriverChangeDTO';
 
 @Component({
   selector: 'app-driver-profile-for-admin',
@@ -45,6 +46,8 @@ export class DriverProfileForAdminComponent implements OnInit {
     drivesPets: new FormControl()
   });
   selectedVehicleType:string;
+  thereIsChange:boolean = false;
+  change: DriverChangeDTO;
 
   constructor(public dialog: MatDialog, private adminViewingService: AdminViewingService, private driverService : DriverDataService) { }
 
@@ -71,13 +74,22 @@ export class DriverProfileForAdminComponent implements OnInit {
 
   loadForms()
   {
+    this.getChanges(); //get profile ce se pozvati sam ako nema izmena
+    this.getVehicleData();
+  }
+
+  getChanges()
+  {
     let id = this.adminViewingService.getAdminViewingId();
     if (id != null)
     {
-      this.driverService.getDriverById(id).subscribe(
+      
+      this.driverService.getLatestDriverChange(id).subscribe(
         {
           next: (result) => 
           {
+            this.change = result;
+            this.thereIsChange = true;
             if (result.profilePicture !== null)
             {
               this.base64String = result.profilePicture;
@@ -89,179 +101,105 @@ export class DriverProfileForAdminComponent implements OnInit {
           },
           error: (error) =>
           {
-            alert(error);
+            this.thereIsChange=false;
+            this.getProfileData();
           }
         }
         );
-
-        this.driverService.getVehicle(id).subscribe(
-          {
-            next: (result) => 
-            {
-              let finalString = `${result.vehicleType.charAt(0).toUpperCase()}${result.vehicleType.slice(1).toLowerCase()}`;
-              this.VehicleForm.get('type')?.setValue(finalString);
-              this.VehicleForm.get('model')?.setValue(result.model);
-              this.VehicleForm.get('plates')?.setValue(result.licenseNumber);
-              this.VehicleForm.get('numberOfSeats')?.setValue(result.passengerSeats);
-              this.VehicleForm.get('drivesBabies')?.setValue(result.babyTransport);
-              this.VehicleForm.get('drivesPets')?.setValue(result.petTransport);
-            },
-            error: (error) =>
-            {
-              alert(error);
-            }
-          }
-        );
     }
   }
 
-  onProfileFormSubmit ()
+  getVehicleData()
   {
-
-    if (this.ProfileForm.get('name')!.value === "")
-    {
-      alert("missing name in form!");
-      return;
-    }
-    if (this.ProfileForm.get('surname')!.value === "")
-    {
-      alert("missing surname in form!");
-      return;
-    }
-    if (this.validFile === false)
-    {
-      alert("picture not valid!");
-      return;
-    }
-    if (this.ProfileForm.get('phone')!.value === "")
-    {
-      alert("missing telephone number in form!");
-      return;
-    } 
-    if (this.ProfileForm.get('address')!.value === "")
-    {
-      alert("missing address in form!");
-      return;
-    }
-
     let id = this.adminViewingService.getAdminViewingId();
-    let mail = this.adminViewingService.getAdminViewingMail();
-    if (id != null && mail!=null && this.base64String!=null)
-    {
-      let userUpdate: PassengerUpdateDTO = {
-        name: this.ProfileForm.get('name')!.value,
-        surname: this.ProfileForm.get('surname')!.value,
-        profilePicture: this.base64String,
-        telephoneNumber: this.ProfileForm.get('phone')!.value,
-        email: mail,
-        address: this.ProfileForm.get('address')!.value,
-      }
-      this.driverService.postDriverChangesNoPassword(id,userUpdate).subscribe(
-        { next: (result) => 
-          {
-            alert("changes saved");
-          },
-          error: (error) =>
-          {
-            alert(error);
-          }
+    if (id != null){
+    this.driverService.getVehicle(id).subscribe(
+      {
+        next: (result) => 
+        {
+          let finalString = `${result.vehicleType.charAt(0).toUpperCase()}${result.vehicleType.slice(1).toLowerCase()}`;
+          this.VehicleForm.get('type')?.setValue(finalString);
+          this.VehicleForm.get('model')?.setValue(result.model);
+          this.VehicleForm.get('plates')?.setValue(result.licenseNumber);
+          this.VehicleForm.get('numberOfSeats')?.setValue(result.passengerSeats);
+          this.VehicleForm.get('drivesBabies')?.setValue(result.babyTransport);
+          this.VehicleForm.get('drivesPets')?.setValue(result.petTransport);
+        },
+        error: (error) =>
+        {
+          alert(error);
         }
-      );
-    }
-    
-  }
-
-  onPasswordFormSubmit ()
-  {
-    
-    if (this.PasswordForm.get('oldPass')!.value === "")
-    {
-      alert("missing old password in form!");
-      return;
-    }
-    if (this.PasswordForm.get('newPass')!.value === "")
-    {
-      alert("missing new password in form!");
-      return;
-    }
-
-    let id = this.adminViewingService.getAdminViewingId();
-    let mail = this.adminViewingService.getAdminViewingMail();
-    if (id != null && mail!=null && this.base64String!=null)
-    {
-      let userUpdate: PasswordChangeDTO = {
-        oldPassword: this.PasswordForm.get('oldPass')!.value,
-        newPassword: this.PasswordForm.get('newPass')!.value,
       }
-      this.driverService.updateDriverPassword(id,userUpdate).subscribe(response => {
-        if (response.status === 204) {
-            console.log("password changed successfully");
-        } else {
-            console.log("error changing password");
-        }
-    });
+    );
     }
   }
 
-  onVehicleFormSubmit ()
+  getProfileData()
   {
-    
-    if (this.VehicleForm.get('model')!.value === "")
-    {
-      alert("missing model in form!");
-      return;
-    }
-    if (this.VehicleForm.get('plates')!.value === "")
-    {
-      alert("missing plates in form!");
-      return;
-    }
-    if (this.VehicleForm.get('numberOfSeats')!.value === "")
-    {
-      alert("missing number of seats in form!");
-      return;
-    }
-    if (this.VehicleForm.get('numberOfSeats')!.value <1)
-    {
-      alert("invalid number of seats number!");
-      return;
-    }
-
     let id = this.adminViewingService.getAdminViewingId();
-    let mail = this.adminViewingService.getAdminViewingMail();
-    if (id != null && mail!=null && this.base64String!=null)
-    {
-      this.selectedVehicleType = this.VehicleForm.get("selectedVehicleType")!.value;
-      let vehicleUpdate: VehicleChangeDTO = {
-        driverId:id,
-        vehicleType:this.VehicleForm.get("selectedVehicleType")!.value,
-        model:this.VehicleForm.get('model')!.value,
-        licenseNumber:this.VehicleForm.get('plates')!.value,
-        passengerSeats:this.VehicleForm.get('numberOfSeats')!.value,
-        babyTransport:this.drivesBabies,
-        petTransport:this.drivesPets
-      }
-      this.driverService.updateVehicle(id,vehicleUpdate).subscribe(
-        { next: (result) => 
+    if (id != null){
+    this.driverService.getDriverById(id).subscribe(
+      {
+        next: (result) => 
+        {
+          if (result.profilePicture !== null)
           {
-            alert("changes saved");
-          },
-          error: (error) =>
-          {
-            alert(error);
+            this.base64String = result.profilePicture;
           }
+          this.ProfileForm.get('name')?.setValue(result.name);
+          this.ProfileForm.get('surname')?.setValue(result.surname);
+          this.ProfileForm.get('address')?.setValue(result.address);
+          this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
+        },
+        error: (error) =>
+        {
+          alert(error);
         }
+      }
       );
     }
   }
 
-  onChangePicture(event:any) {
-    const file = event.target.files[0];
-    if (file.type.split('/')[0] !== 'image') {
-     this.validFile = false;
+  saveChanges()
+  {
+    let id = this.adminViewingService.getAdminViewingId();
+    if (id != null){
+    this.driverService.acceptChange(this.change.id).subscribe(
+      {
+        next: (result) => 
+        {
+          alert("Change accepted.");
+          this.thereIsChange = false;
+        },
+        error: (error) =>
+        {
+          alert(error);
+        }
+      }
+      );
     }
-     this.pictureReader.readAsDataURL(file);
-   }
+  }
+
+  denyChanges()
+  {
+    let id = this.adminViewingService.getAdminViewingId();
+    if (id != null){
+    this.driverService.declineChange(this.change.id).subscribe(
+      {
+        next: (result) => 
+        {
+          alert("Change declined.");
+          this.getProfileData();
+          this.thereIsChange = false;
+        },
+        error: (error) =>
+        {
+          alert(error);
+        }
+      }
+      );
+    }
+  }
 
   openBlockDialog(): void {
     const dialogRef = this.dialog.open(BlockDialogComponent, {
