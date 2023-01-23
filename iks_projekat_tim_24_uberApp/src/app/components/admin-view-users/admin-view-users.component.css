@@ -26,9 +26,12 @@ app-profile-card
 }
 
 .profile-card-container {
-    overflow-y: scroll;
+    height: 600px; 
+    width: 100%; 
+    overflow-y: auto; 
     padding: 10px 30px;
-  }
+}
+
   
 
 button{
