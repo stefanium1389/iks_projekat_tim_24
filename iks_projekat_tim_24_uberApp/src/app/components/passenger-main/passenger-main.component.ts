@@ -1,4 +1,4 @@
-import { Component, OnInit,  Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import { dtoRide } from 'src/app/driver-main/driver-main.component';
 import { HttpClient } from '@angular/common/http';
 import { UserDTO, UserRef } from 'src/app/backend-services/DTO/UserDTO';
-import {PanicDialogComponent} from "../panic-dialog/panic-dialog.component";
+import { PanicDialogComponent } from "../panic-dialog/panic-dialog.component";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
 import numbers = _default.defaults.animations.numbers;
 import { LocationInfo, MapComponent } from '../map/map/map.component';
@@ -26,6 +26,7 @@ import { StringDialogComponent } from '../string-dialog/string-dialog.component'
 import { RideDataService } from 'src/app/backend-services/ride-data.service';
 import { GeoCoordinateDTO } from 'src/app/backend-services/DTO/RouteDTO';
 import { RouteDTO } from 'src/app/backend-services/DTO/RouteDTO';
+import { RideRequestDTO } from 'src/app/backend-services/DTO/RideDTO';
 
 @Component({
   selector: 'app-passenger-main',
@@ -45,22 +46,21 @@ export class PassengerMainComponent implements OnInit {
   linkedUsers: UserDTO[] = [];
   ride: dtoRide | null;
   rideStatus: string | null;//PENDING, CANCELED, STARTED, ACCEPTED, FINISHED, REJECTED
-  previousRideStatus:string | null = "xd";
+  previousRideStatus: string | null = "xd";
   time: number;
   cost: string;
   locationType: string = "departure";
   selectedType: string = 'STANDARD';
-  name_of_start_location : string;
-  name_of_end_location : string;
-  start_location_lat :number;
-  end_location_lat :number;
-  start_location_lng :number;
-  end_location_lng :number;
+  name_of_start_location: string;
+  name_of_end_location: string;
+  start_location_lat: number;
+  end_location_lat: number;
+  start_location_lng: number;
+  end_location_lng: number;
   alreadyFavorite: boolean = false;
 
   constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService,
-     private jwtService: JwtService, private http: HttpClient,private snackBar: MatSnackBar,private rideData: RideDataService ) 
-  {
+    private jwtService: JwtService, private http: HttpClient, private snackBar: MatSnackBar, private rideData: RideDataService) {
     this.destinationForm = new FormGroup({
       start_location: new FormControl(),
       end_location: new FormControl(),
@@ -70,28 +70,28 @@ export class PassengerMainComponent implements OnInit {
 
   ngOnInit(): void {
     interval(5000).subscribe(() => {
-        this.getRide();
-        if(this.ride){
-          this.rideStatus=this.ride.status;
+      this.getRide();
+      if (this.ride) {
+        this.rideStatus = this.ride.status;
+      }
+      else {
+        this.rideStatus = null;
+      }
+      if (this.previousRideStatus != this.rideStatus) {
+        this.previousRideStatus = this.rideStatus;
+        if (this.ride?.status == "PENDING") {
+          alert('Voznja je kreirana i na cekanju');
         }
-        else{
-          this.rideStatus=null;
+        if (this.ride?.status == "ACCEPTED") {
+          alert('Voznja je prihvacena');
         }
-        if(this.previousRideStatus!=this.rideStatus){
-          this.previousRideStatus=this.rideStatus;
-          if(this.ride?.status=="PENDING"){
-            alert('Voznja je kreirana i na cekanju');
-          }
-          if(this.ride?.status=="ACCEPTED"){
-            alert('Voznja je prihvacena');
-          }
-          if(this.ride?.status=="REJECTED"){
-            alert('Voznja je odbijena');
-          }
-          if(this.ride?.status=="STARTED"){
-            alert('Voznja je pocela');
-          }
+        if (this.ride?.status == "REJECTED") {
+          alert('Voznja je odbijena');
         }
+        if (this.ride?.status == "STARTED") {
+          alert('Voznja je pocela');
+        }
+      }
     });
   }
 
@@ -115,10 +115,9 @@ export class PassengerMainComponent implements OnInit {
     this.alreadyFavorite = false;
   }
 
-  makeFavorite(){
+  makeFavorite() {
 
-    if (this.alreadyFavorite)
-    {
+    if (this.alreadyFavorite) {
       return;
     }
 
@@ -128,7 +127,7 @@ export class PassengerMainComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result == undefined || result.length < 1){
+      if (result == undefined || result.length < 1) {
         this.snackBar.open('Morate uneti naziv!', 'Ok', {
           duration: 3000
         });
@@ -136,45 +135,44 @@ export class PassengerMainComponent implements OnInit {
       }
 
       let g1: GeoCoordinateDTO =
-        {
-          address: this.name_of_start_location,
-          latitude: this.start_location_lat,
-          longitude: this.start_location_lng,
-        }
-        let g2: GeoCoordinateDTO =
-        {
-          address: this.name_of_end_location,
-          latitude: this.end_location_lat,
-          longitude: this.end_location_lng,
-        }
-
-        let route: RouteDTO =
-        {
-          departure: g1,
-          destination: g2,
-        }
-
-        let passengers: UserRef[] = [];
-        for (let p of this.linkedUsers)
-        {
-          let ur : UserRef = 
-          {
-            id: p.id,
-            email : p.email,
-          };
-          
-          passengers.push(ur);
-        }
-
-      const fav:FavoriteRideDTO = {
-        favoriteName:result,
-        locations: [route],
-        passengers:passengers, 
-        vehicleType:this.selectedType,
-        babyTransport:this.hasBaby,
-        petTransport:this.hasPet
+      {
+        address: this.name_of_start_location,
+        latitude: this.start_location_lat,
+        longitude: this.start_location_lng,
       }
-  
+      let g2: GeoCoordinateDTO =
+      {
+        address: this.name_of_end_location,
+        latitude: this.end_location_lat,
+        longitude: this.end_location_lng,
+      }
+
+      let route: RouteDTO =
+      {
+        departure: g1,
+        destination: g2,
+      }
+
+      let passengers: UserRef[] = [];
+      for (let p of this.linkedUsers) {
+        let ur: UserRef =
+        {
+          id: p.id,
+          email: p.email,
+        };
+
+        passengers.push(ur);
+      }
+
+      const fav: FavoriteRideDTO = {
+        favoriteName: result,
+        locations: [route],
+        passengers: passengers,
+        vehicleType: this.selectedType,
+        babyTransport: this.hasBaby,
+        petTransport: this.hasPet
+      }
+
       this.rideData.postFavoriteRide(fav).subscribe({
         next: (result) => {
           console.log(result)
@@ -191,9 +189,68 @@ export class PassengerMainComponent implements OnInit {
         }
       })
     });
-  
-  
-}
+
+
+  }
+
+  createRide() {
+
+    let g1: GeoCoordinateDTO =
+      {
+        address: this.name_of_start_location,
+        latitude: this.start_location_lat,
+        longitude: this.start_location_lng,
+      }
+      let g2: GeoCoordinateDTO =
+      {
+        address: this.name_of_end_location,
+        latitude: this.end_location_lat,
+        longitude: this.end_location_lng,
+      }
+
+      let route: RouteDTO =
+      {
+        departure: g1,
+        destination: g2,
+      }
+
+      let passengers: UserRef[] = [];
+      for (let p of this.linkedUsers) {
+        let ur: UserRef =
+        {
+          id: p.id,
+          email: p.email,
+        };
+
+        passengers.push(ur);
+      }
+
+    let requestTime = null;
+    if (this.selectedTime)
+    {
+      requestTime = this.getDateWithGivenTime(this.selectedTime);
+    }
+
+    const dto: RideRequestDTO = {
+      locations: [route],
+      passengers: passengers,
+      vehicleType: this.selectedType,
+      scheduledTime: requestTime,
+      babyTransport: this.hasBaby,
+      petTransport: this.hasPet
+    }
+
+    this.rideData.postRide(dto).subscribe({
+      next: (result) => {
+        console.log(result)
+      },
+      error: (error) => {
+        this.snackBar.open(error.error.message, 'Ok', {
+          duration: 3000
+        });
+      }
+    });
+  }
 
   onTypeChange(type: string) {
     this.map.locationType = type;
@@ -204,17 +261,17 @@ export class PassengerMainComponent implements OnInit {
     this.map.route()
   }
 
-  locStartHandler(loc:LocationInfo) {
+  locStartHandler(loc: LocationInfo) {
     this.destinationForm.get('start_location')?.setValue(loc.name);
-    this.name_of_start_location=loc.name;
+    this.name_of_start_location = loc.name;
     this.start_location_lng = loc.lng;
     this.start_location_lat = loc.lat;
     this.setNotFavorited();
   }
 
-  locEndHandler(loc:LocationInfo) {
+  locEndHandler(loc: LocationInfo) {
     this.destinationForm.get('end_location')?.setValue(loc.name);
-    this.name_of_end_location=loc.name;
+    this.name_of_end_location = loc.name;
     this.end_location_lng = loc.lng;
     this.end_location_lat = loc.lat;
     this.setNotFavorited();
@@ -230,7 +287,7 @@ export class PassengerMainComponent implements OnInit {
 
   }
 
-  @ViewChild('checkbox_option', {static: false}) checkbox_option: ElementRef;
+  @ViewChild('checkbox_option', { static: false }) checkbox_option: ElementRef;
   onBabyClick() {
     this.hasBaby = !this.hasBaby;
     if (this.hasBaby) {
@@ -251,13 +308,13 @@ export class PassengerMainComponent implements OnInit {
       this.selectedTime = result;
     });
   }
-  
+
   openDialog(): void {
     const dialogRef = this.dialog.open(ReportDialogComponent, {
       width: '250px',
       data: {}
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
@@ -267,43 +324,60 @@ export class PassengerMainComponent implements OnInit {
       width: '500px',
       data: {}
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
-      this.linkedUsers=this.linkUsersService.usersList;
-      for (let user of this.linkedUsers)
-      {
-        if (user.profilePicture == null)
-        {
+      this.linkedUsers = this.linkUsersService.usersList;
+      for (let user of this.linkedUsers) {
+        if (user.profilePicture == null) {
           user.profilePicture = defaultPicture;
         }
       }
     });
   }
-  removeUser(user:UserDTO){
+  removeUser(user: UserDTO) {
     this.linkUsersService.removeUser(user);
-    this.linkedUsers=this.linkUsersService.usersList;
+    this.linkedUsers = this.linkUsersService.usersList;
   }
 
-  async getRide(){
+  async getRide() {
     const userId = this.jwtService.getId();
-    try{
+    try {
       const response = await this.http.get(environment.apiBaseUrl + `api/ride/passenger/${userId}/active`).toPromise() as dtoRide;
       this.ride = response;
     }
-    catch (HttpErrorResponse){
-      this.ride=null;
+    catch (HttpErrorResponse) {
+      this.ride = null;
     }
   }
-  
-  panic()
-  {
+
+  panic() {
     const dialogRef = this.dialog.open(PanicDialogComponent, {
       width: '250px',
-      data: {rideId: this.ride?.id}
+      data: { rideId: this.ride?.id }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
   }
+
+ getDateWithGivenTime(time: string) {
+    const currentDate = new Date();
+    const currentHour = currentDate.getHours();
+    const currentMinutes = currentDate.getMinutes();
+    const givenTimeArr = time.split(":");
+    const givenHour = parseInt(givenTimeArr[0]);
+    const givenMinutes = parseInt(givenTimeArr[1]);
+  
+    let newDate: Date;
+    if (givenHour < currentHour || (givenHour === currentHour && givenMinutes <= currentMinutes)) {
+      // given time is before or equal to current time
+      newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, givenHour+1, givenMinutes);
+    } else {
+      // given time is after current time
+      newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), givenHour+1, givenMinutes);
+    }
+    return newDate.toISOString()
+  }
+  
 }

@@ -43,7 +43,7 @@
             </div>
 
             <div class="action-buttons">
-                <button>Započni</button>
+                <button (click)="createRide()">Započni</button>
                 <button (click)="openTimePicker()">Zakazi</button>
             </div>
             <div id="display-time" *ngIf="selectedTime">{{ "selektovano vreme: " + selectedTime }}</div>
