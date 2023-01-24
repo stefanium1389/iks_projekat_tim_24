@@ -35,16 +35,21 @@
   padding-bottom: 0.5em;
   outline: 1em black;
   border-radius: 1em;
-  height: 5em;
-  overflow-y: scroll;
+  height: 10em;
+  overflow-y: auto;
 }
 .user-result{
   background-color: #Ddd;
   padding:0.2em;
-  margin:0.1em;
+  margin:0.7em;
   border-radius: 1em;
 }
 .user-result:hover{
   cursor: pointer;
   background-color: gray;
+}
+
+button 
+{
+  margin-top: 10px;
 }

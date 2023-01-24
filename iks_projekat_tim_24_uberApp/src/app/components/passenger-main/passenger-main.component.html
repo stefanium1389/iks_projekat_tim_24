@@ -51,12 +51,14 @@
 
         <div class="driver-side-panel" id="linked-users">
             <p>Uvezani korisnici</p>
-            <div class="linked-users-container">
+            <div *ngIf="linkedUsers.length>0" class="linked-users-container">
                 <div *ngFor="let user of linkedUsers" class="profil-pregled" id="linked-user">
-                    <div class="profile-pic"></div>
+                    <div class="profile-pic">
+                        <img class="actual-image" src={{user.profilePicture}}>
+                    </div>
                     <p>{{user.name}} {{user.surname}}</p>
                     <div class="scoring">
-                        <i class="fa fa-user" (click)='removeUser(user);'></i>
+                        <i class="fa fa-minus" (click)='removeUser(user);'></i>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
-import { User } from 'src/app/user';
+import { defaultPicture, User } from 'src/app/user';
 import { SearchUserDialogComponent } from '../search-user-dialog/search-user-dialog.component';
 import { LinkUsersService } from 'src/app/services/link-users.service';
 import { interval } from 'rxjs';
@@ -262,12 +262,19 @@ export class PassengerMainComponent implements OnInit {
   }
   openUserSearch(): void {
     const dialogRef = this.dialog.open(SearchUserDialogComponent, {
-      width: '250px',
+      width: '500px',
       data: {}
     });
   
     dialogRef.afterClosed().subscribe(result => {
       this.linkedUsers=this.linkUsersService.usersList;
+      for (let user of this.linkedUsers)
+      {
+        if (user.profilePicture == null)
+        {
+          user.profilePicture = defaultPicture;
+        }
+      }
     });
   }
   removeUser(user:UserDTO){

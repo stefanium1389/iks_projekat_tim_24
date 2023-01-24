@@ -32,7 +32,7 @@ export class SearchUserDialogComponent implements OnInit {
     this.results = [];
     const querry = this.searchForm.get('q')?.value;
     if(querry){
-      const response = await this.http.get(environment.apiBaseUrl+`api/user/search?querry=${querry}`).toPromise() as DTOList<UserDTO>;
+      const response = await this.http.get(environment.apiBaseUrl+`api/user/search3?key=${querry}`).toPromise() as DTOList<UserDTO>;
       for(let user of response.results){
         this.results.push(user);
       };
