@@ -18,6 +18,9 @@ div.route-list-container
     max-height: 40em;
     margin-top: 40px;
 }
+.no-favorites{
+    color: gray;
+}
 
 div.item
 {
@@ -38,6 +41,7 @@ div.column
     margin-left: 3em;
     margin-right: 3em;
 }
+
 
 i.fa-arrow-right, i.fa-arrow-left
 {

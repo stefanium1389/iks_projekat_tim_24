@@ -206,6 +206,7 @@ export class PassengerMainComponent implements OnInit {
 
   locStartHandler(loc:LocationInfo) {
     this.destinationForm.get('start_location')?.setValue(loc.name);
+    this.name_of_start_location=loc.name;
     this.start_location_lng = loc.lng;
     this.start_location_lat = loc.lat;
     this.setNotFavorited();
@@ -213,6 +214,7 @@ export class PassengerMainComponent implements OnInit {
 
   locEndHandler(loc:LocationInfo) {
     this.destinationForm.get('end_location')?.setValue(loc.name);
+    this.name_of_end_location=loc.name;
     this.end_location_lng = loc.lng;
     this.end_location_lat = loc.lat;
     this.setNotFavorited();
