@@ -1,47 +1,59 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
-<div class = "real-wrapper">
+<div class="real-wrapper">
     <div class="wrapper">
 
-        <div class="driver-side-panel" id = "destination-parameters">
-            
-                    <input type="text" placeholder="pocetna destinacija"/>
-                    <input type="text" placeholder="krajnja destinacija"/>
+        <div class="driver-side-panel" id="destination-parameters">
 
-                    <div class="estimate-box">
-                        <p class="estimate">Oko 10 minuta</p>
-                        <p class="estimate">Oko 300 RSD</p>
-                    </div>
+            <form [formGroup]="destinationForm">
+                <div class="destination-container">
+                    <input type="text" placeholder="pocetna destinacija" formControlName="start_location" />
+                    <i (click)="search('start')" class="fa fa-search"></i>
+                </div>
+                <div class="destination-container">
+                    <input type="text" placeholder="krajnja destinacija" formControlName="end_location" />
+                    <i (click)="search('end')" class="fa fa-search"></i>
+                </div>
+            </form>
+            <select [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
+                <option value="departure">Polazište</option>
+                <option value="destination" selected>Odredište</option>
+            </select>
 
-                    <div class="select-and-star">
+            <div *ngIf="this.time" class="estimate-box">
+                <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
+                <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
+            </div>
 
-                        <select [(ngModel)]="selectedType" (ngModelChange)="onTypeChange($event)" id="vehicle-type-selection">
-                            <option *ngIf="!isTypeSelected" value="">Odaberite tip vozila</option>
-                            <option value="standardno">Standardno</option>
-                            <option value="luksuzno">Luksuzno</option>
-                            <option value="kombi">Kombi</option>
-                        </select>
+            <div class="select-and-star">
 
-                        <i class="fa" [ngClass]="{'fa-star-o': !isFavorited, 'fa-star': isFavorited}" (click)="toggleFavorite()"></i>
-                    </div>
+                <select [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
+                    <option value="STANDARD">Standardno</option>
+                    <option value="LUXURY">Luksuzno</option>
+                    <option value="VAN">Kombi</option>
+                </select>
 
-                    <div class="checkbox-parameters">
-                        <mat-checkbox [(ngModel)]="hasBaby" label="baby" >Beba</mat-checkbox>
-                        <mat-checkbox [(ngModel)]="hasPet" label="pets" >Ljubimci</mat-checkbox>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button>Započni</button>
-                        <button (click)="openTimePicker()">Zakazi</button>
-                    </div>
-                    <div id="display-time" *ngIf="showTime">{{ "selektovano vreme: " + selectedTime }}</div>
+                <i class="fa" [ngClass]="{'fa-star-o': !isFavorited, 'fa-star': isFavorited}"
+                    (click)="toggleFavorite()"></i>
+            </div>
+
+            <div class="checkbox-parameters">
+                <mat-checkbox [(ngModel)]="hasBaby" label="baby">Beba</mat-checkbox>
+                <mat-checkbox [(ngModel)]="hasPet" label="pets">Ljubimci</mat-checkbox>
+            </div>
+
+            <div class="action-buttons">
+                <button>Započni</button>
+                <button (click)="openTimePicker()">Zakazi</button>
+            </div>
+            <div id="display-time" *ngIf="showTime">{{ "selektovano vreme: " + selectedTime }}</div>
         </div>
 
         <div class="driver-side-panel" id="linked-users">
             <p>Uvezani korisnici</p>
             <div class="linked-users-container">
                 <div *ngFor="let user of linkedUsers" class="profil-pregled" id="linked-user">
-                    <div class="profile-pic"></div> 
+                    <div class="profile-pic"></div>
                     <p>{{user.name}} {{user.surname}}</p>
                     <div class="scoring">
                         <i class="fa fa-user" (click)='removeUser(user);'></i>
@@ -53,7 +65,7 @@
 
         <div class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
-                <div class="profile-pic"></div> 
+                <div class="profile-pic"></div>
                 <p>Ime Prezime</p>
                 <div class="scoring">
                     <p> 4.4</p>
@@ -68,16 +80,16 @@
                 </div>
             </div>
             <p *ngIf="!inRide">Pristiže u 5 minuta</p>
-                <button *ngIf="!inRide">Odustani</button>
-                <div *ngIf="inRide" class="u-voznji">
-                    <button (click)="openDialog()">Prijavi</button>
-                    <button (click)="panic()" class="panic-dugme">PANIC</button>
-                </div>
+            <button *ngIf="!inRide">Odustani</button>
+            <div *ngIf="inRide" class="u-voznji">
+                <button (click)="openDialog()">Prijavi</button>
+                <button (click)="panic()" class="panic-dugme">PANIC</button>
+            </div>
         </div>
 
     </div>
 
-    <div class = "map-container">
-        <app-map></app-map>
+    <div class="map-container">
+        <app-map (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
     </div>
 </div>

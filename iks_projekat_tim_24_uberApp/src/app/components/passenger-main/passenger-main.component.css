@@ -139,6 +139,21 @@ button:hover{
     max-width: 150px;
 }
 
+#location-type-selection
+{
+  border-radius: 10px;
+  border-style: none;
+  margin: 5px;
+  height: 26px;
+}
+
+.destination-container
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .driver-side-panel .fa 
 {
     color: white;

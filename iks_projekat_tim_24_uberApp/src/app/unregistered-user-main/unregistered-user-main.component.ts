@@ -3,10 +3,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { RideDataService } from '../backend-services/ride-data.service';
 import { MapComponent } from '../components/map/map/map.component';
 import { TimeAndCost } from '../components/map/map/map.component';
-import { EstimationDTO } from '../backend-services/DTO/RideDTO';
-import { RideEstimationRequestDTO } from '../backend-services/DTO/RideDTO';
-import { RouteDTO } from '../backend-services/DTO/RouteDTO';
-import { GeoCoordinateDTO } from '../backend-services/DTO/RouteDTO';
 
 @Component({
   selector: 'app-unregistered-user-main',
@@ -23,9 +19,6 @@ export class UnregisteredUserMainComponent implements OnInit {
   cost: string;
   selectedType: string = 'STANDARD';
   locationType: string = "departure";
-  babies: boolean;
-  pets : boolean;
-
 
   constructor(private rideService : RideDataService) {
     this.destinationForm = new FormGroup({
