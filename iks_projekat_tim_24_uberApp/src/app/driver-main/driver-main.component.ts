@@ -160,7 +160,7 @@ export class DriverMainComponent implements OnInit {
       console.log(this.acceptedRide)
     }
     catch (HttpErrorResponse){
-      
+      this.acceptedRide = null;
     }
   }
   isActive(){
