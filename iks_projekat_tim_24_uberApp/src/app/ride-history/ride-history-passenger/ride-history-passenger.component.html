@@ -27,6 +27,7 @@
             <div class="driver">
                 <div>
                     <div class="profile-picture">
+                    <img class="actual-image-profile" src={{selectedRideDriver.profilePicture}}>
 
                     </div>
                     <div class="profile-name">
@@ -48,7 +49,6 @@
                     <div *ngFor='let review of selectedRideReviews' class="comment">
                         <div>
                             <div class="comment-profile-picture">
-
                             </div>
                             <div class="comment-profile-name">
                                 <h2>{{review.passenger.email}}</h2>

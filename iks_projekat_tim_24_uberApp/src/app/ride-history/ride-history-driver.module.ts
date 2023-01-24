@@ -6,11 +6,13 @@ import { RideListItemComponent } from './ride-list-item/ride-list-item.component
 import { MapModule } from '../components/map/map/map.module';
 import { RideHistoryDetailsComponent } from './ride-history-details/ride-history-details.component';
 import {RideHistoryPassengerModule} from "./ride-history-passenger.module";
+import { RideHistoryDriverAdminComponent } from './ride-history-driver-admin/ride-history-driver-admin.component';
 
 
 @NgModule({
   declarations: [
-    RideHistoryDriverComponent
+    RideHistoryDriverComponent,
+    RideHistoryDriverAdminComponent
   ],
   imports: [
     CommonModule, MapModule, RideHistoryPassengerModule

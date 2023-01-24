@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DTOList } from './DTO/DTOList';
 import { RideDTO } from './DTO/RideDTO';
-import { UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
+import { UserCardDTO, UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
 import { VehicleDTO } from './DTO/VehicleDTO';
 import { PassengerUpdateDTO } from './DTO/UserDTO';
 import { PasswordChangeDTO } from './DTO/UserDTO';
@@ -51,4 +51,17 @@ export class DriverDataService {
   getVehicle(driverId: number): Observable<VehicleDTO> {
     return this.http.get<VehicleDTO>(environment.apiBaseUrl + `api/vehicle/${driverId}`);
   }
+  searchDrivers(key:string):Observable<DTOList<UserCardDTO>> {
+    return this.http.get<DTOList<UserCardDTO>>(environment.apiBaseUrl+ `api/driver/search?key=${key}`);
+  }
+  getLatestDriverChange(driverId: number): Observable<DriverChangeDTO> {
+    return this.http.get<DriverChangeDTO>(environment.apiBaseUrl + `api/driver/changes/${driverId}`);
+  }
+  acceptChange(id: number): Observable<DriverChangeDTO> {
+    return this.http.put<DriverChangeDTO>(environment.apiBaseUrl + `api/driver/changes/${id}/accept`,null);
+  }
+  declineChange(id: number): Observable<DriverChangeDTO> {
+    return this.http.put<DriverChangeDTO>(environment.apiBaseUrl + `api/driver/changes/${id}/decline`,null);
+  }
+  
 }

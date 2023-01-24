@@ -1,6 +1,3 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
-
 <div class="big-wrapper">
     <div class="list-container">
         <h2>Ride history:</h2>
@@ -24,20 +21,26 @@
     </div>
     <div class="map-container">
         <app-map [markers]="markers" [disableClick]="true"></app-map>
-        <div *ngIf='selectedRide'class="wrapper-details">
-            <div class="comments"><h1>Passengers:</h1>
-                <div class="comment-list">
-                    <div *ngFor='let user of selectedRidePassengers' class="profil-pregled">
-                        <div class="profile-pic">
-                            <img class="actual-image-profile" src={{user.profilePicture}}>
-                        </div> 
-                        <div class="column">
-                            <h2>{{user.name}} {{user.surname}}</h2>
-                            <p class="email">{{user.email}}</p>
-                        </div>
+        <div *ngIf="selectedRide" class="info-container">
+
+            <div class="driver">
+                <div>
+                    <div class="profile-picture">
+                        <img class="actual-image-profile" src={{selectedRideDriver.profilePicture}}>
+                    </div>
+                    <div class="profile-name">
+                        <h1>Driver's name:</h1>
+                        <h1>{{selectedRideDriver.name}} {{selectedRideDriver.surname}}</h1>
                     </div>
                 </div>
+                <div>
+                    <h1>Driver rating: {{selectedRideDriverAvgRating}}</h1>
+                    <i class="fa" *ngFor="let star of stars" [ngClass]="{'fa-star': star <= selectedRideDriverAvgRating, 'fa-star-o': star > selectedRideDriverAvgRating}"></i>
+                    <h1>Vehicle rating: {{selectedRideVehicleAvgRating}}</h1>
+                    <i class="fa" *ngFor="let star of stars" [ngClass]="{'fa-star': star <= selectedRideVehicleAvgRating, 'fa-star-o': star > selectedRideVehicleAvgRating}"></i>
+                </div>
             </div>
+
             <div class="comments">
                 <h1>Comments</h1>
                 <div class="comment-list">
@@ -55,16 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="green-card pets-baby">
-                <p>Trajanje: {{selectedRideTime}} min</p>
-                <div class="row">
-                    <p>Bebe: </p><i *ngIf='selectedRide.babyTransport'class="fa fa-check inline"></i>
-                </div>
-                <div class="row">
-                    <p>Ljubimci: </p><i *ngIf='selectedRide.babyTransport'class="fa fa-check inline"></i>
-                </div>
-            </div>
+
         </div>
     </div>
-</div>    
-
+</div>

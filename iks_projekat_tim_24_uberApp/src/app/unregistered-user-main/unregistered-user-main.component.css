@@ -21,6 +21,24 @@
     height: 90%;
 }
 
+
+#vehicle-type-selection
+{
+    border-radius: 10px;
+    border-style: none;
+    margin: 5px;
+    height: 26px;
+    
+}
+
+#location-type-selection
+{
+  border-radius: 10px;
+  border-style: none;
+  margin: 5px;
+  height: 26px;
+}
+
 input{
     width: 100%;
     border-radius: 10px;
@@ -37,6 +55,7 @@ input{
     border-radius: 10px;
     margin:5px;
     padding:10px;
+    min-height: 50px;
 }
 .search-form{
     width: 90%;
@@ -190,10 +209,3 @@ button:hover{
     transform: rotate(45deg);
   }
 
-  #location-type-selection
-  {
-    border-radius: 10px;
-    border-style: none;
-    margin: 5px;
-    height: 26px;
-  }

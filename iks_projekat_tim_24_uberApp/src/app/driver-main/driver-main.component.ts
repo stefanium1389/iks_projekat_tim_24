@@ -26,11 +26,15 @@ export class DriverMainComponent implements OnInit {
   acceptedRide:RideDTO | null;
   inRide:boolean=false;
   _isActive:boolean=true;
-  time:number = 5;
   
   mapType = "ALL";
   driverId: number | null = null;
   markers: any[];
+  
+  time:number;
+  cost:number;
+  pets:boolean;
+  baby:boolean;
 
   constructor(public dialog: MatDialog, private whService: WorkingHourService, private http:HttpClient, private jwtService:JwtService) { }
 
@@ -219,5 +223,3 @@ export interface dtoRejection{
   reason:string;
   timeOfRejection:string;
 }
-
-

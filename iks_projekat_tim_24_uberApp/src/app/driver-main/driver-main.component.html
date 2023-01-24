@@ -9,23 +9,14 @@
 
         <div *ngIf='hasAcceptedRide()' class="driver-side-panel" id = "destination-parameters">
             
-                    <input type="text" placeholder="pocetna destinacija"/>
-                    <input type="text" placeholder="krajnja destinacija"/>
+                    <input [disabled]="true" type="text" placeholder="pocetna destinacija"/>
+                    <input [disabled]="true" type="text" placeholder="krajnja destinacija"/>
 
-                    <div class="estimate-box">
-                        <p class="estimate">Oko 10 minuta</p>
-                        <p class="estimate">Oko 300 RSD</p>
-                    </div>
-
-                    <div class="checkbox-parameters">
-                        <div class="checkbox-holder">
-                            <input type="checkbox"/>
-                            <span class="checkmark"></span><p>Bebe</p>
-                        </div>
-                        <div class="checkbox-holder">
-                            <input type="checkbox"/>
-                            <span class="checkmark"></span><p>Ljubimci</p>
-                        </div>
+                    <div *ngIf="time" class="estimate-box">
+                        <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
+                        <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
+                        <p *ngIf="pets" class="estimate">Prisutni ljubimci</p>
+                        <p *ngIf="baby" class="estimate">Prisutna beba</p>
                     </div>
         </div>
 
@@ -46,6 +37,6 @@
     </div>
 
     <div class = "map-container">
-        <app-map [mapType]="this.mapType" [driverId]="driverId" [markers]="markers"></app-map>
+        <app-map [disableClick]="true" [mapType]="this.mapType" [driverId]="driverId" [markers]="markers"></app-map>
     </div>
 </div>

@@ -13,8 +13,10 @@ import { ReportDialogComponent } from '../report-dialog/report-dialog.component'
 export class AdminMainComponent implements OnInit {
 
   inRide = true;
-  hasBaby = false;
-  hasPet = false;
+  time:number;
+  cost:number;
+  hasBaby:boolean;
+  hasPet:boolean;
 
   constructor(public dialog: MatDialog) {}
 

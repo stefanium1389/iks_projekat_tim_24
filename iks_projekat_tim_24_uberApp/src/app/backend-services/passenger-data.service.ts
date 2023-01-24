@@ -7,6 +7,7 @@ import { RideDTO } from './DTO/RideDTO';
 import { SuccessDTO } from './DTO/SuccessDTO';
 import { PasswordChangeDTO, UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
 import { PassengerUpdateDTO } from './DTO/UserDTO';
+import { UserCardDTO } from './DTO/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,15 @@ export class PassengerDataService {
   }
   updatePassengerPassword(id: number, dto: PasswordChangeDTO): Observable<HttpResponse<any>> {
     return this.http.put<HttpResponse<any>>(environment.apiBaseUrl + `api/user/${id}/changePassword`, dto, { observe: 'response' });
+  }
+  getAllUsers():Observable<DTOList<UserCardDTO>> {
+    return this.http.get<DTOList<UserCardDTO>>(environment.apiBaseUrl+`api/users`);
+  }
+  searchAll(key:string):Observable<DTOList<UserCardDTO>> {
+    return this.http.get<DTOList<UserCardDTO>>(environment.apiBaseUrl+ `api/user/search2?key=${key}`);
+  }
+  searchPassengers(key:string):Observable<DTOList<UserCardDTO>> {
+    return this.http.get<DTOList<UserCardDTO>>(environment.apiBaseUrl+ `api/passenger/search?key=${key}`);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  Input} from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +16,9 @@ import { UserDTO } from 'src/app/backend-services/DTO/UserDTO';
 import {PanicDialogComponent} from "../panic-dialog/panic-dialog.component";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
 import numbers = _default.defaults.animations.numbers;
+import { MapComponent } from '../map/map/map.component';
+import { FormGroup, FormControl } from '@angular/forms';
+import { TimeAndCost } from '../map/map/map.component';
 
 @Component({
   selector: 'app-passenger-main',
@@ -24,10 +27,11 @@ import numbers = _default.defaults.animations.numbers;
 })
 export class PassengerMainComponent implements OnInit {
 
+  @Input() timeAndDistance: { time: number, distance: number };
+  destinationForm: FormGroup;
+  @ViewChild(MapComponent) map !: any;
   inRide: boolean = true;
   isFavorited: boolean = false;
-  isTypeSelected: boolean = false;
-  selectedType: string = '';
   hasBaby = false;
   hasPet: boolean = false;
   selectedTime: string = "xddd";
@@ -36,9 +40,19 @@ export class PassengerMainComponent implements OnInit {
   ride: dtoRide | null;
   rideStatus: string | null;//PENDING, CANCELED, STARTED, ACCEPTED, FINISHED, REJECTED
   previousRideStatus:string | null = "xd";
-  
+  time: number;
+  cost: string;
+  locationType: string = "departure";
+  selectedType: string = 'STANDARD';
 
-  constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService, private jwtService: JwtService, private http: HttpClient) {}
+  constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService, private jwtService: JwtService, private http: HttpClient) 
+  {
+    this.destinationForm = new FormGroup({
+      start_location: new FormControl(),
+      end_location: new FormControl(),
+    })
+
+  }
 
   ngOnInit(): void {
     interval(5000).subscribe(() => {
@@ -67,13 +81,45 @@ export class PassengerMainComponent implements OnInit {
     });
   }
 
+  search(which: string) {
+    if (which === "start") {
+      this.map.search(this.destinationForm.get('start_location')?.value, "start");
+    }
+    else {
+      this.map.search(this.destinationForm.get('end_location')?.value, "end");
+    }
+
+  }
+
   toggleFavorite() {
     this.isFavorited = !this.isFavorited;
   }
 
   onTypeChange(type: string) {
-    this.selectedType = type;
-    this.isTypeSelected = true;
+    this.map.locationType = type;
+  }
+
+  onVehicleTypeChange(type: string) {
+    this.map.selectedVehicleType = type;
+    this.map.route()
+  }
+
+  locStartHandler(loc: string) {
+    this.destinationForm.get('start_location')?.setValue(loc);
+  }
+
+  locEndHandler(loc: string) {
+    this.destinationForm.get('end_location')?.setValue(loc);
+  }
+
+  timeAndDistanceHandler(timeAndCost: TimeAndCost) {
+    if (timeAndCost.time) {
+      this.time = timeAndCost.time;
+    }
+    if (timeAndCost.cost) {
+      this.cost = Number(timeAndCost.cost).toFixed(2);
+    }
+
   }
 
   @ViewChild('checkbox_option', {static: false}) checkbox_option: ElementRef;

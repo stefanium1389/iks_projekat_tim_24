@@ -56,6 +56,11 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { BackendServicesModule } from './backend-services/backend-services.module';
 import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
 import {PanicDialogComponent} from "./components/panic-dialog/panic-dialog.component";
+import { DriverProfileForAdminComponent } from './components/driver-profile-for-admin/driver-profile-for-admin.component';
+import { StatisticsAdminComponent } from './components/statistics-admin/statistics-admin.component';
+import { PassengerProfileAdminComponent } from './components/passenger-profile-admin/passenger-profile-admin.component';
+import { RideHistoryPassengerAdminComponent } from './ride-history/ride-history-passenger-admin/ride-history-passenger-admin.component';
+import { RideHistoryDriverAdminComponent } from './ride-history/ride-history-driver-admin/ride-history-driver-admin.component';
 
 const appRoutes : Routes =
 [
@@ -75,7 +80,11 @@ const appRoutes : Routes =
   {path: 'account-management', component:AdminViewUsersComponent},
   {path: 'activate', component:VerifyEmailComponent},
   {path: 'register-success',component:RegisterNotificationComponent},
-  {path: 'rate-ride',component:RateRideComponent}
+  {path: 'rate-ride',component:RateRideComponent},
+  {path: 'driver-profile-admin',component:DriverProfileForAdminComponent},
+  {path: 'passenger-profile-admin',component:PassengerProfileAdminComponent},
+  {path: 'user-ride-history-admin', component:RideHistoryPassengerAdminComponent},
+  {path: 'driver-ride-history-admin', component:RideHistoryDriverAdminComponent},
 ]
 
 @NgModule({
@@ -107,7 +116,10 @@ const appRoutes : Routes =
         SearchUserDialogComponent,
         FavouriteRoutesComponent,
         VerifyEmailComponent,
-        StringDialogComponent
+        StringDialogComponent,
+        DriverProfileForAdminComponent,
+        StatisticsAdminComponent,
+        PassengerProfileAdminComponent,
         
     ],
     providers: [UserService,{

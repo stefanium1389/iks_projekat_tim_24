@@ -17,6 +17,13 @@
     background-color: #2196F3;
 }
 
+img{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #2196F3;
+}
+
 .pic-and-name
 {
     display: flex;

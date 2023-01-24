@@ -7,6 +7,8 @@ import { FavoriteRideDTO, FavoriteRideResponseDTO } from './DTO/FavoriteRideDTO'
 import { ReasonDTO, RejectionDTO } from './DTO/RejectionDTO';
 import { RideDTO, RideRequestDTO } from './DTO/RideDTO';
 import { SuccessDTO } from './DTO/SuccessDTO';
+import { RideEstimationRequestDTO } from './DTO/RideDTO';
+import { EstimationDTO } from './DTO/RideDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +55,8 @@ export class RideDataService {
   }
   deleteFavorite(id:number):Observable<SuccessDTO>{
     return this.http.delete<SuccessDTO>(environment.apiBaseUrl+`api/ride/favorites/${id}`);
+  }
+  postEstimation(dto:RideEstimationRequestDTO): Observable<EstimationDTO> {
+    return this.http.post<EstimationDTO>(environment.apiBaseUrl+'api/unregisteredUser/', dto); 
   }
 }

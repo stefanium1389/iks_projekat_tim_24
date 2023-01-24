@@ -18,14 +18,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { TimeDialogComponent } from 'src/app/components/time-dialog/time-dialog.component';
 import { FavoriteRideDTO } from 'src/app/backend-services/DTO/FavoriteRideDTO';
 import { StringDialogComponent } from 'src/app/components/string-dialog/string-dialog.component';
+import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { defaultPicture } from 'src/app/user';
 
 @Component({
-  selector: 'app-ride-history-passenger',
-  templateUrl: './ride-history-passenger.component.html',
-  styleUrls: ['./ride-history-passenger.component.css']
+  selector: 'app-ride-history-passenger-admin',
+  templateUrl: './ride-history-passenger-admin.component.html',
+  styleUrls: ['./ride-history-passenger-admin.component.css']
 })
-export class RideHistoryPassengerComponent implements OnInit {
+export class RideHistoryPassengerAdminComponent implements OnInit {
   stars: number[] = [1, 2, 3, 4, 5];
   sort:string='endTime';
   @ViewChild(MapComponent) map !:any ;
@@ -43,7 +44,7 @@ export class RideHistoryPassengerComponent implements OnInit {
   constructor(private reviews:ReviewDataService,
      private passengerData:PassengerDataService,
      private driverData:DriverDataService,
-     private jwt: JwtService, 
+     private adminViewingService: AdminViewingService, 
      private route:Router, 
      private shareRideIdService:ShareRideIdService, 
      private snackBar: MatSnackBar, 
@@ -52,8 +53,8 @@ export class RideHistoryPassengerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(this.jwt.getId()){
-      const id:number = this.jwt.getId()!;
+    if(this.adminViewingService.getAdminViewingId()){
+      const id:number = this.adminViewingService.getAdminViewingId()!;
       const fromDate:string = new Date(1991,11,18).toISOString();
       const toDate:string = new Date().toISOString();
       this.passengerData.getPassengerRidesPaginated(id,0,1000,this.sort,fromDate,toDate).subscribe({
@@ -128,7 +129,7 @@ export class RideHistoryPassengerComponent implements OnInit {
   ];
   onChange(event: any){
     this.sort = event.target.value;
-    const id:number = this.jwt.getId()!;
+    const id:number = this.adminViewingService.getAdminViewingId()!;
     const fromDate:string = new Date(1991,11,18).toISOString();
     const toDate:string = new Date().toISOString();
     this.passengerData.getPassengerRidesPaginated(id,0,1000,this.sort,fromDate,toDate).subscribe({
@@ -137,91 +138,5 @@ export class RideHistoryPassengerComponent implements OnInit {
       }
     })
   }
-  openTimePicker(arg0: RideDTO) {
-    console.log("lmaooo");
-    const dialogRef = this.dialog.open(TimeDialogComponent, {
-      width: '250px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-
-      const dto: RideRequestDTO = {
-        locations: arg0.locations,
-        passengers: arg0.passengers,
-        vehicleType: arg0.vehicleType,
-        scheduledTime: result,
-        babyTransport: arg0.babyTransport,
-        petTransport: arg0.petTransport
-      }
-      this.rideData.postRide(dto).subscribe({
-        next: (result) => {
-          console.log(result)
-        },
-        error: (error) => {
-          this.snackBar.open(error.error.message, 'Ok', {
-            duration: 3000
-          });
-        }
-      });
-    });
-  }
-  createRide(arg0: RideDTO) {
-    console.log('kliknut sam :))');
-    //console.log(arg0);
-    const dto: RideRequestDTO = {
-      locations: arg0.locations,
-      passengers: arg0.passengers,
-      vehicleType: arg0.vehicleType,
-      scheduledTime: null,
-      babyTransport: arg0.babyTransport,
-      petTransport: arg0.petTransport
-    }
-
-    this.rideData.postRide(dto).subscribe({
-      next: (result) => {
-        console.log(result)
-      },
-      error: (error) => {
-        this.snackBar.open(error.error.message, 'Ok', {
-          duration: 3000
-        });
-      }
-    });
-  }
-  makeFavorite(ride:RideDTO){
-      const dialogRef = this.dialog.open(StringDialogComponent, {
-        width: '250px',
-        data: {}
-      });
   
-      dialogRef.afterClosed().subscribe(result => {
-        if(result == undefined || result.length < 1){
-          this.snackBar.open('Morate uneti naziv!', 'Ok', {
-            duration: 3000
-          });
-          return;
-        }
-        const fav:FavoriteRideDTO = {
-          favoriteName:result,
-          locations: ride.locations,
-          passengers:ride.passengers, 
-          vehicleType:ride.vehicleType,
-          babyTransport:ride.babyTransport,
-          petTransport:ride.petTransport
-        }
-    
-        this.rideData.postFavoriteRide(fav).subscribe({
-          next: (result) => {
-            console.log(result)
-          },
-          error: (error) => {
-            this.snackBar.open(error.error.message, 'Ok', {
-              duration: 3000
-            });
-          }
-        })
-      });
-    
-    
-  }
 }
