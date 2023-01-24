@@ -43,7 +43,7 @@ export class MapComponent implements AfterViewInit {
   @Input() disableClick = false;
   @Input() markers: any[];
   @Input() mapType = "EMPTY"; //ALL - sva vozila | RIDE - trenutna voznja | EMPTY - prazna mapa
-  @Input() vehicleId = null;
+  @Input() driverId: number | null = null;
 
   @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
   @Output() out_start_location = new EventEmitter<string>();
@@ -264,7 +264,7 @@ export class MapComponent implements AfterViewInit {
       {
         if(this.mapType === "ALL")
           this.vehicleLocations.push(vehicles[i].location);
-        else if(this.mapType === "RIDE" && vehicles[i].id === this.vehicleId)
+        else if(this.mapType === "RIDE" && vehicles[i].driverId === this.driverId)
           this.vehicleLocations.push(vehicles[i].location);
       }
     }

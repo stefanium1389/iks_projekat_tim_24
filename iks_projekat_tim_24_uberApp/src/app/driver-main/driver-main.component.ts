@@ -9,6 +9,7 @@ import { JwtService } from '../components/jwt-service.service';
 import { UserDTO } from '../backend-services/DTO/UserDTO';
 import {PanicDialogComponent} from "../components/panic-dialog/panic-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {RideDTO} from "../backend-services/DTO/RideDTO";
 
 
 @Component({
@@ -22,10 +23,14 @@ export class DriverMainComponent implements OnInit {
   workHours="";
   isDriverActive:boolean;
   isWorkingHourButtonDisabled:boolean;
-  acceptedRide:dtoRide | null;
+  acceptedRide:RideDTO | null;
   inRide:boolean=false;
   _isActive:boolean=true;
   time:number = 5;
+  
+  mapType = "ALL";
+  driverId: number | null = null;
+  markers: any[];
 
   constructor(public dialog: MatDialog, private whService: WorkingHourService, private http:HttpClient, private jwtService:JwtService) { }
 
@@ -149,18 +154,26 @@ export class DriverMainComponent implements OnInit {
     if(this.acceptedRide){
       return true;
     }
-    return true;
+    return false;
   }
 
   async getAcceptedRide(){
     const driverId = this.jwtService.getId();
     try{
-      const response = await this.http.get(environment.apiBaseUrl + `api/ride/driver/${driverId}/active`).toPromise() as dtoRide;
+      const response = await this.http.get(environment.apiBaseUrl + `api/ride/driver/${driverId}/active`).toPromise() as RideDTO;
       this.acceptedRide = response;
       console.log(this.acceptedRide)
+      
+      this.mapType = "RIDE";
+      this.driverId = this.acceptedRide.driver.id;
+      this.markers = [{lat:this.acceptedRide.locations[0].departure.latitude,lon:this.acceptedRide.locations[0].departure.longitude},{lat:this.acceptedRide.locations[0].destination.latitude,lon:this.acceptedRide.locations[0].destination.longitude}]
     }
     catch (HttpErrorResponse){
       this.acceptedRide = null;
+      
+      this.mapType = "ALL";
+      this.driverId = null;
+      this.markers = [];
     }
   }
   isActive(){
