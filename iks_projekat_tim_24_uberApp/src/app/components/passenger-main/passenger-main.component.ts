@@ -38,7 +38,7 @@ export class PassengerMainComponent implements OnInit {
   @Input() timeAndDistance: { time: number, distance: number };
   destinationForm: FormGroup;
   @ViewChild(MapComponent) map !: any;
-  inRide: boolean = true;
+  inRide: boolean;
   isFavorited: boolean = false;
   hasBaby = false;
   hasPet: boolean = false;
@@ -242,7 +242,11 @@ export class PassengerMainComponent implements OnInit {
 
     this.rideData.postRide(dto).subscribe({
       next: (result) => {
-        console.log(result)
+        this.inRide = true;
+        
+        this.snackBar.open("uspešno kreirana vožnja!", 'Ok', {
+          duration: 3000
+        });
       },
       error: (error) => {
         this.snackBar.open(error.error.message, 'Ok', {

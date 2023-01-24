@@ -7,17 +7,17 @@
 
             <form [formGroup]="destinationForm">
                 <div class="destination-container">
-                    <input type="text" placeholder="pocetna destinacija" formControlName="start_location" />
+                    <input [readOnly]="inRide" type="text" placeholder="pocetna destinacija" formControlName="start_location" />
                     <i (click)="search('start')" class="fa fa-search"></i>
                 </div>
                 <div class="destination-container">
-                    <input type="text" placeholder="krajnja destinacija" formControlName="end_location" />
+                    <input readonly="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
                     <i (click)="search('end')" class="fa fa-search"></i>
                 </div>
             </form>
-            <select [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
-                <option value="departure">Polazište</option>
-                <option value="destination" selected>Odredište</option>
+            <select  [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
+                <option  value="departure">Polazište</option>
+                <option  value="destination" selected>Odredište</option>
             </select>
 
             <div *ngIf="this.time" class="estimate-box">
@@ -27,7 +27,7 @@
 
             <div class="select-and-star">
 
-                <select [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
+                <select [disabled]="inRide" [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
                     <option value="STANDARD">Standardno</option>
                     <option value="LUXURY">Luksuzno</option>
                     <option value="VAN">Kombi</option>
@@ -43,8 +43,8 @@
             </div>
 
             <div class="action-buttons">
-                <button (click)="createRide()">Započni</button>
-                <button (click)="openTimePicker()">Zakazi</button>
+                <button [disabled]="inRide" (click)="createRide()">Započni</button>
+                <button [disabled]="inRide" (click)="openTimePicker()">Zakazi</button>
             </div>
             <div id="display-time" *ngIf="selectedTime">{{ "selektovano vreme: " + selectedTime }}</div>
         </div>
@@ -65,7 +65,7 @@
             <button (click)='openUserSearch()'>Dodaj</button>
         </div>
 
-        <div class="driver-side-panel" id="driver-accept-container">
+        <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
                 <div class="profile-pic"></div>
                 <p>Ime Prezime</p>

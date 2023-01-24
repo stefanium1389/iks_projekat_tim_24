@@ -25,6 +25,11 @@
     height: 90%;
 }
 
+button:disabled
+{
+    background-color: darkgray;
+}
+
 input{
     width: 100%;
     border-radius: 10px;
