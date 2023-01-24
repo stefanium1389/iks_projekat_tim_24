@@ -1,5 +1,6 @@
 <div class="wrapper">
     <h1 class="title">Notifikacije</h1>
+    <p class ="no-notifications" *ngIf="notifications.length===0">Trenutno nemate notifikacije.</p>
     <div class="list">
         <div *ngFor="let notification of notifications" class="notification {{notification.notificationType}} {{notification.read}}">
             <h1>{{notification.notificationType}}</h1>
