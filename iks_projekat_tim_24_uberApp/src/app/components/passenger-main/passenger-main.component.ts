@@ -41,8 +41,7 @@ export class PassengerMainComponent implements OnInit {
   isFavorited: boolean = false;
   hasBaby = false;
   hasPet: boolean = false;
-  selectedTime: string = "xddd";
-  showTime: boolean = false;
+  selectedTime: string;
   linkedUsers: UserDTO[] = [];
   ride: dtoRide | null;
   rideStatus: string | null;//PENDING, CANCELED, STARTED, ACCEPTED, FINISHED, REJECTED
@@ -248,7 +247,6 @@ export class PassengerMainComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The time picker dialog was closed');
       this.selectedTime = result;
-      this.showTime = true;
     });
   }
   

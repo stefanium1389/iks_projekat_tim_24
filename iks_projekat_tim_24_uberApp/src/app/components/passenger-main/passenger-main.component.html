@@ -46,7 +46,7 @@
                 <button>Započni</button>
                 <button (click)="openTimePicker()">Zakazi</button>
             </div>
-            <div id="display-time" *ngIf="showTime">{{ "selektovano vreme: " + selectedTime }}</div>
+            <div id="display-time" *ngIf="selectedTime">{{ "selektovano vreme: " + selectedTime }}</div>
         </div>
 
         <div class="driver-side-panel" id="linked-users">
