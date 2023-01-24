@@ -3,7 +3,7 @@ div{
     flex-direction: column;
 }
 div.list{
-    overflow-y:scroll;
+    overflow-y:auto;
     width: 33%;
     display: flex;
     align-self: center;

@@ -1,0 +1,68 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
+
+<div class="big-wrapper">
+    <div class="list-container">
+        <h2>Ride history:</h2>
+        <select class="sort-select" (change)="onChange($event)">
+        <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option></select>
+        <br>
+        <br>
+        <div class="scrollable">
+            <div *ngFor='let ride of rides' (click)='selectRide(ride)' class="item">
+                <div id="left-column" class="column">
+                    <i class="fa fa-arrow-right"></i>  <p class="inline">{{ride.locations[0].departure.address}}</p> <br>
+                    <i class="fa fa-arrow-left"></i>  <p class="inline">{{ride.locations[0].destination.address}}</p>
+                    <p>Cena: {{ride.totalCost}} RSD</p>
+                </div>
+                <div id="right-column" class="column">
+                    <p>{{ride.startTime}}</p>
+                    <p>{{ride.endTime}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="map-container">
+        <app-map [markers]="markers" [disableClick]="true"></app-map>
+        <div *ngIf='selectedRide'class="wrapper-details">
+            <div class="comments"><h1>Passengers:</h1>
+                <div class="comment-list">
+                    <div *ngFor='let user of selectedRidePassengers' class="profil-pregled">
+                        <div class="profile-pic"></div> 
+                        <div class="column">
+                            <h2>{{user.name}} {{user.surname}}</h2>
+                            <p class="email">{{user.email}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comments">
+                <h1>Comments</h1>
+                <div class="comment-list">
+                    <div *ngFor='let review of selectedRideReviews' class="comment">
+                        <div>
+                            <div class="comment-profile-picture">
+
+                            </div>
+                            <div class="comment-profile-name">
+                                <h2>{{review.passenger.email}}</h2>
+                            </div>                          
+                        </div>
+                        <p>{{review.comment}}</p>
+                        <h3 class="black">Rating: {{review.rating}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="green-card pets-baby">
+                <p>Trajanje: {{selectedRideTime}} min</p>
+                <div class="row">
+                    <p>Bebe: </p><i *ngIf='selectedRide.babyTransport'class="fa fa-check inline"></i>
+                </div>
+                <div class="row">
+                    <p>Ljubimci: </p><i *ngIf='selectedRide.babyTransport'class="fa fa-check inline"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+

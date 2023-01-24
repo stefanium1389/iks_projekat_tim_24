@@ -12,7 +12,7 @@
 
       <button *ngIf="this.thereIsChange" (click)="saveChanges()">Sačuvaj izmene</button>
       <button *ngIf="this.thereIsChange" (click)="denyChanges()">Odabaci izmene</button>
-      <button>Istorija vožnji</button>
+      <button (click)="onRouting('/driver-ride-history-admin')">Istorija vožnji</button>
 
     </div>
 

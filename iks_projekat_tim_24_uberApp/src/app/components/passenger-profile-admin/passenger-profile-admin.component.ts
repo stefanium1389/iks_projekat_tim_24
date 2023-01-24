@@ -8,6 +8,7 @@ import { PassengerDataService } from 'src/app/backend-services/passenger-data.se
 import { PassengerUpdateDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { PasswordChangeDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-passenger-profile-admin',
@@ -33,7 +34,7 @@ export class PassengerProfileAdminComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog, private adminViewingService : AdminViewingService, private passengerService : PassengerDataService) { }
+  constructor(public dialog: MatDialog, private adminViewingService : AdminViewingService, private passengerService : PassengerDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;
@@ -94,4 +95,15 @@ export class PassengerProfileAdminComponent implements OnInit {
       console.log('The dialog was closed', result);
     });
   }
+
+  onRouting(route : string)
+  {
+    this.router.navigate([route]).then(() => {
+      window.location.reload();
+    });
+  }
+
+
 }
+
+

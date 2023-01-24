@@ -6,6 +6,7 @@ import { RideListItemComponent } from './ride-list-item/ride-list-item.component
 import { MapModule } from '../components/map/map/map.module';
 import { RideHistoryDetailsComponent } from './ride-history-details/ride-history-details.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { RideHistoryPassengerAdminComponent } from './ride-history-passenger-admin/ride-history-passenger-admin.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MatMenuModule } from '@angular/material/menu';
     RideHistoryPassengerComponent,
     RideListComponent,
     RideListItemComponent,
-    RideHistoryDetailsComponent
+    RideHistoryDetailsComponent,
+    RideHistoryPassengerAdminComponent
   ],
   imports: [
     CommonModule, MapModule

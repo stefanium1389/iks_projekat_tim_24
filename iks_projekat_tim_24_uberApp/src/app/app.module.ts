@@ -59,6 +59,8 @@ import {PanicDialogComponent} from "./components/panic-dialog/panic-dialog.compo
 import { DriverProfileForAdminComponent } from './components/driver-profile-for-admin/driver-profile-for-admin.component';
 import { StatisticsAdminComponent } from './components/statistics-admin/statistics-admin.component';
 import { PassengerProfileAdminComponent } from './components/passenger-profile-admin/passenger-profile-admin.component';
+import { RideHistoryPassengerAdminComponent } from './ride-history/ride-history-passenger-admin/ride-history-passenger-admin.component';
+import { RideHistoryDriverAdminComponent } from './ride-history/ride-history-driver-admin/ride-history-driver-admin.component';
 
 const appRoutes : Routes =
 [
@@ -81,6 +83,8 @@ const appRoutes : Routes =
   {path: 'rate-ride',component:RateRideComponent},
   {path: 'driver-profile-admin',component:DriverProfileForAdminComponent},
   {path: 'passenger-profile-admin',component:PassengerProfileAdminComponent},
+  {path: 'user-ride-history-admin', component:RideHistoryPassengerAdminComponent},
+  {path: 'driver-ride-history-admin', component:RideHistoryDriverAdminComponent},
 ]
 
 @NgModule({
@@ -115,7 +119,7 @@ const appRoutes : Routes =
         StringDialogComponent,
         DriverProfileForAdminComponent,
         StatisticsAdminComponent,
-        PassengerProfileAdminComponent
+        PassengerProfileAdminComponent,
         
     ],
     providers: [UserService,{

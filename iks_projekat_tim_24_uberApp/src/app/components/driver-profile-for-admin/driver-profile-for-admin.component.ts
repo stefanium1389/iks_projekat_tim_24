@@ -10,6 +10,7 @@ import { DriverDataService } from 'src/app/backend-services/driver-data-service.
 import { VehicleChangeDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { DriverChangeDTO } from 'src/app/backend-services/DTO/DriverChangeDTO';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-driver-profile-for-admin',
@@ -49,7 +50,7 @@ export class DriverProfileForAdminComponent implements OnInit {
   thereIsChange:boolean = false;
   change: DriverChangeDTO;
 
-  constructor(public dialog: MatDialog, private adminViewingService: AdminViewingService, private driverService : DriverDataService) { }
+  constructor(public dialog: MatDialog, private adminViewingService: AdminViewingService, private driverService : DriverDataService, private router:Router) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;
@@ -211,5 +212,15 @@ export class DriverProfileForAdminComponent implements OnInit {
       console.log('The dialog was closed', result);
     });
   }
+
+  onRouting(route : string)
+  {
+    this.router.navigate([route]).then(() => {
+      window.location.reload();
+    });
+  }
+
+
+
 }
 

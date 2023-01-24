@@ -14,6 +14,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {NotificationDTO} from "../../backend-services/DTO/NotificationDTO";
 import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
 import { defaultPicture } from 'src/app/user';
+import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class NavbarRegisteredComponent implements OnInit {
   private stompClient: any;
   isLoaded: boolean = false;
 
-  constructor(private jwtService : JwtService, private router: Router, private whService: WorkingHourService, private navbarRegisteredCall: NavbarRegisteredService) { }
+  constructor(private jwtService : JwtService, private router: Router,private AdminViewingService : AdminViewingService ,private whService: WorkingHourService, private navbarRegisteredCall: NavbarRegisteredService) { }
 
   ngOnInit(): void {
     this.loadPicture();
@@ -102,6 +103,7 @@ export class NavbarRegisteredComponent implements OnInit {
       console.log("logout i whservice")
       await this.whService.onLogout(); //ovde može doći do problema
     }
+    this.AdminViewingService.logout();
     this.jwtService.logout();
     this.onClickOption("");
   }
