@@ -316,7 +316,6 @@ export class MapComponent implements AfterViewInit {
       this.vehicleMarkers[i].removeFrom(this.map);
     this.vehicleMarkers = [];
     for (let i = 0; i < this.vehicleLocations.length; i++) {
-      console.log(this.vehicleLocations);
       let lat = this.vehicleLocations[i].latitude;
       let lng = this.vehicleLocations[i].longitude;
       this.vehicleMarkers[i] = new L.Marker([lat, lng], {icon: this.carIcon});

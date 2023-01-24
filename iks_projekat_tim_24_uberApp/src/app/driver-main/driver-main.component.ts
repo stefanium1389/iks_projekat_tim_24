@@ -40,7 +40,6 @@ export class DriverMainComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    
     interval(5000).subscribe(() => {
       this.getAcceptedRide();
     });
@@ -167,10 +166,10 @@ export class DriverMainComponent implements OnInit {
       const response = await this.http.get(environment.apiBaseUrl + `api/ride/driver/${driverId}/active`).toPromise() as RideDTO;
       this.acceptedRide = response;
       console.log(this.acceptedRide)
-      this.cost = response.totalCost;
-      this.time = response.estimatedTimeInMinutes;
-      this.baby = response.babyTransport;
-      this.pets = response.petTransport;
+      this.cost = this.acceptedRide.totalCost;
+      this.time = this.acceptedRide.estimatedTimeInMinutes;
+      this.baby = this.acceptedRide.babyTransport;
+      this.pets = this.acceptedRide.petTransport;
       
       this.mapType = "RIDE";
       this.driverId = this.acceptedRide.driver.id;
@@ -203,27 +202,4 @@ export class DriverMainComponent implements OnInit {
     });
   }
 
-}
-export interface dtoRide{
-  id:number;
-  startTime:string;
-  endTime:string;
-  totalCost:number;
-  driver:UserDTO;
-  passengers:UserDTO[];
-  estimatedTimeInMinutes:number;
-  vehicleType:string;
-  babyTransport:boolean;
-  petTransport:boolean;
-  locations:dtoLocation[];
-  status:string;
-}
-export interface dtoLocation{
-  address:string;
-  latitude:number;
-  longitude:number;
-}
-export interface dtoRejection{
-  reason:string;
-  timeOfRejection:string;
 }
