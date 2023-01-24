@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TimeDialogComponent } from 'src/app/components/time-dialog/time-dialog.component';
 import { FavoriteRideDTO } from 'src/app/backend-services/DTO/FavoriteRideDTO';
 import { StringDialogComponent } from 'src/app/components/string-dialog/string-dialog.component';
+import { defaultPicture } from 'src/app/user';
 
 @Component({
   selector: 'app-ride-history-passenger',
@@ -69,6 +70,10 @@ export class RideHistoryPassengerComponent implements OnInit {
     this.driverData.getDriverById(ride.driver.id).subscribe({
       next: (result) => {
         this.selectedRideDriver = result;
+        if (result.profilePicture==null)
+        {
+          this.selectedRideDriver.profilePicture=defaultPicture;
+        }
       }
     })
     this.reviews.getReviewsByRideId(ride.id).subscribe({

@@ -19,6 +19,8 @@ import { TimeDialogComponent } from 'src/app/components/time-dialog/time-dialog.
 import { FavoriteRideDTO } from 'src/app/backend-services/DTO/FavoriteRideDTO';
 import { StringDialogComponent } from 'src/app/components/string-dialog/string-dialog.component';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
+import { defaultPicture } from 'src/app/user';
+
 @Component({
   selector: 'app-ride-history-passenger-admin',
   templateUrl: './ride-history-passenger-admin.component.html',
@@ -69,6 +71,10 @@ export class RideHistoryPassengerAdminComponent implements OnInit {
     this.driverData.getDriverById(ride.driver.id).subscribe({
       next: (result) => {
         this.selectedRideDriver = result;
+        if (result.profilePicture==null)
+        {
+          this.selectedRideDriver.profilePicture=defaultPicture;
+        }
       }
     })
     this.reviews.getReviewsByRideId(ride.id).subscribe({

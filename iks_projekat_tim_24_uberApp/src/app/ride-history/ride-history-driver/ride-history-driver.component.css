@@ -66,6 +66,13 @@ div.row{
     background-color: #2196F3;
     margin-right: 0.1em;
 }
+
+.actual-image-profile
+{
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+}
 p{
     width: fit-content;
     color: white;

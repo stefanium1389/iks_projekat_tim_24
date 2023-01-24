@@ -9,6 +9,7 @@ import { ReviewDataService } from 'src/app/backend-services/review-data.service'
 import { JwtService } from 'src/app/components/jwt-service.service';
 import { MapComponent } from 'src/app/components/map/map/map.component';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
+import { defaultPicture } from 'src/app/user';
 
 @Component({
   selector: 'app-ride-history-driver-admin',
@@ -67,6 +68,9 @@ export class RideHistoryDriverAdminComponent implements OnInit {
     for(let i of ride.passengers){
       this.passengerData.getPassengerById(i.id).subscribe({
         next: (result) => {
+          if (result.profilePicture == null) {
+            result.profilePicture = defaultPicture;
+          }
           this.selectedRidePassengers.push(result);
         }
       })

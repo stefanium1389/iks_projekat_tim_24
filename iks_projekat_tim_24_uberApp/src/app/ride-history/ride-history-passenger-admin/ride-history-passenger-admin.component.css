@@ -53,6 +53,13 @@ div.profile-picture
     background-color: #00B4FF;
 }
 
+.actual-image-profile
+{
+    height: 80px;
+    width: 80px;
+    border-radius: 50px;
+}
+
 div.profile-name
 {
     display: inline-block;
