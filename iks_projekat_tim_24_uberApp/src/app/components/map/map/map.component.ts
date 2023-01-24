@@ -29,8 +29,6 @@ export class MapComponent implements AfterViewInit {
   locationType: string = "departure";
   name_of_start_location : string;
   name_of_end_location : string;
-  babies : boolean =false;
-  pets : boolean = false;
   selectedVehicleType : string = "STANDARD";
 
   @Input() disableClick = false;
@@ -113,6 +111,7 @@ export class MapComponent implements AfterViewInit {
 
   registerOnClick(): void {
 
+    
     if (this.disableClick) {
       return;
     }
@@ -214,8 +213,8 @@ export class MapComponent implements AfterViewInit {
         {
           locations: [route],
           vehicleType: this.selectedVehicleType,
-          babyTransport: this.babies,
-          petTransport: this.pets
+          babyTransport: false,
+          petTransport: false
         }
 
         this.rideService.postEstimation(estimation).subscribe(
