@@ -25,6 +25,11 @@
     height: 90%;
 }
 
+button:disabled
+{
+    background-color: darkgray;
+}
+
 input{
     width: 100%;
     border-radius: 10px;
@@ -86,6 +91,13 @@ button:hover{
     height: 50px;
     border-radius: 25px;
     background-color: #2196F3;
+}
+
+.actual-image
+{
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
 }
 
 .profil-pregled{
@@ -234,6 +246,6 @@ button:hover{
 
   .linked-users-container{
     width: 100%;
-    height: 5em;
-    overflow-y: scroll;
+    height: 8em;
+    overflow-y: auto;
   }

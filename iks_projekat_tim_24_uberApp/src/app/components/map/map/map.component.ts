@@ -21,6 +21,12 @@ export interface TimeAndCost {
   cost: number;
 }
 
+export interface LocationInfo {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -54,9 +60,10 @@ export class MapComponent implements AfterViewInit {
   @Input() driverId: number | null = null;
   
   @Output() out_timeAndDistance = new EventEmitter<TimeAndCost>();
-  @Output() out_start_location = new EventEmitter<string>();
-  @Output() out_end_location = new EventEmitter<string>();
   
+  @Output() out_start_location = new EventEmitter<LocationInfo>();
+  @Output() out_end_location = new EventEmitter<LocationInfo>();
+
   constructor(private mapService: MapService, private rideService: RideDataService) {
   }
   
@@ -160,16 +167,34 @@ export class MapComponent implements AfterViewInit {
     }
     
     this.map.on('click', (e: any) => {
+
+      if (this.disableClick) {
+        return;
+      }
+
       const coord = e.latlng;
       const lat = coord.lat;
       const lng = coord.lng;
       this.mapService.reverseSearch(lat, lng).subscribe((res) => {
         console.log(res.display_name);
         if (this.locationType === "departure") {
-          this.out_start_location.emit(res.display_name);
+          let info : LocationInfo = 
+          {
+            name: res.display_name,
+            lat:coord.lat,
+            lng:coord.lng,
+          }
+          this.out_start_location.emit(info);
           this.name_of_start_location = res.display_name;
-        } else {
-          this.out_end_location.emit(res.display_name);
+        }
+        else {
+          let info : LocationInfo = 
+          {
+            name: res.display_name,
+            lat:coord.lat,
+            lng:coord.lng,
+          }
+          this.out_end_location.emit(info);
           this.name_of_end_location = res.display_name;
         }
         
