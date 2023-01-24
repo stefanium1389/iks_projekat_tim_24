@@ -39,7 +39,7 @@ export class PassengerMainComponent implements OnInit {
   @Input() timeAndDistance: { time: number, distance: number };
   destinationForm: FormGroup;
   @ViewChild(MapComponent) map !: any;
-  inRide: boolean;
+  inRide: boolean = false;
   isFavorited: boolean = false;
   hasBaby = false;
   hasPet: boolean = false;
@@ -83,9 +83,11 @@ export class PassengerMainComponent implements OnInit {
         this.getRide();
         if(this.ride) {
           this.rideStatus = this.ride.status;
+          this.inRide = true;
         }
         else
         {
+          this.inRide = false;
           this.rideStatus = null;
         }
     });
@@ -238,7 +240,6 @@ export class PassengerMainComponent implements OnInit {
 
     this.rideData.postRide(dto).subscribe({
       next: (result) => {
-        this.inRide = true;
         this.setDriver(result);
         this.setVehicle(result);
         this.snackBar.open("uspešno kreirana vožnja!", 'Ok', {
@@ -349,6 +350,7 @@ export class PassengerMainComponent implements OnInit {
       console.log(this.ride)
       this.cost = this.ride.totalCost;
       this.time = this.ride.estimatedTimeInMinutes;
+      
       this.mapType = "RIDE";
       this.driverId = this.ride.driver.id;
       this.markers = [{lat:this.ride.locations[0].departure.latitude,lon:this.ride.locations[0].departure.longitude},{lat:this.ride.locations[0].destination.latitude,lon:this.ride.locations[0].destination.longitude}]

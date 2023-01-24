@@ -42,6 +42,13 @@ export class DriverMainComponent implements OnInit {
   {
     interval(5000).subscribe(() => {
       this.getAcceptedRide();
+      if(this.acceptedRide) {
+        this.inRide = true;
+      }
+      else
+      {
+        this.inRide = false;
+      }
     });
 
     this.whService.statusChanged.subscribe(status => {
@@ -132,7 +139,6 @@ export class DriverMainComponent implements OnInit {
       const id = this.acceptedRide.id;
       try{
         this.http.put(environment.apiBaseUrl + `api/ride/${id}/start`, {}).toPromise();
-        this.inRide=true;
       }
       catch (HttpErrorResponse){
         console.error(HttpErrorResponse);
@@ -145,7 +151,6 @@ export class DriverMainComponent implements OnInit {
       const id = this.acceptedRide.id;
       try{
         this.http.put(environment.apiBaseUrl + `api/ride/${id}/end`, {}).toPromise();
-        this.inRide=true;
       }
       catch (HttpErrorResponse){
         console.error(HttpErrorResponse);
