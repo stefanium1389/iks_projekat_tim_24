@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { defaultPicture, User } from 'src/app/user';
 import { SearchUserDialogComponent } from '../search-user-dialog/search-user-dialog.component';
@@ -10,7 +9,6 @@ import { LinkUsersService } from 'src/app/services/link-users.service';
 import { interval } from 'rxjs';
 import { JwtService } from '../jwt-service.service';
 import { environment } from 'src/environments/environment';
-import { dtoRide } from 'src/app/driver-main/driver-main.component';
 import { HttpClient } from '@angular/common/http';
 import { UserDTO, UserRef } from 'src/app/backend-services/DTO/UserDTO';
 import { PanicDialogComponent } from "../panic-dialog/panic-dialog.component";
@@ -41,19 +39,25 @@ export class PassengerMainComponent implements OnInit {
   @Input() timeAndDistance: { time: number, distance: number };
   destinationForm: FormGroup;
   @ViewChild(MapComponent) map !: any;
-  inRide: boolean;
+  inRide: boolean = false;
   isFavorited: boolean = false;
   hasBaby = false;
   hasPet: boolean = false;
   selectedTime: string;
   linkedUsers: UserDTO[] = [];
-  ride: dtoRide | null;
+  ride: RideDTO | null;
   rideStatus: string | null;//PENDING, CANCELED, STARTED, ACCEPTED, FINISHED, REJECTED
   previousRideStatus: string | null = "xd";
   time: number;
-  cost: string;
+  cost: number;
   locationType: string = "departure";
   selectedType: string = 'STANDARD';
+  
+  mapType = "ALL";
+  driverId: number | null = null;
+  markers: any[];
+  disabledClick = false;
+  
   name_of_start_location: string;
   name_of_end_location: string;
   start_location_lat: number;
@@ -71,34 +75,22 @@ export class PassengerMainComponent implements OnInit {
       start_location: new FormControl(),
       end_location: new FormControl(),
     })
-
   }
 
-  ngOnInit(): void {
-    /*interval(5000).subscribe(() => {
-      this.getRide();
-      if (this.ride) {
-        this.rideStatus = this.ride.status;
-      }
-      else {
-        this.rideStatus = null;
-      }
-      if (this.previousRideStatus != this.rideStatus) {
-        this.previousRideStatus = this.rideStatus;
-        if (this.ride?.status == "PENDING") {
-          alert('Voznja je kreirana i na cekanju');
+  ngOnInit(): void
+  {
+    interval(5000).subscribe(() => {
+        this.getRide();
+        if(this.ride) {
+          this.rideStatus = this.ride.status;
+          this.inRide = true;
         }
-        if (this.ride?.status == "ACCEPTED") {
-          alert('Voznja je prihvacena');
+        else
+        {
+          this.inRide = false;
+          this.rideStatus = null;
         }
-        if (this.ride?.status == "REJECTED") {
-          alert('Voznja je odbijena');
-        }
-        if (this.ride?.status == "STARTED") {
-          alert('Voznja je pocela');
-        }
-      }
-    });*/
+    });
   }
 
   search(which: string) {
@@ -248,7 +240,6 @@ export class PassengerMainComponent implements OnInit {
 
     this.rideData.postRide(dto).subscribe({
       next: (result) => {
-        this.inRide = true;
         this.setDriver(result);
         this.setVehicle(result);
         this.snackBar.open("uspešno kreirana vožnja!", 'Ok', {
@@ -293,7 +284,7 @@ export class PassengerMainComponent implements OnInit {
       this.time = timeAndCost.time;
     }
     if (timeAndCost.cost) {
-      this.cost = Number(timeAndCost.cost).toFixed(2);
+      this.cost = Number(timeAndCost.cost);
     }
 
   }
@@ -350,14 +341,28 @@ export class PassengerMainComponent implements OnInit {
     this.linkedUsers = this.linkUsersService.usersList;
   }
 
-  async getRide() {
+  async getRide()
+  {
     const userId = this.jwtService.getId();
-    try {
-      const response = await this.http.get(environment.apiBaseUrl + `api/ride/passenger/${userId}/active`).toPromise() as dtoRide;
+    try{
+      const response = await this.http.get(environment.apiBaseUrl + `api/ride/passenger/${userId}/active`).toPromise() as RideDTO;
       this.ride = response;
+      console.log(this.ride)
+      this.cost = this.ride.totalCost;
+      this.time = this.ride.estimatedTimeInMinutes;
+      
+      this.mapType = "RIDE";
+      this.driverId = this.ride.driver.id;
+      this.markers = [{lat:this.ride.locations[0].departure.latitude,lon:this.ride.locations[0].departure.longitude},{lat:this.ride.locations[0].destination.latitude,lon:this.ride.locations[0].destination.longitude}]
+      this.disabledClick = true;
     }
-    catch (HttpErrorResponse) {
-      this.ride = null;
+    catch (HttpErrorResponse){
+      this.ride=null;
+  
+      this.mapType = "ALL";
+      this.driverId = null;
+      this.markers = [];
+      this.disabledClick = false;
     }
   }
 
