@@ -27,3 +27,15 @@ export interface RideRequestDTO{
     petTransport:boolean;
     scheduledTime:string | null;
 }
+
+export interface RideEstimationRequestDTO{
+    locations:RouteDTO[];
+    vehicleType:string;
+    babyTransport:boolean;
+    petTransport:boolean;
+}
+
+export interface EstimationDTO{
+    estimatedTimeInMinutes: number,
+    estimatedCost: number,
+}
