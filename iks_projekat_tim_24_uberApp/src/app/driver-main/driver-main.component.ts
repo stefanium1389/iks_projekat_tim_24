@@ -167,6 +167,10 @@ export class DriverMainComponent implements OnInit {
       const response = await this.http.get(environment.apiBaseUrl + `api/ride/driver/${driverId}/active`).toPromise() as RideDTO;
       this.acceptedRide = response;
       console.log(this.acceptedRide)
+      this.cost = response.totalCost;
+      this.time = response.estimatedTimeInMinutes;
+      this.baby = response.babyTransport;
+      this.pets = response.petTransport;
       
       this.mapType = "RIDE";
       this.driverId = this.acceptedRide.driver.id;

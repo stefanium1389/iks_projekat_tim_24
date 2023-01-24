@@ -57,7 +57,8 @@ export class MapComponent implements AfterViewInit {
   @Output() out_start_location = new EventEmitter<string>();
   @Output() out_end_location = new EventEmitter<string>();
   
-  constructor(private mapService: MapService, private rideService: RideDataService) { }
+  constructor(private mapService: MapService, private rideService: RideDataService) {
+  }
   
   ngAfterViewInit(): void {
     let DefaultIcon = L.icon({
@@ -295,15 +296,12 @@ export class MapComponent implements AfterViewInit {
   }
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
-  handleResult(vehiclesList: { body: string; })
-  {
-    if (vehiclesList.body)
-    {
+  handleResult(vehiclesList: { body: string; }) {
+    if (vehiclesList.body) {
       this.vehicleLocations = [];
       let vehiclesResult: DTOList<VehicleDTO> = JSON.parse(vehiclesList.body);
       let vehicles = vehiclesResult.results;
-      for (let i = 0; i < vehicles.length; i++)
-      {
+      for (let i = 0; i < vehicles.length; i++) {
         if (this.mapType === "ALL")
           this.vehicleLocations.push(vehicles[i].location);
         else if (this.mapType === "RIDE" && vehicles[i].driverId === this.driverId)
@@ -313,13 +311,11 @@ export class MapComponent implements AfterViewInit {
     this.drawVehicles();
   }
   
-  drawVehicles()
-  {
+  drawVehicles() {
     for (let i = 0; i < this.vehicleMarkers.length; i++)
       this.vehicleMarkers[i].removeFrom(this.map);
     this.vehicleMarkers = [];
-    for (let i = 0; i < this.vehicleLocations.length; i++)
-    {
+    for (let i = 0; i < this.vehicleLocations.length; i++) {
       console.log(this.vehicleLocations);
       let lat = this.vehicleLocations[i].latitude;
       let lng = this.vehicleLocations[i].longitude;
