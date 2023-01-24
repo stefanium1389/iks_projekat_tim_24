@@ -67,21 +67,23 @@
 
         <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
-                <div class="profile-pic"></div>
-                <p>Ime Prezime</p>
+                <div class="profile-pic">
+                    <img class="actual-image" alt="defaultPicture" src={{driver.profilePicture}}>
+                </div>
+                <p>{{driver.name +" "+driver.surname}}</p>
                 <div class="scoring">
-                    <p> 4.4</p>
+                    <p>{{4.77}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
             <div class="profil-pregled">
-                <p>Ford Fiesta</p>
+                <p>{{vehicle.model}}</p>
                 <div class="scoring">
-                    <p> 4.9</p>
+                    <p>{{4.38}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-            <p *ngIf="!inRide">Pristiže u 5 minuta</p>
+            <p *ngIf="!inRide">Pristiže u 7 minuta</p>
             <button *ngIf="!inRide">Odustani</button>
             <div *ngIf="inRide" class="u-voznji">
                 <button (click)="openDialog()">Prijavi</button>
@@ -92,6 +94,6 @@
     </div>
 
     <div class="map-container">
-        <app-map (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
+        <app-map [disableClick]="inRide" (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
     </div>
 </div>

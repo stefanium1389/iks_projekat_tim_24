@@ -123,6 +123,11 @@ export class MapComponent implements AfterViewInit {
     }
 
     this.map.on('click', (e: any) => {
+
+      if (this.disableClick) {
+        return;
+      }
+
       const coord = e.latlng;
       const lat = coord.lat;
       const lng = coord.lng;

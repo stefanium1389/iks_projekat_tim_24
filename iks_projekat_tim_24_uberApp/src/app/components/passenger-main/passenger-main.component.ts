@@ -27,6 +27,9 @@ import { RideDataService } from 'src/app/backend-services/ride-data.service';
 import { GeoCoordinateDTO } from 'src/app/backend-services/DTO/RouteDTO';
 import { RouteDTO } from 'src/app/backend-services/DTO/RouteDTO';
 import { RideRequestDTO } from 'src/app/backend-services/DTO/RideDTO';
+import { DriverDataService } from 'src/app/backend-services/driver-data-service.service';
+import { VehicleDataService } from 'src/app/backend-services/vehicle-data.service';
+import { VehicleDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 
 @Component({
   selector: 'app-passenger-main',
@@ -58,9 +61,12 @@ export class PassengerMainComponent implements OnInit {
   start_location_lng: number;
   end_location_lng: number;
   alreadyFavorite: boolean = false;
+  driver:UserDTO;
+  vehicle:VehicleDTO;
 
   constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService,
-    private jwtService: JwtService, private http: HttpClient, private snackBar: MatSnackBar, private rideData: RideDataService) {
+    private jwtService: JwtService, private http: HttpClient, private snackBar: MatSnackBar,
+    private rideData: RideDataService , private driverDataService: DriverDataService, private vehicleDataService : VehicleDataService) {
     this.destinationForm = new FormGroup({
       start_location: new FormControl(),
       end_location: new FormControl(),
@@ -69,7 +75,7 @@ export class PassengerMainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    interval(5000).subscribe(() => {
+    /*interval(5000).subscribe(() => {
       this.getRide();
       if (this.ride) {
         this.rideStatus = this.ride.status;
@@ -92,7 +98,7 @@ export class PassengerMainComponent implements OnInit {
           alert('Voznja je pocela');
         }
       }
-    });
+    });*/
   }
 
   search(which: string) {
@@ -243,7 +249,8 @@ export class PassengerMainComponent implements OnInit {
     this.rideData.postRide(dto).subscribe({
       next: (result) => {
         this.inRide = true;
-        
+        this.setDriver(result);
+        this.setVehicle(result);
         this.snackBar.open("uspešno kreirana vožnja!", 'Ok', {
           duration: 3000
         });
@@ -384,4 +391,32 @@ export class PassengerMainComponent implements OnInit {
     return newDate.toISOString()
   }
   
+  setDriver(dto : RideDTO)
+  {
+    let driver = this.driverDataService.getDriverById(dto.driver.id).subscribe({
+      next: (result) => {
+        this.driver = result;
+      },
+      error: (error) => {
+        this.snackBar.open(error.error.message, 'Ok', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  setVehicle(dto : RideDTO)
+  {
+    let vehicle = this.vehicleDataService.getVehicleByDriverId(dto.driver.id).subscribe({
+      next: (result) => {
+        this.vehicle = result;
+      },
+      error: (error) => {
+        this.snackBar.open(error.error.message, 'Ok', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
 }
