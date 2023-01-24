@@ -17,13 +17,18 @@
                 <option value="departure">Polazište</option>
                 <option value="destination" selected>Odredište</option>
             </select>
+            <select [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
+                <option value="STANDARD">Standardno</option>
+                <option value="LUXURY">Luksuzno</option>
+                <option value="VAN">Kombi</option>
+            </select>
 
-            <div class="estimate-box">
-                <p class="estimate">Oko {{ time }} minuta</p>
-                <p class="estimate">Oko {{ distance }} km</p>
+            <div *ngIf="this.time" class="estimate-box">
+                <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
+                <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
             </div>
 
-                <button>Zapocni</button>
+                <button [routerLink]="['/login']">Zapocni</button>
         </div>
     </div>
 

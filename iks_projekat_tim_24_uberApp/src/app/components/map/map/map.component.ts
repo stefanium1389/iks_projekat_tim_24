@@ -4,10 +4,13 @@ import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
 import { EventEmitter, Input, Output } from '@angular/core';
 import { icon } from 'leaflet';
+import { GeoCoordinateDTO, RouteDTO } from 'src/app/backend-services/DTO/RouteDTO';
+import { RideEstimationRequestDTO } from 'src/app/backend-services/DTO/RideDTO';
+import { RideDataService } from 'src/app/backend-services/ride-data.service';
 
-export interface TimeAndDistance {
+export interface TimeAndCost {
   time: number;
-  distance: number;
+  cost: number;
 }
 
 @Component({
@@ -24,15 +27,20 @@ export class MapComponent implements AfterViewInit {
   totalDistance: number;
   totalTime: number;
   locationType: string = "departure";
+  name_of_start_location : string;
+  name_of_end_location : string;
+  babies : boolean =false;
+  pets : boolean = false;
+  selectedVehicleType : string = "STANDARD";
 
   @Input() disableClick = false;
   @Input() markers: any[];
 
-  @Output() out_timeAndDistance = new EventEmitter<TimeAndDistance>();
+  @Output() out_timeAndDistance = new EventEmitter<TimeAndCost>();
   @Output() out_start_location = new EventEmitter<string>();
   @Output() out_end_location = new EventEmitter<string>();
 
-  constructor(private mapService: MapService) {
+  constructor(private mapService: MapService, private rideService: RideDataService) {
   }
 
   ngAfterViewInit(): void {
@@ -41,18 +49,13 @@ export class MapComponent implements AfterViewInit {
     });
 
     L.Marker.prototype.options.icon = DefaultIcon;
-    
+
     this.initMap();
   }
 
   ngOnInit() {
     this.route();
   }
-
-  ngOnDestroy() {
-    
-}
-
 
   private initMap(): void {
 
@@ -75,7 +78,7 @@ export class MapComponent implements AfterViewInit {
     this.registerOnClick();
 
   }
-  
+
   newIcon = icon({
     iconUrl: String(L.Icon.Default.prototype.options.iconUrl),
     iconAnchor: [12, 45],
@@ -109,8 +112,8 @@ export class MapComponent implements AfterViewInit {
   }
 
   registerOnClick(): void {
-    
-    if(this.disableClick){
+
+    if (this.disableClick) {
       return;
     }
 
@@ -122,9 +125,11 @@ export class MapComponent implements AfterViewInit {
         console.log(res.display_name);
         if (this.locationType === "departure") {
           this.out_start_location.emit(res.display_name);
+          this.name_of_start_location = res.display_name;
         }
         else {
           this.out_end_location.emit(res.display_name);
+          this.name_of_end_location = res.display_name;
         }
 
       });
@@ -176,31 +181,70 @@ export class MapComponent implements AfterViewInit {
       });
 
       this.ride_route.on('routesfound', (e) => {
-        let routes = e.routes;
-        let summary = routes[0].summary;
-        this.totalDistance = summary.totalDistance / 1000;
-        this.totalTime = Math.round(summary.totalTime % 3600 / 60);
-        this.out_timeAndDistance.emit({ time: this.totalTime, distance: this.totalDistance });
+
+        this.postEstimation();
       });
+
       this.ride_route.addTo(this.map);
     }
   }
 
+  postEstimation()
+  {
+    let g1: GeoCoordinateDTO =
+        {
+          address: this.name_of_start_location,
+          latitude: this.start_location.getLatLng().lat,
+          longitude: this.start_location.getLatLng().lng,
+        }
+        let g2: GeoCoordinateDTO =
+        {
+          address: this.name_of_end_location,
+          latitude: this.end_location.getLatLng().lat,
+          longitude: this.end_location.getLatLng().lng,
+        }
+
+        let route: RouteDTO =
+        {
+          departure: g1,
+          destination: g2,
+        }
+
+        let estimation: RideEstimationRequestDTO =
+        {
+          locations: [route],
+          vehicleType: this.selectedVehicleType,
+          babyTransport: this.babies,
+          petTransport: this.pets
+        }
+
+        this.rideService.postEstimation(estimation).subscribe(
+          {
+            next: (result) => {
+              this.out_timeAndDistance.emit({ time: result.estimatedTimeInMinutes, cost: result.estimatedCost });
+            },
+            error: (error) => {
+              alert(error);
+            }
+          }
+        );
+  }
+
   ngOnChanges() {
-    if(this.markers.length==0){
+    if (this.markers.length == 0) {
       return;
     }
-    if(this.start_location){
+    if (this.start_location) {
       this.start_location.removeFrom(this.map);
     }
-    this.start_location = new L.Marker([this.markers[0].lat,this.markers[0].lon],{ icon: this.newIcon }).addTo(this.map);
+    this.start_location = new L.Marker([this.markers[0].lat, this.markers[0].lon], { icon: this.newIcon }).addTo(this.map);
 
-    if(this.end_location){
+    if (this.end_location) {
       this.end_location.removeFrom(this.map);
     }
-    this.end_location = new L.Marker([this.markers[1].lat,this.markers[1].lon],{ icon: this.newIcon }).addTo(this.map);
+    this.end_location = new L.Marker([this.markers[1].lat, this.markers[1].lon], { icon: this.newIcon }).addTo(this.map);
 
     this.route();
   }
-    
+
 }
