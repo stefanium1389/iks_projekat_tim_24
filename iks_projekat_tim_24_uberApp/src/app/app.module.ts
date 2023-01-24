@@ -51,7 +51,7 @@ import { RideHistoryPassengerComponent } from './ride-history/ride-history-passe
 import { RideHistoryDriverComponent } from './ride-history/ride-history-driver/ride-history-driver.component';
 import { SearchUserDialogComponent } from './components/search-user-dialog/search-user-dialog.component';
 import { JwtInterceptorService } from './components/jwt-interceptor.service';
-import { FavouriteRoutesComponent } from "./components/favourite-routes/favourite-routes.component";
+import { EllipsisPipe, FavouriteRoutesComponent } from "./components/favourite-routes/favourite-routes.component";
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { BackendServicesModule } from './backend-services/backend-services.module';
 import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
@@ -120,6 +120,7 @@ const appRoutes : Routes =
         DriverProfileForAdminComponent,
         StatisticsAdminComponent,
         PassengerProfileAdminComponent,
+        EllipsisPipe
         
     ],
     providers: [UserService,{

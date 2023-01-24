@@ -3,23 +3,25 @@
 <div class="big-wrapper">
     <div class="list-container">
         <h2>Favourite routes:</h2>
+        <p class ="no-favorites" *ngIf="favoriteRoutes.length===0">Currently there are no favorite rides.</p>
         <div class="route-list-container">
             <div *ngFor='let fav of favoriteRoutes' (click)='selectFavorite(fav)' class="item">
                 
                 <div class="column">
-                    <i class="fa fa-star"></i> <p> {{fav.favoriteName}}</p>
+                    <i class="fa fa-star"></i> <p> {{fav.favoriteName}} </p>
                     <br>
-                    <i class="fa fa-arrow-right"></i>  <p>{{fav.locations[0].departure.address}}</p> <br>
-                    <i class="fa fa-arrow-left"></i>  <p>{{fav.locations[0].destination.address}}</p>
+                    <i class="fa fa-arrow-right"></i>  <p>{{fav.locations[0].departure.address | ellipsis:50:false:'...'}}</p> <br>
+                    <i class="fa fa-arrow-left"></i>  <p>{{fav.locations[0].destination.address | ellipsis:50:false:'...'}}</p>
                 </div>
                 <div class="column">
-                    <i (click)="removeFav(fav)" class="fa fa-minus"></i>
+                    <p>Vehicle type: {{fav.vehicleType}}</p>
                     <br>
-                    <p>{{fav.vehicleType}}</p>
+                    <p>Baby</p><i class="fa " [ngClass]="{'fa-check': fav.babyTransport, 'fa-times': !fav.babyTransport}" ></i>
                     <br>
-                    <p>Baby </p><i class='fa' [ngClass]="{'fa-check-square-o': fav.babyTransport, 'fa-square-o': !fav.babyTransport}" ></i>
-                    <br>
-                    <p>Pet      </p><i class='fa' [ngClass]="{'fa-check-square-o': fav.petTransport, 'fa-square-o': !fav.petTransport}" ></i>
+                    <p>Pet</p><i  class="fa " [ngClass]="{'fa-check': fav.petTransport, 'fa-times': !fav.petTransport}" ></i>
+                </div>
+                <div class="column">
+                    <i (click)="removeFav(fav)" style="font-size:30px;" class="fa fa-times"></i>
                 </div>
             </div>
         </div>

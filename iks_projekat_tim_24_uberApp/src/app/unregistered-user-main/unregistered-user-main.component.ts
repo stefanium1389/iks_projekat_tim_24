@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { LocalizeFn } from '@angular/localize/init';
 import { RideDataService } from '../backend-services/ride-data.service';
-import { MapComponent } from '../components/map/map/map.component';
+import { LocationInfo, MapComponent } from '../components/map/map/map.component';
 import { TimeAndCost } from '../components/map/map/map.component';
 
 @Component({
@@ -39,12 +40,12 @@ export class UnregisteredUserMainComponent implements OnInit {
     this.map.route()
   }
 
-  locStartHandler(loc: string) {
-    this.destinationForm.get('start_location')?.setValue(loc);
+  locStartHandler(loc: LocationInfo) {
+    this.destinationForm.get('start_location')?.setValue(loc.name);
   }
 
-  locEndHandler(loc: string) {
-    this.destinationForm.get('end_location')?.setValue(loc);
+  locEndHandler(loc: LocationInfo) {
+    this.destinationForm.get('end_location')?.setValue(loc.name);
   }
 
   timeAndDistanceHandler(timeAndCost: TimeAndCost) {

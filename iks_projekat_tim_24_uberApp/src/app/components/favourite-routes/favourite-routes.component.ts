@@ -6,6 +6,19 @@ import { RideDTO, RideRequestDTO } from 'src/app/backend-services/DTO/RideDTO';
 import { RideDataService } from 'src/app/backend-services/ride-data.service';
 import { JwtService } from '../jwt-service.service';
 import { TimeDialogComponent } from '../time-dialog/time-dialog.component';
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'ellipsis'
+})
+export class EllipsisPipe implements PipeTransform {
+  transform(value: string, limit: number = 50, completeWords: boolean = false, ellipsis: string = '...') {
+    if (completeWords) {
+      limit = value.substr(0, 13).lastIndexOf(' ');
+    }
+    return `${value.slice(0, limit)}${ellipsis}`;
+  }
+}
 
 @Component({
   selector: 'app-favourite-routes',

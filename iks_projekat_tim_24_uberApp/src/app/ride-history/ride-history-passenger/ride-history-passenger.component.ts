@@ -189,6 +189,9 @@ export class RideHistoryPassengerComponent implements OnInit {
     });
   }
   makeFavorite(ride:RideDTO){
+
+      
+
       const dialogRef = this.dialog.open(StringDialogComponent, {
         width: '250px',
         data: {}

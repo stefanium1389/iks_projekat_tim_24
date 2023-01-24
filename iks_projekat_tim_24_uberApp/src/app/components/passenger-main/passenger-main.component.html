@@ -7,17 +7,17 @@
 
             <form [formGroup]="destinationForm">
                 <div class="destination-container">
-                    <input type="text" placeholder="pocetna destinacija" formControlName="start_location" />
+                    <input [readOnly]="inRide" type="text" placeholder="pocetna destinacija" formControlName="start_location" />
                     <i (click)="search('start')" class="fa fa-search"></i>
                 </div>
                 <div class="destination-container">
-                    <input type="text" placeholder="krajnja destinacija" formControlName="end_location" />
+                    <input readonly="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
                     <i (click)="search('end')" class="fa fa-search"></i>
                 </div>
             </form>
-            <select [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
-                <option value="departure">Polazište</option>
-                <option value="destination" selected>Odredište</option>
+            <select  [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
+                <option  value="departure">Polazište</option>
+                <option  value="destination" selected>Odredište</option>
             </select>
 
             <div *ngIf="this.time" class="estimate-box">
@@ -27,14 +27,14 @@
 
             <div class="select-and-star">
 
-                <select [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
+                <select [disabled]="inRide" [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
                     <option value="STANDARD">Standardno</option>
                     <option value="LUXURY">Luksuzno</option>
                     <option value="VAN">Kombi</option>
                 </select>
 
                 <i class="fa" [ngClass]="{'fa-star-o': !isFavorited, 'fa-star': isFavorited}"
-                    (click)="toggleFavorite()"></i>
+                    (click)="makeFavorite()"></i>
             </div>
 
             <div class="checkbox-parameters">
@@ -43,43 +43,47 @@
             </div>
 
             <div class="action-buttons">
-                <button>Započni</button>
-                <button (click)="openTimePicker()">Zakazi</button>
+                <button [disabled]="inRide" (click)="createRide()">Započni</button>
+                <button [disabled]="inRide" (click)="openTimePicker()">Zakazi</button>
             </div>
-            <div id="display-time" *ngIf="showTime">{{ "selektovano vreme: " + selectedTime }}</div>
+            <div id="display-time" *ngIf="selectedTime">{{ "selektovano vreme: " + selectedTime }}</div>
         </div>
 
         <div class="driver-side-panel" id="linked-users">
             <p>Uvezani korisnici</p>
-            <div class="linked-users-container">
+            <div *ngIf="linkedUsers.length>0" class="linked-users-container">
                 <div *ngFor="let user of linkedUsers" class="profil-pregled" id="linked-user">
-                    <div class="profile-pic"></div>
+                    <div class="profile-pic">
+                        <img class="actual-image" src={{user.profilePicture}}>
+                    </div>
                     <p>{{user.name}} {{user.surname}}</p>
                     <div class="scoring">
-                        <i class="fa fa-user" (click)='removeUser(user);'></i>
+                        <i class="fa fa-minus" (click)='removeUser(user);'></i>
                     </div>
                 </div>
             </div>
             <button (click)='openUserSearch()'>Dodaj</button>
         </div>
 
-        <div class="driver-side-panel" id="driver-accept-container">
+        <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
-                <div class="profile-pic"></div>
-                <p>Ime Prezime</p>
+                <div class="profile-pic">
+                    <img class="actual-image" alt="defaultPicture" src={{driver.profilePicture}}>
+                </div>
+                <p>{{driver.name +" "+driver.surname}}</p>
                 <div class="scoring">
-                    <p> 4.4</p>
+                    <p>{{4.77}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
             <div class="profil-pregled">
-                <p>Ford Fiesta</p>
+                <p>{{vehicle.model}}</p>
                 <div class="scoring">
-                    <p> 4.9</p>
+                    <p>{{4.38}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-            <p *ngIf="!inRide">Pristiže u 5 minuta</p>
+            <p *ngIf="!inRide">Pristiže u 7 minuta</p>
             <button *ngIf="!inRide">Odustani</button>
             <div *ngIf="inRide" class="u-voznji">
                 <button (click)="openDialog()">Prijavi</button>
@@ -90,6 +94,6 @@
     </div>
 
     <div class="map-container">
-        <app-map (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
+        <app-map [disableClick]="inRide" (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
     </div>
 </div>

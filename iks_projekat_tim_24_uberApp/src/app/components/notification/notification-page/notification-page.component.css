@@ -11,8 +11,12 @@ div.list{
     height: 45em;
 }
 h1.title{
-    margin: 1em;
+    margin: 30px;
     font-size: xx-large;
+}
+.no-notifications{
+    margin-left: 30px;
+    color: gray;
 }
 
 div.notification
