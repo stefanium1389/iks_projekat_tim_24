@@ -9,8 +9,8 @@
 
         <div *ngIf='hasAcceptedRide()' class="driver-side-panel" id = "destination-parameters">
             
-                    <input [disabled]="true" type="text" placeholder="pocetna destinacija"/>
-                    <input [disabled]="true" type="text" placeholder="krajnja destinacija"/>
+                    <input [(ngModel)]="startLocation"  [disabled]="true" type="text" placeholder="pocetna destinacija"/>
+                    <input [(ngModel)]="endLocation" [disabled]="true" type="text" placeholder="krajnja destinacija"/>
 
                     <div class="estimate-box">
                         <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
@@ -22,8 +22,10 @@
 
         <div *ngIf='hasAcceptedRide()'class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
-                <div class="profile-pic"></div> 
-                <p>Ime Prezime</p>
+                <div class="profile-pic">
+                    <img class="actual-image" src={{passenger.profilePicture}}>
+                </div> 
+                <p>{{passenger.name+" "+passenger.surname}}</p>
             </div>
             <div *ngIf='!inRide'>
                 <button (click)='startRide()'>Pocetak</button>

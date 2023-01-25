@@ -63,7 +63,7 @@ export class RideHistoryDriverAdminComponent implements OnInit {
   selectRide(ride:RideDTO){
     this.selectedRide = ride;
     this.markers = [{lat:ride.locations[0].departure.latitude,lon:ride.locations[0].departure.longitude},{lat:ride.locations[0].destination.latitude,lon:ride.locations[0].destination.longitude}]
-    this.selectedRideTime = new Date(ride.endTime).getMinutes() - new Date(ride.startTime).getMinutes(); 
+    this.selectedRideTime = Math.round((new Date(this.selectedRide.endTime).getTime() - new Date(this.selectedRide.startTime).getTime())/(60*1000));
     this.selectedRidePassengers = [];
     for(let i of ride.passengers){
       this.passengerData.getPassengerById(i.id).subscribe({
