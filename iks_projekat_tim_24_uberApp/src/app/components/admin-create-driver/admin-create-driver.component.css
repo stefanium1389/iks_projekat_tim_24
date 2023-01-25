@@ -50,3 +50,15 @@ button{
     background-color: #DDDBDB;
     color: black;
 }
+
+select.sort-select
+{
+    background-color: white;
+    width: fit-content;
+    padding: 0.5em;
+    padding-left: 3em;
+    padding-right: 3em;
+    align-self: center;
+    border-radius: 10px;
+    font-size: 20px;
+}
