@@ -145,12 +145,30 @@ export class MapComponent implements AfterViewInit {
           this.start_location = L.marker(
               [result[0].lat, result[0].lon], {icon: this.newIcon});
           this.start_location.addTo(this.map).openPopup();
+          let info : LocationInfo = 
+          {
+            name: address,
+            lat:result[0].lat,
+            lng:result[0].lon,
+          }
+          this.name_of_start_location = address;
+          this.out_start_location.emit(info);//EMITUJ OVDE
+          
         } else {
           if (this.end_location) {
             this.end_location.removeFrom(this.map);
           }
           this.end_location = L.marker([result[0].lat, result[0].lon], {icon: this.newIcon});
           this.end_location.addTo(this.map).openPopup();
+          let info : LocationInfo = 
+          {
+            name: address,
+            lat:result[0].lat,
+            lng:result[0].lon,
+          }
+          this.name_of_end_location = address;
+          this.out_end_location.emit(info);//EMITUJ OVDE
+          
         }
         this.route();
       },
@@ -288,7 +306,7 @@ export class MapComponent implements AfterViewInit {
             this.out_timeAndDistance.emit({time: result.estimatedTimeInMinutes, cost: result.estimatedCost});
           },
           error: (error) => {
-            alert(error);
+            console.log(error.error.message)
           }
         }
     );
@@ -322,6 +340,7 @@ export class MapComponent implements AfterViewInit {
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
   handleResult(vehiclesList: { body: string; }) {
+    
     if (vehiclesList.body) {
       this.vehicleLocations = [];
       let vehiclesResult: DTOList<VehicleDTO> = JSON.parse(vehiclesList.body);

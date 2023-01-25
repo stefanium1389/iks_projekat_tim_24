@@ -11,6 +11,7 @@ import { VehicleChangeDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { DriverChangeDTO } from 'src/app/backend-services/DTO/DriverChangeDTO';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-driver-profile-for-admin',
@@ -19,13 +20,13 @@ import { Router } from '@angular/router';
 })
 export class DriverProfileForAdminComponent implements OnInit {
 
-  drivesBabies : boolean;
-  drivesPets : boolean;
+  drivesBabies: boolean;
+  drivesPets: boolean;
   validFile: boolean = true;
-  base64String : string | undefined;
+  base64String: string | undefined;
   pictureReader: FileReader;
-  vehicleTypes = ["Van","Luxury","Standard"];
-  
+  vehicleTypes = ["Van", "Luxury", "Standard"];
+
   ProfileForm = new FormGroup({
     name: new FormControl(),
     surname: new FormControl(),
@@ -46,11 +47,13 @@ export class DriverProfileForAdminComponent implements OnInit {
     drivesBabies: new FormControl(),
     drivesPets: new FormControl()
   });
-  selectedVehicleType:string;
-  thereIsChange:boolean = false;
+  selectedVehicleType: string;
+  thereIsChange: boolean = false;
   change: DriverChangeDTO;
 
-  constructor(public dialog: MatDialog, private adminViewingService: AdminViewingService, private driverService : DriverDataService, private router:Router) { }
+  constructor(public dialog: MatDialog, private adminViewingService: AdminViewingService,
+    private driverService: DriverDataService, private router: Router,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;
@@ -59,40 +62,32 @@ export class DriverProfileForAdminComponent implements OnInit {
     this.setReader();
   }
 
-  setReader ()
-  {
-   this.pictureReader.onloadend = () => {
-     if (this.pictureReader === null)
-     {
-       throw new Error("No reader!");
-     }else
-     {
-       this.base64String = this.pictureReader.result?.toString();
-     }
-     
-  };
+  setReader() {
+    this.pictureReader.onloadend = () => {
+      if (this.pictureReader === null) {
+        throw new Error("No reader!");
+      } else {
+        this.base64String = this.pictureReader.result?.toString();
+      }
+
+    };
   }
 
-  loadForms()
-  {
+  loadForms() {
     this.getChanges(); //get profile ce se pozvati sam ako nema izmena
     this.getVehicleData();
   }
 
-  getChanges()
-  {
+  getChanges() {
     let id = this.adminViewingService.getAdminViewingId();
-    if (id != null)
-    {
-      
+    if (id != null) {
+
       this.driverService.getLatestDriverChange(id).subscribe(
         {
-          next: (result) => 
-          {
+          next: (result) => {
             this.change = result;
             this.thereIsChange = true;
-            if (result.profilePicture !== null)
-            {
+            if (result.profilePicture !== null) {
               this.base64String = result.profilePicture;
             }
             this.ProfileForm.get('name')?.setValue(result.name);
@@ -100,104 +95,102 @@ export class DriverProfileForAdminComponent implements OnInit {
             this.ProfileForm.get('address')?.setValue(result.address);
             this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
           },
-          error: (error) =>
-          {
-            this.thereIsChange=false;
+          error: (error) => {
+            this.thereIsChange = false;
             this.getProfileData();
           }
         }
-        );
+      );
     }
   }
 
-  getVehicleData()
-  {
+  getVehicleData() {
     let id = this.adminViewingService.getAdminViewingId();
-    if (id != null){
-    this.driverService.getVehicle(id).subscribe(
-      {
-        next: (result) => 
+    if (id != null) {
+      this.driverService.getVehicle(id).subscribe(
         {
-          let finalString = `${result.vehicleType.charAt(0).toUpperCase()}${result.vehicleType.slice(1).toLowerCase()}`;
-          this.VehicleForm.get('type')?.setValue(finalString);
-          this.VehicleForm.get('model')?.setValue(result.model);
-          this.VehicleForm.get('plates')?.setValue(result.licenseNumber);
-          this.VehicleForm.get('numberOfSeats')?.setValue(result.passengerSeats);
-          this.VehicleForm.get('drivesBabies')?.setValue(result.babyTransport);
-          this.VehicleForm.get('drivesPets')?.setValue(result.petTransport);
-        },
-        error: (error) =>
-        {
-          alert(error);
-        }
-      }
-    );
-    }
-  }
-
-  getProfileData()
-  {
-    let id = this.adminViewingService.getAdminViewingId();
-    if (id != null){
-    this.driverService.getDriverById(id).subscribe(
-      {
-        next: (result) => 
-        {
-          if (result.profilePicture !== null)
-          {
-            this.base64String = result.profilePicture;
+          next: (result) => {
+            let finalString = `${result.vehicleType.charAt(0).toUpperCase()}${result.vehicleType.slice(1).toLowerCase()}`;
+            this.VehicleForm.get('type')?.setValue(finalString);
+            this.VehicleForm.get('model')?.setValue(result.model);
+            this.VehicleForm.get('plates')?.setValue(result.licenseNumber);
+            this.VehicleForm.get('numberOfSeats')?.setValue(result.passengerSeats);
+            this.VehicleForm.get('drivesBabies')?.setValue(result.babyTransport);
+            this.VehicleForm.get('drivesPets')?.setValue(result.petTransport);
+          },
+          error: (error) => {
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
           }
-          this.ProfileForm.get('name')?.setValue(result.name);
-          this.ProfileForm.get('surname')?.setValue(result.surname);
-          this.ProfileForm.get('address')?.setValue(result.address);
-          this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
-        },
-        error: (error) =>
-        {
-          alert(error);
         }
-      }
       );
     }
   }
 
-  saveChanges()
-  {
+  getProfileData() {
     let id = this.adminViewingService.getAdminViewingId();
-    if (id != null){
-    this.driverService.acceptChange(this.change.id).subscribe(
-      {
-        next: (result) => 
+    if (id != null) {
+      this.driverService.getDriverById(id).subscribe(
         {
-          alert("Change accepted.");
-          this.thereIsChange = false;
-        },
-        error: (error) =>
-        {
-          alert(error);
+          next: (result) => {
+            if (result.profilePicture !== null) {
+              this.base64String = result.profilePicture;
+            }
+            this.ProfileForm.get('name')?.setValue(result.name);
+            this.ProfileForm.get('surname')?.setValue(result.surname);
+            this.ProfileForm.get('address')?.setValue(result.address);
+            this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
+          },
+          error: (error) => {
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
+          }
         }
-      }
       );
     }
   }
 
-  denyChanges()
-  {
+  saveChanges() {
     let id = this.adminViewingService.getAdminViewingId();
-    if (id != null){
-    this.driverService.declineChange(this.change.id).subscribe(
-      {
-        next: (result) => 
+    if (id != null) {
+      this.driverService.acceptChange(this.change.id).subscribe(
         {
-          alert("Change declined.");
-          this.getProfileData();
-          this.thereIsChange = false;
-        },
-        error: (error) =>
-        {
-          alert(error);
+          next: (result) => {
+            this.snackBar.open("Change saved.", 'Ok', {
+              duration: 3000
+            });
+            this.thereIsChange = false;
+          },
+          error: (error) => {
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
+          }
         }
-      }
+      );
+    }
+  }
+
+  denyChanges() {
+    let id = this.adminViewingService.getAdminViewingId();
+    if (id != null) {
+      this.driverService.declineChange(this.change.id).subscribe(
+        {
+          next: (result) => {
+            this.snackBar.open("Change declined.", 'Ok', {
+              duration: 3000
+            });
+            this.getProfileData();
+            this.thereIsChange = false;
+          },
+          error: (error) => {
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
+          }
+        }
       );
     }
   }
@@ -207,14 +200,13 @@ export class DriverProfileForAdminComponent implements OnInit {
       width: '250px',
       data: {}
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
   }
 
-  onRouting(route : string)
-  {
+  onRouting(route: string) {
     this.router.navigate([route]).then(() => {
       window.location.reload();
     });

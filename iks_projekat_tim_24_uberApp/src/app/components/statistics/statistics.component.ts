@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartDataset, ChartData } from 'chart.js';
 import {ChartToRender, ChartRequest, ChartService} from  'src/app/services/chart.service';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
@@ -9,7 +11,7 @@ import {ChartToRender, ChartRequest, ChartService} from  'src/app/services/chart
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor(private chartService: ChartService) { }
+  constructor(private chartService: ChartService,private snackBar: MatSnackBar,) { }
 
   
   startDate: Date;
@@ -52,7 +54,10 @@ export class StatisticsComponent implements OnInit {
           },
           error: (error) =>
           {
-            alert(error);
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
+    
           }
         }
         );

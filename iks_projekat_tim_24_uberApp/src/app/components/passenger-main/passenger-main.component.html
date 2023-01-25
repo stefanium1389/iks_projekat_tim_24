@@ -11,7 +11,7 @@
                     <i (click)="search('start')" class="fa fa-search"></i>
                 </div>
                 <div class="destination-container">
-                    <input [readOnly]="inRide" readonly="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
+                    <input [readonly]="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
                     <i (click)="search('end')" class="fa fa-search"></i>
                 </div>
             </form>
@@ -20,7 +20,7 @@
                 <option  value="destination" selected>Odredište</option>
             </select>
 
-            <div *ngIf="this.ride" class="estimate-box">
+            <div *ngIf="time" class="estimate-box">
                 <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
                 <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
             </div>

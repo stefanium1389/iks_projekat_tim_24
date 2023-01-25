@@ -439,7 +439,7 @@ export class PassengerMainComponent implements OnInit {
   }
 
   setDriver(dto: RideDTO) {
-    let driver = this.driverDataService.getDriverById(dto.driver.id).subscribe({
+      this.driverDataService.getDriverById(dto.driver.id).subscribe({
       next: (result) => {
         if (result.profilePicture==null)
         result.profilePicture=defaultPicture;
