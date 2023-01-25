@@ -53,3 +53,9 @@ export interface UserCardDTO {
 	role:string;
 	email:string;
 }
+
+export interface DriverReportDTO {
+	id: number;
+	driverId: number;
+	reason: string;
+}

@@ -8,8 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class ReportDialogComponent implements OnInit {
 
-  reportTypes: string[] = ["speeding", "harassment", "something"]
-  selectedType : string;
+  reason : string;
 
   constructor(
     public dialogRef: MatDialogRef<ReportDialogComponent>,
@@ -19,8 +18,8 @@ export class ReportDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.selectedType);
-    this.dialogRef.close(this.selectedType);
+    console.log(this.reason);
+    this.dialogRef.close(this.reason);
   }
 
 }

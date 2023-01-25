@@ -26,6 +26,7 @@ export class RideHistoryDriverComponent implements OnInit {
   selectedRideTime: number;
   markers: any[];
   selectedRideReviews: ReviewDTO[];
+  defaultPicture = defaultPicture;
 
   constructor(private driverData: DriverDataService, private jwt: JwtService, private passengerData: PassengerDataService, private reviews: ReviewDataService) { }
 

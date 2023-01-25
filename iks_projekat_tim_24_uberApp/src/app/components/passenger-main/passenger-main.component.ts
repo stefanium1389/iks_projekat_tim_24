@@ -28,6 +28,7 @@ import { RideRequestDTO } from 'src/app/backend-services/DTO/RideDTO';
 import { DriverDataService } from 'src/app/backend-services/driver-data-service.service';
 import { VehicleDataService } from 'src/app/backend-services/vehicle-data.service';
 import { VehicleDTO } from 'src/app/backend-services/DTO/VehicleDTO';
+import { ReviewDataService } from 'src/app/backend-services/review-data.service';
 
 @Component({
   selector: 'app-passenger-main',
@@ -65,12 +66,16 @@ export class PassengerMainComponent implements OnInit {
   start_location_lng: number;
   end_location_lng: number;
   alreadyFavorite: boolean = false;
-  driver:UserDTO;
-  vehicle:VehicleDTO;
+  driver: UserDTO;
+  vehicle: VehicleDTO;
+  averageDriverScore: string;
+  averageVehicleScore: string;
 
   constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService,
     private jwtService: JwtService, private http: HttpClient, private snackBar: MatSnackBar,
-    private rideData: RideDataService , private driverDataService: DriverDataService, private vehicleDataService : VehicleDataService) {
+    private rideData: RideDataService, private driverDataService: DriverDataService,
+    private vehicleDataService: VehicleDataService, private reviewDataService: ReviewDataService) {
+
     this.destinationForm = new FormGroup({
       start_location: new FormControl(),
       end_location: new FormControl(),
@@ -194,38 +199,37 @@ export class PassengerMainComponent implements OnInit {
   createRide() {
 
     let g1: GeoCoordinateDTO =
-      {
-        address: this.name_of_start_location,
-        latitude: this.start_location_lat,
-        longitude: this.start_location_lng,
-      }
-      let g2: GeoCoordinateDTO =
-      {
-        address: this.name_of_end_location,
-        latitude: this.end_location_lat,
-        longitude: this.end_location_lng,
-      }
+    {
+      address: this.name_of_start_location,
+      latitude: this.start_location_lat,
+      longitude: this.start_location_lng,
+    }
+    let g2: GeoCoordinateDTO =
+    {
+      address: this.name_of_end_location,
+      latitude: this.end_location_lat,
+      longitude: this.end_location_lng,
+    }
 
-      let route: RouteDTO =
+    let route: RouteDTO =
+    {
+      departure: g1,
+      destination: g2,
+    }
+
+    let passengers: UserRef[] = [];
+    for (let p of this.linkedUsers) {
+      let ur: UserRef =
       {
-        departure: g1,
-        destination: g2,
-      }
+        id: p.id,
+        email: p.email,
+      };
 
-      let passengers: UserRef[] = [];
-      for (let p of this.linkedUsers) {
-        let ur: UserRef =
-        {
-          id: p.id,
-          email: p.email,
-        };
-
-        passengers.push(ur);
-      }
+      passengers.push(ur);
+    }
 
     let requestTime = null;
-    if (this.selectedTime)
-    {
+    if (this.selectedTime) {
       requestTime = this.getDateWithGivenTime(this.selectedTime);
     }
 
@@ -242,6 +246,7 @@ export class PassengerMainComponent implements OnInit {
       next: (result) => {
         this.setDriver(result);
         this.setVehicle(result);
+        this.setReviews(result);
         this.snackBar.open("uspešno kreirana vožnja!", 'Ok', {
           duration: 3000
         });
@@ -311,14 +316,29 @@ export class PassengerMainComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
+  openReportDialog(): void {
     const dialogRef = this.dialog.open(ReportDialogComponent, {
       width: '250px',
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+      if (result == null)
+      {
+        return;
+      }
+      this.driverDataService.reportDriver(this.driver.id, { reason: result }).subscribe({
+        next: (result) => {
+          this.snackBar.open("report submited.", 'Ok', {
+            duration: 3000
+          });
+        },
+        error: (error) => {
+          this.snackBar.open(error.error.message, 'Ok', {
+            duration: 3000
+          });
+        }
+      });
     });
   }
   openUserSearch(): void {
@@ -377,29 +397,30 @@ export class PassengerMainComponent implements OnInit {
     });
   }
 
- getDateWithGivenTime(time: string) {
+  getDateWithGivenTime(time: string) {
     const currentDate = new Date();
     const currentHour = currentDate.getHours();
     const currentMinutes = currentDate.getMinutes();
     const givenTimeArr = time.split(":");
     const givenHour = parseInt(givenTimeArr[0]);
     const givenMinutes = parseInt(givenTimeArr[1]);
-  
+
     let newDate: Date;
     if (givenHour < currentHour || (givenHour === currentHour && givenMinutes <= currentMinutes)) {
       // given time is before or equal to current time
-      newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, givenHour+1, givenMinutes);
+      newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, givenHour + 1, givenMinutes);
     } else {
       // given time is after current time
-      newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), givenHour+1, givenMinutes);
+      newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), givenHour + 1, givenMinutes);
     }
     return newDate.toISOString()
   }
-  
-  setDriver(dto : RideDTO)
-  {
+
+  setDriver(dto: RideDTO) {
     let driver = this.driverDataService.getDriverById(dto.driver.id).subscribe({
       next: (result) => {
+        if (result.profilePicture==null)
+        result.profilePicture=defaultPicture;
         this.driver = result;
       },
       error: (error) => {
@@ -410,9 +431,8 @@ export class PassengerMainComponent implements OnInit {
     });
   }
 
-  setVehicle(dto : RideDTO)
-  {
-    let vehicle = this.vehicleDataService.getVehicleByDriverId(dto.driver.id).subscribe({
+  setVehicle(dto: RideDTO) {
+    this.vehicleDataService.getVehicleByDriverId(dto.driver.id).subscribe({
       next: (result) => {
         this.vehicle = result;
       },
@@ -422,6 +442,54 @@ export class PassengerMainComponent implements OnInit {
         });
       }
     });
+  }
+
+  setReviews(dto: RideDTO) {
+    this.reviewDataService.getReviewsByDriverId(dto.driver.id).subscribe({
+      next: (result) => {
+        let sumDriver = 0;
+        for (let review of result.results)
+        {
+          sumDriver += review.rating;
+        }
+        if (sumDriver === 0)
+        {
+          this.averageDriverScore="none";
+        }
+        else
+        {
+          this.averageDriverScore=(sumDriver/result.totalCount).toFixed(2);
+        }
+      }
+    });
+
+    this.vehicleDataService.getVehicleByDriverId(dto.driver.id).subscribe({
+      next: (result) => {
+        this.reviewDataService.getReviewsByVehicleId(result.id).subscribe({
+          next: (result) => {
+            let sumVehicle= 0;
+            for (let review of result.results)
+            {
+              sumVehicle += review.rating;
+            }
+            if (sumVehicle === 0)
+            {
+              this.averageVehicleScore="none";
+            }
+            else
+            {
+              this.averageVehicleScore=(sumVehicle/result.totalCount).toFixed(2);
+            }
+          }
+        });
+      },
+      error: (error) => {
+        this.snackBar.open(error.error.message, 'Ok', {
+          duration: 3000
+        });
+      }
+    });
+
   }
 
 }
