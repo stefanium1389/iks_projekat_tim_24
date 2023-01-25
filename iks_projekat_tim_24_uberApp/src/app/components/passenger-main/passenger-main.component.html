@@ -63,31 +63,33 @@
                     </div>
                 </div>
             </div>
-            <button *ngIf='!ride' [disabled]="inRide" (click)='openUserSearch()'>Dodaj</button>
+            <button *ngIf='!ride' (click)='openUserSearch()'>Dodaj</button>
         </div>
 
         <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
             <p>Vozac</p>
-            <div class="profil-pregled">
-                <div class="profile-pic">
+            <p *ngIf="!ride?.driver">Voznja zakazazna, vozac ce biti dodeljen kasnije</p>
+            <div *ngIf="ride?.driver" class="profil-pregled">
+                <div  class="profile-pic">
                     <img class="actual-image" src={{driver.profilePicture}}>
                 </div>
+                
                 <p>{{driver.name +" "+driver.surname}}</p>
                 <div *ngIf="averageVehicleScore!=='none'" class="scoring">
                     <p>{{averageDriverScore}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-            <div class="profil-pregled">
+            <div *ngIf="vehicle" class="profil-pregled">
                 <p>{{vehicle.model}}</p>
                 <div *ngIf="averageVehicleScore!=='none'" class="scoring">
                     <p>{{averageVehicleScore}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-            <p *ngIf="!inRide">Pristiže u 7 minuta</p>
+            <!-- <p *ngIf="!inRide">Pristiže u 7 minuta</p> -->
             <!-- <button *ngIf="!inRide">Odustani</button> -->
-            <div *ngIf="inRide" class="u-voznji">
+            <div class="u-voznji">
                 <button *ngIf="ride?.status=='PENDING' || ride?.status=='ACCEPTED'" (click)="withdrawRide()">Odustani</button>
                 <button *ngIf="ride?.status=='STARTED'"  (click)="openReportDialog()">Prijavi</button>
                 <button *ngIf="ride?.status=='STARTED'" (click)="panic()" class="panic-dugme">PANIC</button>
