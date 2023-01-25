@@ -7,6 +7,7 @@ import { defaultPicture } from 'src/app/user';
 import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
 import { PassengerUpdateDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { PasswordChangeDTO } from 'src/app/backend-services/DTO/UserDTO';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-passenger-profile',
@@ -32,7 +33,8 @@ export class PassengerProfileComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog, private jwtService: JwtService, private passengerService : PassengerDataService) { }
+  constructor(public dialog: MatDialog, private jwtService: JwtService,
+    private snackBar: MatSnackBar, private passengerService : PassengerDataService) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;
@@ -61,7 +63,10 @@ export class PassengerProfileComponent implements OnInit {
           },
           error: (error) =>
           {
-            alert(error);
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
+    
           }
         }
         );
@@ -87,27 +92,37 @@ export class PassengerProfileComponent implements OnInit {
 
     if (this.ProfileForm.get('name')!.value === "")
     {
-      alert("missing name in form!");
+      this.snackBar.open("missing name in form!", 'Ok', {
+        duration: 3000
+      });
       return;
     }
     if (this.ProfileForm.get('surname')!.value === "")
     {
-      alert("missing surname in form!");
+      this.snackBar.open("missing surname in form!", 'Ok', {
+        duration: 3000
+      });
       return;
     }
     if (this.validFile === false)
     {
-      alert("picture not valid!");
+      this.snackBar.open("picture not valid!", 'Ok', {
+        duration: 3000
+      });
       return;
     }
     if (this.ProfileForm.get('phone')!.value === "")
     {
-      alert("missing telephone number in form!");
+      this.snackBar.open("missing telephone number in form!", 'Ok', {
+        duration: 3000
+      });
       return;
     } 
     if (this.ProfileForm.get('address')!.value === "")
     {
-      alert("missing address in form!");
+      this.snackBar.open("missing address in form!", 'Ok', {
+        duration: 3000
+      });
       return;
     }
 
@@ -126,11 +141,16 @@ export class PassengerProfileComponent implements OnInit {
       this.passengerService.updatePassengerNoPassword(id,userUpdate).subscribe(
         { next: (result) => 
           {
-            alert("profile changed");
+            this.snackBar.open("Profile changed.", 'Ok', {
+              duration: 3000
+            });
+    
           },
           error: (error) =>
           {
-            alert(error);
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
           }
         }
       );
@@ -143,12 +163,16 @@ export class PassengerProfileComponent implements OnInit {
     
     if (this.PasswordForm.get('oldPass')!.value === "")
     {
-      alert("missing old password in form!");
+      this.snackBar.open("missing old password in form!", 'Ok', {
+        duration: 3000
+      });
       return;
     }
     if (this.PasswordForm.get('newPass')!.value === "")
     {
-      alert("missing new password in form!");
+      this.snackBar.open("missing new password in form!", 'Ok', {
+        duration: 3000
+      });
       return;
     }
 

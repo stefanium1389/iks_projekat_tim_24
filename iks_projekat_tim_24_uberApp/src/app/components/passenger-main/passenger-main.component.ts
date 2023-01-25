@@ -372,6 +372,7 @@ export class PassengerMainComponent implements OnInit {
       this.time = this.ride.estimatedTimeInMinutes;
       this.setDriver(this.ride);
       this.setVehicle(this.ride);
+      this.setReviews(this.ride);
       
       this.mapType = "RIDE";
       this.driverId = this.ride.driver.id;
@@ -423,7 +424,7 @@ export class PassengerMainComponent implements OnInit {
   }
 
   setDriver(dto: RideDTO) {
-    let driver = this.driverDataService.getDriverById(dto.driver.id).subscribe({
+      this.driverDataService.getDriverById(dto.driver.id).subscribe({
       next: (result) => {
         if (result.profilePicture==null)
         result.profilePicture=defaultPicture;

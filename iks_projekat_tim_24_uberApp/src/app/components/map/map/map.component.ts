@@ -288,7 +288,7 @@ export class MapComponent implements AfterViewInit {
             this.out_timeAndDistance.emit({time: result.estimatedTimeInMinutes, cost: result.estimatedCost});
           },
           error: (error) => {
-            alert(error);
+            console.log(error.error.message)
           }
         }
     );
@@ -322,6 +322,7 @@ export class MapComponent implements AfterViewInit {
   
   // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
   handleResult(vehiclesList: { body: string; }) {
+    
     if (vehiclesList.body) {
       this.vehicleLocations = [];
       let vehiclesResult: DTOList<VehicleDTO> = JSON.parse(vehiclesList.body);

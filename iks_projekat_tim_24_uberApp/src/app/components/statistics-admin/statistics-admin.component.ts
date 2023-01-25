@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartDataset, ChartData } from 'chart.js';
 import { ChartAdminService } from 'src/app/services/chart-admin.service';
 import {ChartToRender, ChartRequest, ChartService} from  'src/app/services/chart.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-statistics-admin',
@@ -10,7 +11,7 @@ import {ChartToRender, ChartRequest, ChartService} from  'src/app/services/chart
 })
 export class StatisticsAdminComponent implements OnInit {
 
-  constructor(private chartService: ChartAdminService) { }
+  constructor(private chartService: ChartAdminService,private snackBar: MatSnackBar,) { }
 
   
   startDate: Date;
@@ -53,7 +54,10 @@ export class StatisticsAdminComponent implements OnInit {
           },
           error: (error) =>
           {
-            alert(error);
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
+    
           }
         }
         );
