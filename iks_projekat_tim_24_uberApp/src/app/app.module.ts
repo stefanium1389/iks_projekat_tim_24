@@ -71,6 +71,7 @@ const appRoutes : Routes =
   {path: 'notifications', component: NotificationPageComponent},
   {path: 'driver-home', component: DriverMainComponent},
   {path: 'admin-home' , component: AdminMainComponent},
+  {path: 'admin-create-driver', component: AdminCreateDriverComponent},
   {path: 'user-home', component: PassengerMainComponent},
   {path: 'user-profile', component: PassengerProfileComponent},
   {path: 'user-ride-history', component: RideHistoryPassengerComponent},

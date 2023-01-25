@@ -33,8 +33,9 @@
 
     <!-- ADMIN - upravljanje nalozima, chat -->
     <button mat-menu-item (click)="onClickOption('/account-management')" *ngIf="role === 'ADMIN'">Upravljanje nalozima</button>
+    <button mat-menu-item (click)="onClickOption('/admin-create-driver')" *ngIf="role === 'ADMIN'">Kreiraj vozaca</button>
     <button mat-menu-item *ngIf="role === 'ADMIN'">Poruke</button>
-
+    
     <button mat-menu-item (click)="logout()">Izlogujte se</button>
 
 </mat-menu>

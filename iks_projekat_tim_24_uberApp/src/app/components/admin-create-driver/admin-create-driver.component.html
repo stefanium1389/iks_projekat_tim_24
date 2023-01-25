@@ -3,7 +3,9 @@
         <div>
             <h1>Kreiranje vozaca</h1>
         </div>
-        <form class="row">
+        <form class="row"
+            [formGroup]="form" 
+            (ngSubmit)="submit()">
                 <div class="column">
                     <p>Licni podaci</p>
                     <div class="form-outline form-white mb-4">
@@ -13,11 +15,7 @@
                         <input type="text" name="lastname" class="form-control form-control-lg" placeholder="Lastname" formControlName="lastname"/>
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <input type="text" name="city" class="form-control form-control-lg" placeholder="City" formControlName="city"/>
-                    </div>
-                    <div class="checkbox-parameters">
-                        <mat-checkbox [(ngModel)]="hasBabyDriver" label="babyDriver" >Vozac zeli da vozi bebe</mat-checkbox>
-                        <mat-checkbox [(ngModel)]="hasPetDriver" label="petsDriver" >Vozac zeli da vozi ljubimce</mat-checkbox>
+                        <input type="text" name="city" class="form-control form-control-lg" placeholder="Address" formControlName="address"/>
                     </div>
                 </div>
                 <div class="column">
@@ -28,9 +26,9 @@
                     <div class="form-outline form-white mb-4">
                         <input type="text" name="email" class="form-control form-control-lg" placeholder="E-mail" formControlName="email"/>
                     </div>
-                    <p>Dokument</p>
+                    <p>Vozacka dozvola</p>
                     <div class="form-outline form-white mb-4">
-                        <input type="file" name="phone" class="form-control form-control-sm" placeholder="Select document" formControlName="phone"/>
+                        <input (change)="onChangePicture($event)" accept="image/*" type="file" name="phone" class="form-control form-control-sm" placeholder="Select document" formControlName="document"/>
                     </div>
                 </div>
                 <div class="column">
@@ -45,12 +43,8 @@
                         <input type="number" name="vehicle-detail" class="form-control form-control-lg" placeholder="Number of seats" formControlName="vehicle-detail"/>
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <select [(ngModel)]="selectedType" (ngModelChange)="onTypeChange($event)" id="vehicle-type-selection" class="form-control form-control-lg">
-                            <!-- <option *ngIf="!isTypeSelected" value="">Odaberite tip vozila</option> -->
-                            <option value="standardno">Standardno</option>
-                            <option value="luksuzno">Luksuzno</option>
-                            <option value="kombi">Kombi</option>
-                        </select>
+                        <select class="sort-select" (change)="onChange($event)">
+                            <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option></select>
                     </div>
                     <div class="checkbox-parameters">
                         <mat-checkbox [(ngModel)]="hasBabyVehicle" label="babyVehicle" >Vozilo ima opremu za bebe</mat-checkbox>
