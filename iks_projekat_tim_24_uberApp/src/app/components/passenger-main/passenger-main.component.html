@@ -62,31 +62,31 @@
                     </div>
                 </div>
             </div>
-            <button (click)='openUserSearch()'>Dodaj</button>
+            <button [disabled]="inRide" (click)='openUserSearch()'>Dodaj</button>
         </div>
 
         <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
                 <div class="profile-pic">
-                    <img class="actual-image" alt="defaultPicture" src={{driver.profilePicture}}>
+                    <img class="actual-image" src={{driver.profilePicture}}>
                 </div>
                 <p>{{driver.name +" "+driver.surname}}</p>
-                <div class="scoring">
-                    <p>{{4.77}}</p>
+                <div *ngIf="averageVehicleScore!=='none'" class="scoring">
+                    <p>{{averageDriverScore}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
             <div class="profil-pregled">
                 <p>{{vehicle.model}}</p>
-                <div class="scoring">
-                    <p>{{4.38}}</p>
+                <div *ngIf="averageVehicleScore!=='none'" class="scoring">
+                    <p>{{averageVehicleScore}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
             <p *ngIf="!inRide">Pristiže u 7 minuta</p>
             <button *ngIf="!inRide">Odustani</button>
             <div *ngIf="inRide" class="u-voznji">
-                <button (click)="openDialog()">Prijavi</button>
+                <button (click)="openReportDialog()">Prijavi</button>
                 <button (click)="panic()" class="panic-dugme">PANIC</button>
             </div>
         </div>

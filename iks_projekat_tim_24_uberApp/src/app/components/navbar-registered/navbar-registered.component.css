@@ -22,6 +22,11 @@
     background-color: #2196F3;
 }
 
+.profile-pic:hover
+{
+  cursor: pointer;
+}
+
 .actual-image
 {
   width: 100%;

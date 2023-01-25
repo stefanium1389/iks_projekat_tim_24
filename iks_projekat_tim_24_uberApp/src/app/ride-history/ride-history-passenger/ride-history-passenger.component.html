@@ -36,9 +36,12 @@
                     </div>
                 </div>
                 <div>
-                    <h1>Driver rating: {{selectedRideDriverAvgRating}}</h1>
+
+                    <h1 *ngIf="selectedRideDriverAvgRating">Driver rating: {{selectedRideDriverAvgRating}}</h1>
+                    <h1 *ngIf="!selectedRideDriverAvgRating">There are no driver ratings</h1>
                     <i class="fa" *ngFor="let star of stars" [ngClass]="{'fa-star': star <= selectedRideDriverAvgRating, 'fa-star-o': star > selectedRideDriverAvgRating}"></i>
-                    <h1>Vehicle rating: {{selectedRideVehicleAvgRating}}</h1>
+                    <h1 *ngIf="selectedRideVehicleAvgRating">Vehicle rating: {{selectedRideVehicleAvgRating}}</h1>
+                    <h1 *ngIf="!selectedRideVehicleAvgRating">There are no vehicle ratings</h1>
                     <i class="fa" *ngFor="let star of stars" [ngClass]="{'fa-star': star <= selectedRideVehicleAvgRating, 'fa-star-o': star > selectedRideVehicleAvgRating}"></i>
                 </div>
             </div>

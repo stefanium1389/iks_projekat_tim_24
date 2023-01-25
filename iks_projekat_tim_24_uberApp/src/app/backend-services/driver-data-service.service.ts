@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DTOList } from './DTO/DTOList';
 import { RideDTO } from './DTO/RideDTO';
-import { UserCardDTO, UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
+import { DriverReportDTO, UserCardDTO, UserDTO, UserRegistrationDTO, UserUpdateDTO } from './DTO/UserDTO';
 import { VehicleDTO } from './DTO/VehicleDTO';
 import { PassengerUpdateDTO } from './DTO/UserDTO';
 import { PasswordChangeDTO } from './DTO/UserDTO';
 import { DriverChangeDTO } from './DTO/DriverChangeDTO';
 import { VehicleChangeDTO } from './DTO/VehicleDTO';
+import { ReasonDTO } from './DTO/RejectionDTO';
 
 
 @Injectable({
@@ -39,7 +40,6 @@ export class DriverDataService {
     return this.http.get<DTOList<RideDTO>>(environment.apiBaseUrl+`api/driver/${id}/ride?page=${page}&size=${size}&sort=${sort}&from=${fromDate}&to=${toDate}`)
   }
   postDriverChangesNoPassword(id:number, dto:PassengerUpdateDTO):Observable<DriverChangeDTO>{
-    console.log(dto.name);
     return this.http.post<DriverChangeDTO>(environment.apiBaseUrl+`api/driver/${id}`,dto);
   }
   updateDriverPassword(id: number, dto: PasswordChangeDTO): Observable<HttpResponse<any>> {
@@ -62,6 +62,9 @@ export class DriverDataService {
   }
   declineChange(id: number): Observable<DriverChangeDTO> {
     return this.http.put<DriverChangeDTO>(environment.apiBaseUrl + `api/driver/changes/${id}/decline`,null);
+  }
+  reportDriver(id:number, dto:ReasonDTO):Observable<DriverReportDTO>{
+    return this.http.post<DriverReportDTO>(environment.apiBaseUrl+`api/driver/${id}/report`,dto);
   }
   
 }

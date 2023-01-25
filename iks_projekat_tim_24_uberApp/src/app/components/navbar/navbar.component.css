@@ -8,6 +8,10 @@
     text-decoration: none;
 }
 
+#navbar_logo:hover{
+    cursor: pointer;
+}
+
 header{
     background-color: #2E8B57 ;
     display: flex;

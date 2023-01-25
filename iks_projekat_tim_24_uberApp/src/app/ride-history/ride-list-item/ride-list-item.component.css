@@ -9,6 +9,11 @@ div.item
     padding: 5px;
 }
 
+div.item:hover
+{
+    cursor: pointer;
+}
+
 div.column
 {
     flex:auto;
