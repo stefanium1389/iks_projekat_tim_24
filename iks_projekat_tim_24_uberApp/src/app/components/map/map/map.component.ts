@@ -288,7 +288,7 @@ export class MapComponent implements AfterViewInit {
             this.out_timeAndDistance.emit({time: result.estimatedTimeInMinutes, cost: result.estimatedCost});
           },
           error: (error) => {
-            alert(error);
+            console.log(error.error.message)
           }
         }
     );

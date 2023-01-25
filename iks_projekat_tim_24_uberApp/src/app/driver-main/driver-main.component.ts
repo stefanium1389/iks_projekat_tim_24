@@ -15,6 +15,7 @@ import { defaultPicture } from '../user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
+
 @Component({
   selector: 'app-driver-main',
   templateUrl: './driver-main.component.html',
@@ -85,7 +86,7 @@ export class DriverMainComponent implements OnInit {
     } else if (status === 'revert') {
       this.revertExceeded();
     } else {
-      alert(status);
+      console.log(status);
     }
   }
 
@@ -114,7 +115,9 @@ export class DriverMainComponent implements OnInit {
       }
 
     } catch (error) {
-      alert(error);
+      this.snackBar.open("greska u dobavljanju aktivnosti", 'Ok', {
+        duration: 3000
+      });
     }
   }
 
