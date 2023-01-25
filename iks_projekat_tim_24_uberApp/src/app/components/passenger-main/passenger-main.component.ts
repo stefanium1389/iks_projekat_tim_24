@@ -379,8 +379,12 @@ export class PassengerMainComponent implements OnInit {
       this.hasPet = this.ride.petTransport;
       this.destinationForm.get('start_location')?.setValue(this.ride.locations[0].departure.address);
       this.destinationForm.get('end_location')?.setValue(this.ride.locations[0].destination.address);
-      this.setDriver(this.ride);
-      this.setVehicle(this.ride);
+      if(this.ride.driver){
+        this.setDriver(this.ride);
+        this.setVehicle(this.ride);
+        this.setReviews(this.ride);
+      }
+      
 
       //linked users!
       this.linkedUsers = [];
@@ -393,7 +397,9 @@ export class PassengerMainComponent implements OnInit {
       }
       
       this.mapType = "RIDE";
-      this.driverId = this.ride.driver.id;
+      if(this.ride.driver){
+        this.driverId = this.ride.driver.id;
+      }
       this.markers = [{lat:this.ride.locations[0].departure.latitude,lon:this.ride.locations[0].departure.longitude},{lat:this.ride.locations[0].destination.latitude,lon:this.ride.locations[0].destination.longitude}]
       this.disabledClick = true;
     }
