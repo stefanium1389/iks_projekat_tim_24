@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatMenu } from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DriverDataService } from 'src/app/backend-services/driver-data-service.service';
 import { GeoCoordinateDTO } from 'src/app/backend-services/DTO/RouteDTO';
 import { UserRegistrationDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { VehicleRequestDTO } from 'src/app/backend-services/DTO/VehicleDTO';
+import { VehicleDataService } from 'src/app/backend-services/vehicle-data.service';
 
 @Component({
   selector: 'app-admin-create-driver',
@@ -13,7 +16,7 @@ import { VehicleRequestDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 })
 export class AdminCreateDriverComponent implements OnInit {
 
-  constructor() {
+  constructor(private driverDataService:DriverDataService, private vehicleDataService:VehicleDataService, private snackBar: MatSnackBar) {
 
     this.form = new FormGroup({
       name: new FormControl('',Validators.required),
@@ -27,7 +30,6 @@ export class AdminCreateDriverComponent implements OnInit {
       babyVehicle: new FormControl(''),
       petsVehicle: new FormControl('')
     });
-
    }
 
   hasPetVehicle:boolean = false;
@@ -50,20 +52,13 @@ export class AdminCreateDriverComponent implements OnInit {
     //   }
     // }       
     if(!this.form.valid){
-      console.log('nevalidno!');
       return;
     }
-
-    const loc:GeoCoordinateDTO = {
-      address:'Tek kreiran',
-      latitude:45.248924272662464,
-      longitude:19.838440668950827
-    }
-
+    
     const driverDto: UserRegistrationDTO = {
       name: this.form.get('name')?.value,
       surname: this.form.get('lastname')?.value,
-      profilePicture: 'xdBro',
+      profilePicture: null,
       telephoneNumber: this.form.get('phone')?.value,
       email: this.form.get('email')?.value,
       address: this.form.get('address')?.value,
@@ -73,13 +68,39 @@ export class AdminCreateDriverComponent implements OnInit {
       vehicleType: this.selectedType,
       model: this.form.get('vehicle_model')?.value,
       licenseNumber: this.form.get('vehicle_license')?.value,
-      currentLocation: loc,
+      currentLocation: {
+        address:"Tek kreiran",
+        latitude:45.248924272662464,
+        longitude:19.838440668950827
+      },
       passengerSeats:this.form.get('vehicle_detail')?.value,
       babyTransport:this.form.get('babyVehicle')?.value,
       petTransport:this.form.get('petsVehicle')?.value
     }
-    console.log(driverDto)
-    console.log(vehicleDto)
+
+    console.log(vehicleDto);
+    this.driverDataService.postDriver(driverDto).subscribe({
+      next: (result) => {
+        let driverId = result.id;
+        this.vehicleDataService.postVehicle(driverId, vehicleDto).subscribe({
+          next: (result) => {
+            this.snackBar.open('Uspesno dodat novi vozac!', 'Ok', {
+              duration: 3000
+            });
+          },
+          error: (error) => {
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
+          }
+        })
+      },
+      error: (error) => {
+        this.snackBar.open(error.error.message, 'Ok', {
+          duration: 3000
+        });
+      }
+    })
   }
 
   onChangePicture(event:any) {
