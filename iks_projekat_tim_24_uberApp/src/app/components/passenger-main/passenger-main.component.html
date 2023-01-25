@@ -50,7 +50,8 @@
         </div>
 
         <div class="driver-side-panel" id="linked-users">
-            <p>Uvezani korisnici</p>
+            <p *ngIf="!ride">Uvezani korisnici</p>
+            <p *ngIf="ride">Putnici</p>
             <div *ngIf="linkedUsers.length>0" class="linked-users-container">
                 <div *ngFor="let user of linkedUsers" class="profil-pregled" id="linked-user">
                     <div class="profile-pic">
@@ -66,6 +67,7 @@
         </div>
 
         <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
+            <p>Vozac</p>
             <div class="profil-pregled">
                 <div class="profile-pic">
                     <img class="actual-image" src={{driver.profilePicture}}>

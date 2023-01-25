@@ -30,6 +30,9 @@ import { VehicleDataService } from 'src/app/backend-services/vehicle-data.servic
 import { VehicleDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { ReviewDataService } from 'src/app/backend-services/review-data.service';
 import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
+import { RateRideDialogComponent } from '../rate-ride-dialog/rate-ride-dialog.component';
+import { Router } from '@angular/router';
+import { ShareRideIdService } from 'src/app/services/share-ride-id.service';
 
 @Component({
   selector: 'app-passenger-main',
@@ -76,7 +79,7 @@ export class PassengerMainComponent implements OnInit {
     private jwtService: JwtService, private http: HttpClient, private snackBar: MatSnackBar,
     private rideData: RideDataService, private driverDataService: DriverDataService,
     private vehicleDataService: VehicleDataService, private reviewDataService: ReviewDataService,
-    private passengerDataService: PassengerDataService) {
+    private passengerDataService: PassengerDataService,private shareRideIdService:ShareRideIdService,private route: Router) {
 
     this.destinationForm = new FormGroup({
       start_location: new FormControl(),
@@ -395,12 +398,22 @@ export class PassengerMainComponent implements OnInit {
       this.disabledClick = true;
     }
     catch (HttpErrorResponse){
+
       if(this.ride){
-        //otvori dijalog za ocenjivanje
+        let rideId = this.ride.id;
+        //ako je bila voznja pre, sad je nema pa moze da se oceni jer je gotova
+        const dialogRef = this.dialog.open(RateRideDialogComponent, {
+          width: '500px',
+          data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if(result == true){
+            this.shareRideIdService.setRideId(rideId);
+          this.route.navigate(['/rate-ride']);
+          }
+        });
       }
-      
       this.ride=null;
-  
       this.mapType = "ALL";
       this.driverId = null;
       this.markers = [];
@@ -514,7 +527,6 @@ export class PassengerMainComponent implements OnInit {
 
   }
   withdrawRide(){
-    console.log('kliknut sam')
     let id = this.ride?.id;
     this.rideData.putWithdrawRide(id!).subscribe({
       next: (result)=> {
