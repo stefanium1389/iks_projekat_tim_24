@@ -34,21 +34,21 @@
                 <div class="column">
                     <p>Detalji o vozilu</p>
                     <div class="form-outline form-white mb-4">
-                        <input type="text" name="marka-vozila" class="form-control form-control-lg" placeholder="Vehicle manufacturer" formControlName="vehicle-man"/>
+                        <input type="text" name="marka-vozila" class="form-control form-control-lg" placeholder="Vehicle model" formControlName="vehicle_model"/>
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <input type="text" name="vehicle-name" class="form-control form-control-lg" placeholder="Vehicle name" formControlName="vehicle-name"/>
+                        <input type="text" name="vehicle-name" class="form-control form-control-lg" placeholder="License plate" formControlName="vehicle_license"/>
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <input type="number" name="vehicle-detail" class="form-control form-control-lg" placeholder="Number of seats" formControlName="vehicle-detail"/>
+                        <input type="number" name="vehicle-detail" class="form-control form-control-lg" placeholder="Number of seats" formControlName="vehicle_detail"/>
                     </div>
                     <div class="form-outline form-white mb-4">
                         <select class="sort-select" (change)="onChange($event)">
                             <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option></select>
                     </div>
                     <div class="checkbox-parameters">
-                        <mat-checkbox [(ngModel)]="hasBabyVehicle" label="babyVehicle" >Vozilo ima opremu za bebe</mat-checkbox>
-                        <mat-checkbox [(ngModel)]="hasPetVehicle" label="petsVehicle" >Vozilo ima opremu za ljubimce</mat-checkbox>
+                        <mat-checkbox formControlName='babyVehicle' [(ngModel)]="hasBabyVehicle" label="babyVehicle" >Vozilo ima opremu za bebe</mat-checkbox>
+                        <mat-checkbox formControlName="petsVehicle" [(ngModel)]="hasPetVehicle" label="petsVehicle" >Vozilo ima opremu za ljubimce</mat-checkbox>
                     </div>
                 </div>
                 <button class="btn btn-outline-light btn-lg btn-block px-5" type="submit">Create</button>

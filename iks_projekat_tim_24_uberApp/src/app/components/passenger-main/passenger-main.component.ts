@@ -357,6 +357,10 @@ export class PassengerMainComponent implements OnInit {
       this.disabledClick = true;
     }
     catch (HttpErrorResponse){
+      if(this.ride){
+        //otvori dijalog za ocenjivanje
+      }
+      
       this.ride=null;
   
       this.mapType = "ALL";
