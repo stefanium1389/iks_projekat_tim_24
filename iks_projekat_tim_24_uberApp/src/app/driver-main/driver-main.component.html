@@ -12,7 +12,7 @@
                     <input [disabled]="true" type="text" placeholder="pocetna destinacija"/>
                     <input [disabled]="true" type="text" placeholder="krajnja destinacija"/>
 
-                    <div *ngIf="time" class="estimate-box">
+                    <div class="estimate-box">
                         <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
                         <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
                         <p *ngIf="pets" class="estimate">Prisutni ljubimci</p>
@@ -37,6 +37,6 @@
     </div>
 
     <div class = "map-container">
-        <app-map [disableClick]="true"></app-map>
+        <app-map [disableClick]="true" [mapType]="mapType" [driverId]="driverId" [markers]="markers"></app-map>
     </div>
 </div>
