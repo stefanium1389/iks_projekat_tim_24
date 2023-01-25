@@ -370,6 +370,8 @@ export class PassengerMainComponent implements OnInit {
       console.log(this.ride)
       this.cost = this.ride.totalCost;
       this.time = this.ride.estimatedTimeInMinutes;
+      this.setDriver(this.ride);
+      this.setVehicle(this.ride);
       
       this.mapType = "RIDE";
       this.driverId = this.ride.driver.id;
