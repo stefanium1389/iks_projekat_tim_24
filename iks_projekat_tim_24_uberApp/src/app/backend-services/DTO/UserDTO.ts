@@ -6,6 +6,7 @@ export interface UserDTO {
 	telephoneNumber: string,
 	email: string;
 	address: string;
+	blocked: boolean;
 }
 export interface UserRegistrationDTO {
 	name: string;

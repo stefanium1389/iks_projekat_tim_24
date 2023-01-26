@@ -9,6 +9,7 @@ import { PassengerUpdateDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { PasswordChangeDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { Router } from '@angular/router';
+import {BlockUserService} from "../../backend-services/block-user.service";
 
 @Component({
   selector: 'app-passenger-profile-admin',
@@ -21,6 +22,10 @@ export class PassengerProfileAdminComponent implements OnInit {
   validFile: boolean = true;
   base64String : string | undefined;
   pictureReader: FileReader;
+  
+  userId: number;
+  blocked: boolean;
+  blockButtonText: string;
 
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -34,7 +39,7 @@ export class PassengerProfileAdminComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog, private adminViewingService : AdminViewingService, private passengerService : PassengerDataService, private router: Router) { }
+  constructor(public dialog: MatDialog, private blockService: BlockUserService, private adminViewingService : AdminViewingService, private passengerService : PassengerDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;
@@ -48,6 +53,7 @@ export class PassengerProfileAdminComponent implements OnInit {
     let id = this.adminViewingService.getAdminViewingId();
     if (id != null)
     {
+      this.userId = id;
       this.passengerService.getPassengerById(id).subscribe(
         {
           next: (result) => 
@@ -60,6 +66,16 @@ export class PassengerProfileAdminComponent implements OnInit {
             this.ProfileForm.get('surname')?.setValue(result.surname);
             this.ProfileForm.get('address')?.setValue(result.address);
             this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
+            
+            this.blocked = result.blocked;
+            if(this.blocked)
+            {
+              this.blockButtonText = "Unblock";
+            }
+            else
+            {
+              this.blockButtonText = "Block";
+            }
           },
           error: (error) =>
           {
@@ -71,7 +87,7 @@ export class PassengerProfileAdminComponent implements OnInit {
   }
 
   setReader ()
-   {
+  {
     this.pictureReader.onloadend = () => {
       if (this.pictureReader === null)
       {
@@ -80,12 +96,27 @@ export class PassengerProfileAdminComponent implements OnInit {
       {
         this.base64String = this.pictureReader.result?.toString();
       }
-      
-   };
-   }
+    
+    };
+  }
 
+  block()
+  {
+    if(this.blocked)
+    {
+      this.blockService.putUnblock(this.userId).subscribe();
+      this.blocked = false;
+      this.blockButtonText = "Block";
+    }
+    else
+    {
+      this.blockService.putBlock(this.userId).subscribe();
+      this.blocked = true;
+      this.blockButtonText = "Unblock";
+    }
+  }
 
-  openBlockDialog(): void {
+  openNoteDialog(): void {
     const dialogRef = this.dialog.open(BlockDialogComponent, {
       width: '250px',
       data: {}

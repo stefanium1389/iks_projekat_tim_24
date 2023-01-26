@@ -11,6 +11,7 @@ import { VehicleChangeDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { DriverChangeDTO } from 'src/app/backend-services/DTO/DriverChangeDTO';
 import { Router } from '@angular/router';
+import {BlockUserService} from "../../backend-services/block-user.service";
 
 @Component({
   selector: 'app-driver-profile-for-admin',
@@ -25,6 +26,10 @@ export class DriverProfileForAdminComponent implements OnInit {
   base64String : string | undefined;
   pictureReader: FileReader;
   vehicleTypes = ["Van","Luxury","Standard"];
+  
+  userId: number;
+  blocked: boolean;
+  blockButtonText: string;
   
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -50,7 +55,7 @@ export class DriverProfileForAdminComponent implements OnInit {
   thereIsChange:boolean = false;
   change: DriverChangeDTO;
 
-  constructor(public dialog: MatDialog, private adminViewingService: AdminViewingService, private driverService : DriverDataService, private router:Router) { }
+  constructor(public dialog: MatDialog, private blockService: BlockUserService, private adminViewingService: AdminViewingService, private driverService : DriverDataService, private router:Router) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;
@@ -84,7 +89,6 @@ export class DriverProfileForAdminComponent implements OnInit {
     let id = this.adminViewingService.getAdminViewingId();
     if (id != null)
     {
-      
       this.driverService.getLatestDriverChange(id).subscribe(
         {
           next: (result) => 
@@ -139,7 +143,8 @@ export class DriverProfileForAdminComponent implements OnInit {
   {
     let id = this.adminViewingService.getAdminViewingId();
     if (id != null){
-    this.driverService.getDriverById(id).subscribe(
+      this.userId = id;
+      this.driverService.getDriverById(id).subscribe(
       {
         next: (result) => 
         {
@@ -151,6 +156,16 @@ export class DriverProfileForAdminComponent implements OnInit {
           this.ProfileForm.get('surname')?.setValue(result.surname);
           this.ProfileForm.get('address')?.setValue(result.address);
           this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
+  
+          this.blocked = result.blocked;
+          if(this.blocked)
+          {
+            this.blockButtonText = "Unblock";
+          }
+          else
+          {
+            this.blockButtonText = "Block";
+          }
         },
         error: (error) =>
         {
@@ -201,16 +216,21 @@ export class DriverProfileForAdminComponent implements OnInit {
       );
     }
   }
-
-  openBlockDialog(): void {
-    const dialogRef = this.dialog.open(BlockDialogComponent, {
-      width: '250px',
-      data: {}
-    });
   
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
+  block()
+  {
+    if(this.blocked)
+    {
+      this.blockService.putUnblock(this.userId).subscribe();
+      this.blocked = false;
+      this.blockButtonText = "Block";
+    }
+    else
+    {
+      this.blockService.putBlock(this.userId).subscribe();
+      this.blocked = true;
+      this.blockButtonText = "Unblock";
+    }
   }
 
   onRouting(route : string)

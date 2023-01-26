@@ -8,7 +8,7 @@
           <img class="actual-image" src="{{base64String}}">
         </div>
       </div>
-      <button class="block-button" (click)="openBlockDialog()">Blokiraj</button>
+      <button class="block-button" (click)="block()">{{blockButtonText}}</button>
 
       <button *ngIf="this.thereIsChange" (click)="saveChanges()">Sačuvaj izmene</button>
       <button *ngIf="this.thereIsChange" (click)="denyChanges()">Odabaci izmene</button>
