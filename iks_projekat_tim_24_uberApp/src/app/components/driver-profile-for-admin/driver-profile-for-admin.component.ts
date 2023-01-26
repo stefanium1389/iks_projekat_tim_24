@@ -11,6 +11,7 @@ import { VehicleChangeDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { DriverChangeDTO } from 'src/app/backend-services/DTO/DriverChangeDTO';
 import { Router } from '@angular/router';
+import {BlockUserService} from "../../backend-services/block-user.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -25,8 +26,12 @@ export class DriverProfileForAdminComponent implements OnInit {
   validFile: boolean = true;
   base64String: string | undefined;
   pictureReader: FileReader;
-  vehicleTypes = ["Van", "Luxury", "Standard"];
-
+  vehicleTypes = ["Van","Luxury","Standard"];
+  
+  userId: number;
+  blocked: boolean;
+  blockButtonText: string;
+  
   ProfileForm = new FormGroup({
     name: new FormControl(),
     surname: new FormControl(),
@@ -51,7 +56,7 @@ export class DriverProfileForAdminComponent implements OnInit {
   thereIsChange: boolean = false;
   change: DriverChangeDTO;
 
-  constructor(public dialog: MatDialog, private adminViewingService: AdminViewingService,
+  constructor(public dialog: MatDialog, private blockService: BlockUserService, private adminViewingService: AdminViewingService,
     private driverService: DriverDataService, private router: Router,
     private snackBar: MatSnackBar) { }
 
@@ -80,8 +85,8 @@ export class DriverProfileForAdminComponent implements OnInit {
 
   getChanges() {
     let id = this.adminViewingService.getAdminViewingId();
-    if (id != null) {
-
+    if (id != null)
+    {
       this.driverService.getLatestDriverChange(id).subscribe(
         {
           next: (result) => {
@@ -106,31 +111,33 @@ export class DriverProfileForAdminComponent implements OnInit {
 
   getVehicleData() {
     let id = this.adminViewingService.getAdminViewingId();
-    if (id != null) {
-      this.driverService.getVehicle(id).subscribe(
-        {
-          next: (result) => {
-            let finalString = `${result.vehicleType.charAt(0).toUpperCase()}${result.vehicleType.slice(1).toLowerCase()}`;
-            this.VehicleForm.get('type')?.setValue(finalString);
-            this.VehicleForm.get('model')?.setValue(result.model);
-            this.VehicleForm.get('plates')?.setValue(result.licenseNumber);
-            this.VehicleForm.get('numberOfSeats')?.setValue(result.passengerSeats);
-            this.VehicleForm.get('drivesBabies')?.setValue(result.babyTransport);
-            this.VehicleForm.get('drivesPets')?.setValue(result.petTransport);
-          },
-          error: (error) => {
-            this.snackBar.open(error.error.message, 'Ok', {
-              duration: 3000
-            });
-          }
+    if (id != null)
+    {
+      this.driverService.getVehicle(id).subscribe({
+        next: (result) => {
+          let finalString = `${result.vehicleType.charAt(0).toUpperCase()}${result.vehicleType.slice(1).toLowerCase()}`;
+          this.VehicleForm.get('type')?.setValue(finalString);
+          this.VehicleForm.get('model')?.setValue(result.model);
+          this.VehicleForm.get('plates')?.setValue(result.licenseNumber);
+          this.VehicleForm.get('numberOfSeats')?.setValue(result.passengerSeats);
+          this.VehicleForm.get('drivesBabies')?.setValue(result.babyTransport);
+          this.VehicleForm.get('drivesPets')?.setValue(result.petTransport);
+        },
+        error: (error) => {
+          this.snackBar.open(error.error.message, 'Ok', {
+            duration: 3000
+          });
         }
-      );
+      }
+    );
     }
   }
 
-  getProfileData() {
+  getProfileData()
+  {
     let id = this.adminViewingService.getAdminViewingId();
-    if (id != null) {
+    if (id != null){
+      this.userId = id;
       this.driverService.getDriverById(id).subscribe(
         {
           next: (result) => {
@@ -141,11 +148,16 @@ export class DriverProfileForAdminComponent implements OnInit {
             this.ProfileForm.get('surname')?.setValue(result.surname);
             this.ProfileForm.get('address')?.setValue(result.address);
             this.ProfileForm.get('phone')?.setValue(result.telephoneNumber);
+      
+            this.blocked = result.blocked;
+            if (this.blocked) {
+              this.blockButtonText = "Unblock";
+            } else {
+              this.blockButtonText = "Block";
+            }
           },
           error: (error) => {
-            this.snackBar.open(error.error.message, 'Ok', {
-              duration: 3000
-            });
+            alert(error);
           }
         }
       );
@@ -194,16 +206,21 @@ export class DriverProfileForAdminComponent implements OnInit {
       );
     }
   }
-
-  openBlockDialog(): void {
-    const dialogRef = this.dialog.open(BlockDialogComponent, {
-      width: '250px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
+  
+  block()
+  {
+    if(this.blocked)
+    {
+      this.blockService.putUnblock(this.userId).subscribe();
+      this.blocked = false;
+      this.blockButtonText = "Block";
+    }
+    else
+    {
+      this.blockService.putBlock(this.userId).subscribe();
+      this.blocked = true;
+      this.blockButtonText = "Unblock";
+    }
   }
 
   onRouting(route: string) {
@@ -211,8 +228,4 @@ export class DriverProfileForAdminComponent implements OnInit {
       window.location.reload();
     });
   }
-
-
-
 }
-

@@ -20,11 +20,7 @@ export class AdminViewUsersComponent implements OnInit {
   selectedType: string = 'both';
   users: UserForCard[] = [];
 
-  constructor(private adminViewingService: AdminViewingService,
-    private router: Router, private passengerService: PassengerDataService,
-    private driverService: DriverDataService, private snackBar: MatSnackBar) {
-
-  }
+  constructor(private adminViewingService: AdminViewingService, private router: Router, private passengerService: PassengerDataService, private driverService: DriverDataService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.onTypeChanged();
