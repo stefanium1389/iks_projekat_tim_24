@@ -11,16 +11,16 @@
                     <i (click)="search('start')" class="fa fa-search"></i>
                 </div>
                 <div class="destination-container">
-                    <input readonly="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
+                    <input [readonly]="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
                     <i (click)="search('end')" class="fa fa-search"></i>
                 </div>
             </form>
-            <select  [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
+            <select *ngIf="!ride" [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
                 <option  value="departure">Polazište</option>
                 <option  value="destination" selected>Odredište</option>
             </select>
 
-            <div *ngIf="this.ride" class="estimate-box">
+            <div *ngIf="time" class="estimate-box">
                 <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
                 <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
             </div>
@@ -37,9 +37,9 @@
                     (click)="makeFavorite()"></i>
             </div>
 
-            <div class="checkbox-parameters">
-                <mat-checkbox [(ngModel)]="hasBaby" label="baby">Beba</mat-checkbox>
-                <mat-checkbox [(ngModel)]="hasPet" label="pets">Ljubimci</mat-checkbox>
+            <div  class="checkbox-parameters">
+                <mat-checkbox [disabled]="inRide" [(ngModel)]="hasBaby" label="baby">Beba</mat-checkbox>
+                <mat-checkbox [disabled]="inRide" [(ngModel)]="hasPet" label="pets">Ljubimci</mat-checkbox>
             </div>
 
             <div class="action-buttons">
@@ -50,7 +50,8 @@
         </div>
 
         <div class="driver-side-panel" id="linked-users">
-            <p>Uvezani korisnici</p>
+            <p *ngIf="!ride">Uvezani korisnici</p>
+            <p *ngIf="ride">Putnici</p>
             <div *ngIf="linkedUsers.length>0" class="linked-users-container">
                 <div *ngFor="let user of linkedUsers" class="profil-pregled" id="linked-user">
                     <div class="profile-pic">
@@ -58,36 +59,40 @@
                     </div>
                     <p>{{user.name}} {{user.surname}}</p>
                     <div class="scoring">
-                        <i class="fa fa-minus" (click)='removeUser(user);'></i>
+                        <i *ngIf="!ride" class="fa fa-minus" (click)='removeUser(user);'></i>
                     </div>
                 </div>
             </div>
-            <button [disabled]="inRide" (click)='openUserSearch()'>Dodaj</button>
+            <button *ngIf='!ride' (click)='openUserSearch()'>Dodaj</button>
         </div>
 
         <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
-            <div class="profil-pregled">
-                <div class="profile-pic">
+            <p>Vozac</p>
+            <p *ngIf="!ride?.driver">Voznja zakazazna, vozac ce biti dodeljen kasnije</p>
+            <div *ngIf="ride?.driver" class="profil-pregled">
+                <div  class="profile-pic">
                     <img class="actual-image" src={{driver.profilePicture}}>
                 </div>
+                
                 <p>{{driver.name +" "+driver.surname}}</p>
                 <div *ngIf="averageVehicleScore!=='none'" class="scoring">
                     <p>{{averageDriverScore}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-            <div class="profil-pregled">
+            <div *ngIf="vehicle" class="profil-pregled">
                 <p>{{vehicle.model}}</p>
                 <div *ngIf="averageVehicleScore!=='none'" class="scoring">
                     <p>{{averageVehicleScore}}</p>
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-            <p *ngIf="!inRide">Pristiže u 7 minuta</p>
-            <button *ngIf="!inRide">Odustani</button>
-            <div *ngIf="inRide" class="u-voznji">
-                <button (click)="openReportDialog()">Prijavi</button>
-                <button (click)="panic()" class="panic-dugme">PANIC</button>
+            <!-- <p *ngIf="!inRide">Pristiže u 7 minuta</p> -->
+            <!-- <button *ngIf="!inRide">Odustani</button> -->
+            <div class="u-voznji">
+                <button *ngIf="ride?.status=='PENDING' || ride?.status=='ACCEPTED'" (click)="withdrawRide()">Odustani</button>
+                <button *ngIf="ride?.status=='STARTED'"  (click)="openReportDialog()">Prijavi</button>
+                <button *ngIf="ride?.status=='STARTED'" (click)="panic()" class="panic-dugme">PANIC</button>
             </div>
         </div>
 

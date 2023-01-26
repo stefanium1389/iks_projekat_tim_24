@@ -84,7 +84,7 @@ export class NavbarRegisteredComponent implements OnInit {
           },
           error: (error) =>
           {
-            alert(error);
+            console.log(error.error.message);
           }
         }
         );

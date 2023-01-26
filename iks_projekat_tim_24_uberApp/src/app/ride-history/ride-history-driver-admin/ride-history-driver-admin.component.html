@@ -58,10 +58,10 @@
             <div class="green-card pets-baby">
                 <p>Trajanje: {{selectedRideTime}} min</p>
                 <div class="row">
-                    <p>Bebe: </p><i *ngIf='selectedRide.babyTransport'class="fa fa-check inline"></i>
+                    <p *ngIf='selectedRide.babyTransport'>Bebe: </p><i *ngIf='selectedRide.babyTransport' class="fa fa-check inline"></i>
                 </div>
                 <div class="row">
-                    <p>Ljubimci: </p><i *ngIf='selectedRide.babyTransport'class="fa fa-check inline"></i>
+                    <p *ngIf='selectedRide.babyTransport'>Ljubimci: </p><i *ngIf='selectedRide.babyTransport' class="fa fa-check inline"></i>
                 </div>
             </div>
         </div>

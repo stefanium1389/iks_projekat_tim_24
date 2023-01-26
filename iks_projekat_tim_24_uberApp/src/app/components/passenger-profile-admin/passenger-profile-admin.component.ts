@@ -10,6 +10,7 @@ import { PasswordChangeDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { Router } from '@angular/router';
 import {BlockUserService} from "../../backend-services/block-user.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-passenger-profile-admin',
@@ -20,7 +21,7 @@ export class PassengerProfileAdminComponent implements OnInit {
 
   isAdmin: boolean = true;
   validFile: boolean = true;
-  base64String : string | undefined;
+  base64String: string | undefined;
   pictureReader: FileReader;
   
   userId: number;
@@ -39,7 +40,8 @@ export class PassengerProfileAdminComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog, private blockService: BlockUserService, private adminViewingService : AdminViewingService, private passengerService : PassengerDataService, private router: Router) { }
+  constructor(public dialog: MatDialog, private blockService: BlockUserService, private adminViewingService: AdminViewingService, private snackBar: MatSnackBar,
+    private passengerService: PassengerDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.base64String = defaultPicture;
@@ -48,18 +50,15 @@ export class PassengerProfileAdminComponent implements OnInit {
     this.setReader();
   }
 
-  loadForms()
-  {
+  loadForms() {
     let id = this.adminViewingService.getAdminViewingId();
     if (id != null)
     {
       this.userId = id;
       this.passengerService.getPassengerById(id).subscribe(
         {
-          next: (result) => 
-          {
-            if (result.profilePicture !== null)
-            {
+          next: (result) => {
+            if (result.profilePicture !== null) {
               this.base64String = result.profilePicture;
             }
             this.ProfileForm.get('name')?.setValue(result.name);
@@ -77,26 +76,24 @@ export class PassengerProfileAdminComponent implements OnInit {
               this.blockButtonText = "Block";
             }
           },
-          error: (error) =>
-          {
-            alert(error);
+          error: (error) => {
+            this.snackBar.open(error.error.message, 'Ok', {
+              duration: 3000
+            });
           }
         }
-        );
+      );
     }
   }
 
   setReader ()
   {
     this.pictureReader.onloadend = () => {
-      if (this.pictureReader === null)
-      {
+      if (this.pictureReader === null) {
         throw new Error("No reader!");
-      }else
-      {
+      } else {
         this.base64String = this.pictureReader.result?.toString();
       }
-    
     };
   }
 
@@ -121,14 +118,13 @@ export class PassengerProfileAdminComponent implements OnInit {
       width: '250px',
       data: {}
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
   }
 
-  onRouting(route : string)
-  {
+  onRouting(route: string) {
     this.router.navigate([route]).then(() => {
       window.location.reload();
     });

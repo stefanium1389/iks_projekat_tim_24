@@ -11,7 +11,7 @@ export interface UserDTO {
 export interface UserRegistrationDTO {
 	name: string;
 	surname: string;
-	profilePicture: string;
+	profilePicture: string | null;
 	telephoneNumber: string,
 	email: string;
 	address: string;

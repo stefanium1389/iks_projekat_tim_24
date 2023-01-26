@@ -29,6 +29,10 @@ import { DriverDataService } from 'src/app/backend-services/driver-data-service.
 import { VehicleDataService } from 'src/app/backend-services/vehicle-data.service';
 import { VehicleDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { ReviewDataService } from 'src/app/backend-services/review-data.service';
+import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
+import { RateRideDialogComponent } from '../rate-ride-dialog/rate-ride-dialog.component';
+import { Router } from '@angular/router';
+import { ShareRideIdService } from 'src/app/services/share-ride-id.service';
 
 @Component({
   selector: 'app-passenger-main',
@@ -74,7 +78,8 @@ export class PassengerMainComponent implements OnInit {
   constructor(public dialog: MatDialog, private linkUsersService: LinkUsersService,
     private jwtService: JwtService, private http: HttpClient, private snackBar: MatSnackBar,
     private rideData: RideDataService, private driverDataService: DriverDataService,
-    private vehicleDataService: VehicleDataService, private reviewDataService: ReviewDataService) {
+    private vehicleDataService: VehicleDataService, private reviewDataService: ReviewDataService,
+    private passengerDataService: PassengerDataService,private shareRideIdService:ShareRideIdService,private route: Router) {
 
     this.destinationForm = new FormGroup({
       start_location: new FormControl(),
@@ -370,17 +375,51 @@ export class PassengerMainComponent implements OnInit {
       console.log(this.ride)
       this.cost = this.ride.totalCost;
       this.time = this.ride.estimatedTimeInMinutes;
-      this.setDriver(this.ride);
-      this.setVehicle(this.ride);
+      this.hasBaby = this.ride.babyTransport;
+      this.hasPet = this.ride.petTransport;
+      this.destinationForm.get('start_location')?.setValue(this.ride.locations[0].departure.address);
+      this.destinationForm.get('end_location')?.setValue(this.ride.locations[0].destination.address);
+      if(this.ride.driver){
+        this.setDriver(this.ride);
+        this.setVehicle(this.ride);
+        this.setReviews(this.ride);
+      }
+      
+
+      //linked users!
+      this.linkedUsers = [];
+      for(let user of this.ride.passengers){
+        this.passengerDataService.getPassengerById(user.id).subscribe({
+          next: (result) => {
+            this.linkedUsers.push(result);
+          }
+        })
+      }
       
       this.mapType = "RIDE";
-      this.driverId = this.ride.driver.id;
+      if(this.ride.driver){
+        this.driverId = this.ride.driver.id;
+      }
       this.markers = [{lat:this.ride.locations[0].departure.latitude,lon:this.ride.locations[0].departure.longitude},{lat:this.ride.locations[0].destination.latitude,lon:this.ride.locations[0].destination.longitude}]
       this.disabledClick = true;
     }
     catch (HttpErrorResponse){
+
+      if(this.ride){
+        let rideId = this.ride.id;
+        //ako je bila voznja pre, sad je nema pa moze da se oceni jer je gotova
+        const dialogRef = this.dialog.open(RateRideDialogComponent, {
+          width: '500px',
+          data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if(result == true){
+            this.shareRideIdService.setRideId(rideId);
+          this.route.navigate(['/rate-ride']);
+          }
+        });
+      }
       this.ride=null;
-  
       this.mapType = "ALL";
       this.driverId = null;
       this.markers = [];
@@ -419,7 +458,7 @@ export class PassengerMainComponent implements OnInit {
   }
 
   setDriver(dto: RideDTO) {
-    let driver = this.driverDataService.getDriverById(dto.driver.id).subscribe({
+      this.driverDataService.getDriverById(dto.driver.id).subscribe({
       next: (result) => {
         if (result.profilePicture==null)
         result.profilePicture=defaultPicture;
@@ -493,5 +532,15 @@ export class PassengerMainComponent implements OnInit {
     });
 
   }
-
+  withdrawRide(){
+    let id = this.ride?.id;
+    this.rideData.putWithdrawRide(id!).subscribe({
+      next: (result)=> {
+        this.ride = null;
+      },
+      error: (error) => {
+        console.log(error.error.message);
+      }
+    });
+  }
 }

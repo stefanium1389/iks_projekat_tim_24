@@ -61,6 +61,7 @@ import { StatisticsAdminComponent } from './components/statistics-admin/statisti
 import { PassengerProfileAdminComponent } from './components/passenger-profile-admin/passenger-profile-admin.component';
 import { RideHistoryPassengerAdminComponent } from './ride-history/ride-history-passenger-admin/ride-history-passenger-admin.component';
 import { RideHistoryDriverAdminComponent } from './ride-history/ride-history-driver-admin/ride-history-driver-admin.component';
+import { RateRideDialogComponent } from './components/rate-ride-dialog/rate-ride-dialog.component';
 
 const appRoutes : Routes =
 [
@@ -71,6 +72,7 @@ const appRoutes : Routes =
   {path: 'notifications', component: NotificationPageComponent},
   {path: 'driver-home', component: DriverMainComponent},
   {path: 'admin-home' , component: AdminMainComponent},
+  {path: 'admin-create-driver', component: AdminCreateDriverComponent},
   {path: 'user-home', component: PassengerMainComponent},
   {path: 'user-profile', component: PassengerProfileComponent},
   {path: 'user-ride-history', component: RideHistoryPassengerComponent},
@@ -120,7 +122,8 @@ const appRoutes : Routes =
         DriverProfileForAdminComponent,
         StatisticsAdminComponent,
         PassengerProfileAdminComponent,
-        EllipsisPipe
+        EllipsisPipe,
+        RateRideDialogComponent
         
     ],
     providers: [UserService,{
