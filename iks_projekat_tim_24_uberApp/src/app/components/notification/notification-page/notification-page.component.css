@@ -1,0 +1,45 @@
+div{
+    display: flex;
+    flex-direction: column;
+}
+div.list{
+    overflow-y:auto;
+    width: 33%;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    height: 45em;
+}
+h1.title{
+    margin: 30px;
+    font-size: xx-large;
+}
+.no-notifications{
+    margin-left: 30px;
+    color: gray;
+}
+
+div.notification
+{
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+div.PANIC
+{
+    background-color: #FF8E82;
+}
+
+div.NORMAL
+{
+    background-color: #DDDBDB;
+}
+
+div.false
+{
+    border-style: solid;
+    border-width: 5px;
+    border-color: #2E8B57;
+}

@@ -1,0 +1,10 @@
+<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
+<div class="card" (click)="onCardClick()">
+    <div class="pic-and-name">
+        <div class="profile">
+          <img src ={{user.picture}}>
+        </div> 
+        <p>{{user.nameAndSurname}}</p>
+    </div>
+  <i *ngIf="user.role === 'DRIVER'" class="fa fa-solid fa-car"></i>
+</div>

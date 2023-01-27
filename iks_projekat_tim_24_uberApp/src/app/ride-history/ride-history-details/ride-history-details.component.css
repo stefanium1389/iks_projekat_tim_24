@@ -2,7 +2,7 @@ div.wrapper-details{
     display: flex;
     height: 15%;
     align-items:stretch;
-    justify-content: center;
+    justify-content: left;
 }
 div.green-card{
     display: flex;
@@ -10,11 +10,11 @@ div.green-card{
     border-radius: 2em;
     margin: 2em;
     padding: 2em;
+    width: 30%;
 }
 div.green-card.trajanje{
     
     align-items: center;
-    justify-content: center;
     
 }
 div.green-card.pets-baby{

@@ -1,0 +1,207 @@
+div.map-container
+{
+    width: 60%;
+    height: 60%;
+}
+
+div.list-container
+{
+    width: 40%;
+    margin: 2em;
+}
+
+div.big-wrapper
+{
+    display: flex;
+    align-self: center;
+    height: 90%;
+    margin: 1em;
+}
+
+div.info-containter
+{
+    display: flex;
+    width: 100%;
+}
+
+div.wrapper-details{
+    display: flex;
+    height: 15%;
+    align-items:stretch;
+    justify-content: left;
+}
+div.green-card{
+    flex-direction: column;
+    display: flex;
+    background-color: #2E8B57;
+    border-radius: 2em;
+    margin: 2em;
+    padding: 2em;
+    width: 30%;
+    height: 10em;
+}
+div.green-card.trajanje{
+    
+    align-items: center;
+    
+}
+div.green-card.pets-baby{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    
+}
+div.row{
+    display: flex;
+    align-items: center;
+    flex-direction:row;
+    width: fit-content;
+    margin: 0.5em;
+}
+
+.profile-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #2196F3;
+    margin-right: 0.1em;
+}
+
+.actual-image-profile
+{
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+}
+p{
+    width: fit-content;
+    color: white;
+    height: fit-content;
+}
+div.profil-pregled{
+    display: flex;
+    background-color: #DDDBDB;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+div.list-container
+{
+    width: 40%;
+    margin: 2em;
+}
+
+div.list-container
+{
+    overflow-y:auto;
+    max-height: 100%;
+    margin-top: 40px;
+}
+
+select.sort-select
+{
+    background-color: #DDDBDB;
+    width: fit-content;
+    padding: 1em;
+    padding-left: 5em;
+    padding-right: 5em;
+    align-self: center;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+select.sort-select:hover
+{
+    background-color: white;
+}
+div.item
+{
+    display: flex;
+    background-color: #DDDBDB;
+    border-radius: 10px;
+    flex-direction: row;
+    margin-bottom: 20px;
+    margin-right: 5px;
+    padding: 5px;
+}
+div.item:hover{
+    background-color:#90D9A4;
+    cursor:pointer;
+}
+
+div.item p {
+    color: black;
+}
+
+div.column
+{
+    flex:auto;
+    display: block;
+    margin-left: 5em;
+    margin-right: 5em;
+}
+
+i.fa-arrow-right, i.fa-arrow-left
+{
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+
+i.inline
+{
+    display: inline;
+    color: white;
+    width: fit-content;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+p{
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.comment-list p {
+    color: black;
+}
+div.comments
+{
+    display: inline-block;
+    background-color: #2E8B57;
+    width: 40%;
+    height: 15em;
+    margin-left: 2.5%;
+    border-radius: 10px;
+    padding: 10px;
+    vertical-align: top;
+}
+
+div.comment-list
+{
+    height: 75%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+div.comment
+{
+    background-color: #DDDBDB;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+h1{
+    color: white;
+}
+p.email{
+    color:skyblue;
+}
+h2 {
+    height: fit-content;
+    margin-bottom: 0;
+}

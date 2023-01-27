@@ -8,15 +8,15 @@
     text-decoration: none;
 }
 
+#navbar_logo:hover{
+    cursor: pointer;
+}
+
 header{
     background-color: #2E8B57 ;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 10%;
-}
-
-app-button
-{
-    margin: 0px 15px;
+    max-height: 70px;
 }

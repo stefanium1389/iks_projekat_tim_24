@@ -1,13 +1,19 @@
 <div class="div">
   <h1 class="element">Registration</h1>
-  <form>
-    <input class="element" type="email" id="e-mail" name="e-mail" placeholder="E-mail">
-    <input class="element" type="password" id="password" name="password" placeholder="Password">
-    <input class="element" type="password" id="repeat password" name="repeat password" placeholder="Repeat password">
-    <input class="element" type="text" id="name" name="name" placeholder="Name">
-    <input class="element" type="text" id="surname" name="surname" placeholder="Surname">
-    <input class="element" type="tel" id="phone number" name="phone number" placeholder="Phone number">
-    <input class="element" type="text" id="address" name="address" placeholder="Address">
+  <form
+    method="POST"
+    [formGroup]="registerForm" 
+    (ngSubmit)="register()"
+  >
+    <input class="element" type="email" id="e-mail" name="e-mail" placeholder="E-mail" formControlName="email">
+    <input class="element" type="password" id="password" name="password" placeholder="Password" formControlName="password"> 
+    <input class="element" type="password" id="repeat password" name="repeat password" placeholder="Repeat password" formControlName="repeatPassword">
+    <div *ngIf="registerForm.hasError('notSame')">Passwords do not match</div>
+    <input class="element" type="text" id="name" name="name" placeholder="Name" formControlName="name">
+    <input class="element" type="text" id="surname" name="surname" placeholder="Surname" formControlName="surname">
+    <input class="element" type="tel" id="phone number" name="phone number" placeholder="Phone number" formControlName="phone">
+    <input class="element" type="text" id="address" name="address" placeholder="Address" formControlName="address">
+    <button class="element" type="submit">Register</button>
   </form>
-  <button class="element">Register</button>
+  
 </div>

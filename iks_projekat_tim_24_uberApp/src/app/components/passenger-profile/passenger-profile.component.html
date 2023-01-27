@@ -1,0 +1,59 @@
+<div class="wrapper">
+    <div class="profile-wrapper">
+        <h1 id="profil">Profil</h1>
+
+        <div class="profile-container">
+            <div class="upload">
+                <div class="profile-icon">
+                  <img class="actual-image" src="{{base64String}}">
+                </div>
+                <div class="round">
+                  <input type="file" (change)="onChangePicture($event)" accept="image/*">
+                  <i class="fa fa-plus" style="color: #fff;"></i>
+                </div>
+              </div>
+        </div>
+
+        <div class="side-panel">
+            <form [formGroup]="ProfileForm" (ngSubmit)="onProfileFormSubmit()" fxLayout="column">
+                <mat-form-field class="form-field">
+                  <mat-label>Ime</mat-label>
+                  <input matInput type="text" name="name" formControlName="name" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                  <mat-label>Prezime</mat-label>
+                  <input matInput type="text" name="surname" formControlName="surname" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <mat-label>Adresa</mat-label>
+                    <input matInput type="text" name="address" formControlName="address" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <mat-label>Broj telefona</mat-label>
+                    <input matInput type="text" name="phone" formControlName="phone" />
+                </mat-form-field>
+                <button type="submit">Sačuvaj</button>
+            </form>
+            
+        </div>
+        <div class="side-panel">
+            <form [formGroup]="PasswordForm" (ngSubmit)="onPasswordFormSubmit()" fxLayout="row">
+                <mat-form-field class="form-field">
+                  <mat-label>Stara lozinka</mat-label>
+                  <input matInput type="password" name="oldPass" formControlName="oldPass" />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                  <mat-label>Nova lozinka</mat-label>
+                  <input matInput type="password" name="newPass" formControlName="newPass" />
+                </mat-form-field>
+                <button type="submit">Sačuvaj</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="stats-wrapper">
+        <h1>Statistika</h1>
+        <app-statistics></app-statistics>
+    </div>
+    
+</div>

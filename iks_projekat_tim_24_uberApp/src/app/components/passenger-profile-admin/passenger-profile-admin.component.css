@@ -1,0 +1,193 @@
+.wrapper
+{
+    display: flex;
+    padding: 20px 60px;
+}
+
+.profile-wrapper
+{
+    width: 40%;
+    max-width: 400px;
+}
+
+.stats-wrapper
+{
+    width: 60%;
+    padding: 0px 50px;
+}
+
+.admin-button
+{
+  margin: 10px;
+}
+
+
+.profile-icon{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: #2196F3;
+}
+
+.actual-image
+{
+  width: 100%;
+  height: 100%;
+  border-radius: 40px;
+}
+
+.profile-container
+{
+    display: flex;
+    align-items: center;
+}
+
+.form-field
+{
+    display: block;
+    margin: 0px 10px;
+    color: white;
+    width: 80%;
+}
+
+::ng-deep .profile-wrapper .mat-focused .mat-form-field-label {
+    color: white !important;
+   }
+  
+   ::ng-deep .profile-wrapper .mat-form-field-underline {
+    background-color: white !important;
+  } 
+  
+  ::ng-deep .profile-wrapper .mat-form-field-ripple {
+   background-color: white !important;
+  }
+
+  .profile-wrapper mat-label{
+    color: white;
+  }
+
+.side-panel{
+    border-radius: 25px;
+    align-items: left;
+    display: flex;
+    
+    padding: 10px;
+    margin: 10px;
+    flex-direction: column;
+    background-color:#2E8B57 ;
+    height: fit-content;
+}
+
+button{
+    border-radius: 10px;
+    text-align: center;
+    color: black;
+    padding: 12px 16px;
+    width:fit-content;
+    background-color: #DDDBDB;
+    margin-right:10px;
+    border:none;
+    font-size:1em;
+}
+button:hover{
+    color : black;
+    background-color: white;
+}
+
+#profil
+{
+    margin-left: 20px;
+}
+
+.upload{
+    width: 80px;
+    position: relative;
+    margin: 0px 20px;
+  }
+  
+  .upload img{
+    border-radius: 50%;
+    border: 4px solid #eaeaea;
+  }
+  
+  .upload .round{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #2E8B57;
+    width: 32px;
+    height: 32px;
+    line-height: 33px;
+    text-align: center;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .upload .round input[type = "file"]{
+    position: absolute;
+    transform: scale(2);
+    opacity: 0;
+  }
+  
+  input[type=file]::-webkit-file-upload-button{
+      cursor: pointer;
+  }
+
+  .block-button
+  {
+    background-color: red;
+    color: white;
+  }
+
+  .block-button:hover
+  {
+    background-color: maroon;
+    color: white;
+  }
+
+  .admin-options  button:hover
+  {
+    background-color: #878787;
+  }
+
+div.notes
+{
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    flex-direction: column;
+    background-color:#2E8B57 ;
+    border-radius: 25px;
+    height: 390px;
+}
+
+div.note-list
+{
+    display: block;
+    height: 75%;
+    overflow-y: auto;
+}
+
+div.note
+{
+    background-color: #DDDBDB;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+p
+{
+    margin: 0px;
+}
+
+#input-note
+{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    min-width: 300px;
+    color: white;
+    border-bottom-style: solid;
+    border-color: white;
+}

@@ -1,0 +1,41 @@
+<div class="rating-wrapper">
+    <div class="profile-data">
+        <div class="column">
+            <div class="profile-pic">
+            </div>
+            <p *ngIf="driver">
+                {{driver.name}} {{driver.surname}}
+            </p>
+            <p *ngIf="vehicle">
+                {{vehicle.model}}
+            </p>
+            <p *ngIf="ride">
+                From: {{ride.locations[0].departure.address}}
+                <br>
+                To: {{ride.locations[0].destination.address}}
+                <br>
+                At: {{ride.endTime}}
+            </p>
+        </div>
+    </div>
+    <div class="green-card">
+        <div class="top-row">
+            <div class="column">
+                <h1>Ocenite vozaca</h1>
+                <app-star-rating (ratingChange)="vozacRatingFunc($event)"></app-star-rating>
+                <br>
+                <textarea [(ngModel)]="driverComment" rows="6" cols="50" maxlength="200" placeholder="Comment driver..."></textarea>
+                <br>
+                <button class="btn btn-outline-light btn-lg px-5" (click)="rateDriver()">Rate Driver</button>
+            </div>
+            <div class="column">
+                <h1>Ocetnite vozilo</h1>
+                <app-star-rating (ratingChange)="voziloRatingFunc($event)"></app-star-rating>
+                <br>
+                <textarea [(ngModel)]="vehicleComment" rows="6" cols="50" maxlength="200" placeholder="Comment vehicle..."></textarea>
+                <br>
+                <button class="btn btn-outline-light btn-lg px-5" (click)="rateVehicle()">Rate Vehicle</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+::ng-deep .mat-select-arrow {
+    color: #2E8B57 !important;
+   }
+
+::ng-deep .mat-select-min-line {
+    color: #2E8B57 !important;
+   }
+
+::ng-deep .mat-focused .mat-form-field-label {
+    color: #2E8B57 !important;
+   }
+  
+   ::ng-deep.mat-form-field-underline {
+    background-color: #2E8B57 !important;
+  } 
+  
+  ::ng-deep.mat-form-field-ripple {
+   background-color: #2E8B57 !important;
+  }
+
+  mat-label{
+    color: #2E8B57;
+  }
+
+  :host ::ng-deep .mat-raised-button.mat-primary {
+    background-color: #2E8B57;
+  }
+.email{
+  color:lightsteelblue;
+}
+.search-results{
+  
+  margin:1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  outline: 1em black;
+  border-radius: 1em;
+  height: 10em;
+  overflow-y: auto;
+}
+.user-result{
+  background-color: #Ddd;
+  padding:0.2em;
+  margin:0.7em;
+  border-radius: 1em;
+}
+.user-result:hover{
+  cursor: pointer;
+  background-color: gray;
+}
+
+button 
+{
+  margin-top: 10px;
+}

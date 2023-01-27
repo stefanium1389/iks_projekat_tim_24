@@ -1,0 +1,57 @@
+<div>
+    <div class="green-card">
+        <div>
+            <h1>Kreiranje vozaca</h1>
+        </div>
+        <form class="row"
+            [formGroup]="form" 
+            (ngSubmit)="submit()">
+                <div class="column">
+                    <p>Licni podaci</p>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="name" class="form-control form-control-lg" placeholder="Name" formControlName="name"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="lastname" class="form-control form-control-lg" placeholder="Lastname" formControlName="lastname"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="city" class="form-control form-control-lg" placeholder="Address" formControlName="address"/>
+                    </div>
+                </div>
+                <div class="column">
+                    <p>Kontakt</p>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="phone" class="form-control form-control-lg" placeholder="Phone number" formControlName="phone"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="email" class="form-control form-control-lg" placeholder="E-mail" formControlName="email"/>
+                    </div>
+                    <p>Vozacka dozvola</p>
+                    <div class="form-outline form-white mb-4">
+                        <input (change)="onChangePicture($event)" accept="image/*" type="file" name="phone" class="form-control form-control-sm" placeholder="Select document" formControlName="document"/>
+                    </div>
+                </div>
+                <div class="column">
+                    <p>Detalji o vozilu</p>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="marka-vozila" class="form-control form-control-lg" placeholder="Vehicle model" formControlName="vehicle_model"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" name="vehicle-name" class="form-control form-control-lg" placeholder="License plate" formControlName="vehicle_license"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="number" name="vehicle-detail" class="form-control form-control-lg" placeholder="Number of seats" formControlName="vehicle_detail"/>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <select class="sort-select" (change)="onChange($event)">
+                            <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option></select>
+                    </div>
+                    <div class="checkbox-parameters">
+                        <mat-checkbox formControlName='babyVehicle' [(ngModel)]="hasBabyVehicle" label="babyVehicle" >Vozilo ima opremu za bebe</mat-checkbox>
+                        <mat-checkbox formControlName="petsVehicle" [(ngModel)]="hasPetVehicle" label="petsVehicle" >Vozilo ima opremu za ljubimce</mat-checkbox>
+                    </div>
+                </div>
+                <button class="btn btn-outline-light btn-lg btn-block px-5" type="submit">Create</button>
+        </form>
+    </div>
+</div>

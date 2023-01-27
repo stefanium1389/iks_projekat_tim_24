@@ -1,0 +1,7 @@
+<form>
+  <mat-label>Enter a report</mat-label>
+  <mat-form-field>
+    <input matInput [(ngModel)]="reason" name="reason">
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+</form>

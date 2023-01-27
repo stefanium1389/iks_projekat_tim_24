@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <div class="date-picker-container">
+
+      <mat-form-field>
+        <mat-label>Početno vreme</mat-label>
+        <input matInput [matDatepicker]="startDatePicker" (dateInput)="startDate = $event.target.value" (dateInput)="onDateChange()" >
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Završno vreme</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" (dateInput)="endDate = $event.target.value" (dateInput)="onDateChange()">
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Tip izveštaja</mat-label>
+        <mat-select [(ngModel)]="selectedChartType" name="selectedChartType" (ngModelChange)="onChartChange($event)">
+          <mat-option *ngFor="let type of chartTypes" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+  </div>
+
+  <canvas baseChart [data]="ChartData" [options]="ChartOptions" [type]="TypeOfChart" ></canvas>
+
+  <div class="summaries">
+    <p id="stat-sum">Ukupno: {{total}}</p>
+    <p id="stat-average">Prosečno: {{average}}</p>
+  </div>
+</div>

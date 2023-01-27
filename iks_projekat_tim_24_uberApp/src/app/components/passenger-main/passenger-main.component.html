@@ -1,0 +1,104 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
+<div class="real-wrapper">
+    <div class="wrapper">
+
+        <div class="driver-side-panel" id="destination-parameters">
+
+            <form [formGroup]="destinationForm">
+                <div class="destination-container">
+                    <input [readOnly]="inRide" type="text" placeholder="pocetna destinacija" formControlName="start_location" />
+                    <i (click)="search('start')" class="fa fa-search"></i>
+                </div>
+                <div class="destination-container">
+                    <input [readonly]="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
+                    <i (click)="search('end')" class="fa fa-search"></i>
+                </div>
+            </form>
+            <select *ngIf="!ride" [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
+                <option  value="departure">Polazište</option>
+                <option  value="destination" selected>Odredište</option>
+            </select>
+
+            <div *ngIf="time" class="estimate-box">
+                <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
+                <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
+            </div>
+
+            <div class="select-and-star">
+
+                <select [disabled]="inRide" [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
+                    <option value="STANDARD">Standardno</option>
+                    <option value="LUXURY">Luksuzno</option>
+                    <option value="VAN">Kombi</option>
+                </select>
+
+                <i class="fa" [ngClass]="{'fa-star-o': !isFavorited, 'fa-star': isFavorited}"
+                    (click)="makeFavorite()"></i>
+            </div>
+
+            <div  class="checkbox-parameters">
+                <mat-checkbox [disabled]="inRide" [(ngModel)]="hasBaby" label="baby">Beba</mat-checkbox>
+                <mat-checkbox [disabled]="inRide" [(ngModel)]="hasPet" label="pets">Ljubimci</mat-checkbox>
+            </div>
+
+            <div class="action-buttons">
+                <button [disabled]="inRide" (click)="createRide()">Započni</button>
+                <button [disabled]="inRide" (click)="openTimePicker()">Zakazi</button>
+            </div>
+            <div id="display-time" *ngIf="selectedTime">{{ "selektovano vreme: " + selectedTime }}</div>
+        </div>
+
+        <div class="driver-side-panel" id="linked-users">
+            <p *ngIf="!ride">Uvezani korisnici</p>
+            <p *ngIf="ride">Putnici</p>
+            <div *ngIf="linkedUsers.length>0" class="linked-users-container">
+                <div *ngFor="let user of linkedUsers" class="profil-pregled" id="linked-user">
+                    <div class="profile-pic">
+                        <img class="actual-image" src={{user.profilePicture}}>
+                    </div>
+                    <p>{{user.name}} {{user.surname}}</p>
+                    <div class="scoring">
+                        <i *ngIf="!ride" class="fa fa-minus" (click)='removeUser(user);'></i>
+                    </div>
+                </div>
+            </div>
+            <button *ngIf='!ride' (click)='openUserSearch()'>Dodaj</button>
+        </div>
+
+        <div *ngIf="inRide" class="driver-side-panel" id="driver-accept-container">
+            <p>Vozac</p>
+            <p *ngIf="!ride?.driver">Voznja zakazazna, vozac ce biti dodeljen kasnije</p>
+            <div *ngIf="ride?.driver" class="profil-pregled">
+                <div  class="profile-pic">
+                    <img class="actual-image" src={{driver.profilePicture}}>
+                </div>
+                
+                <p>{{driver.name +" "+driver.surname}}</p>
+                <div *ngIf="averageVehicleScore!=='none'" class="scoring">
+                    <p>{{averageDriverScore}}</p>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+            <div *ngIf="vehicle" class="profil-pregled">
+                <p>{{vehicle.model}}</p>
+                <div *ngIf="averageVehicleScore!=='none'" class="scoring">
+                    <p>{{averageVehicleScore}}</p>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+            <!-- <p *ngIf="!inRide">Pristiže u 7 minuta</p> -->
+            <!-- <button *ngIf="!inRide">Odustani</button> -->
+            <div class="u-voznji">
+                <button *ngIf="ride?.status=='PENDING' || ride?.status=='ACCEPTED'" (click)="withdrawRide()">Odustani</button>
+                <button *ngIf="ride?.status=='STARTED'"  (click)="openReportDialog()">Prijavi</button>
+                <button *ngIf="ride?.status=='STARTED'" (click)="panic()" class="panic-dugme">PANIC</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="map-container">
+        <app-map [disableClick]="disabledClick" [mapType]="mapType" [driverId]="driverId" [markers]="markers" (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
+    </div>
+</div>

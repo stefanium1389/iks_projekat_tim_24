@@ -1,0 +1,29 @@
+<div class="wrapper">
+    <div class="profile-wrapper">
+        <h1 id="profil">Nalozi</h1>
+        <div class="search-container">
+            <mat-form-field class="form-field">
+                <mat-label>Pretraga</mat-label>
+                <input matInput type="text" [(ngModel)]="searchWord" (ngModelChange)="onTypeChanged()" placeholder="Search for users"/>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Tip korisnika</mat-label>
+              <mat-select [(ngModel)]="selectedType" (ngModelChange)="onTypeChanged()">
+                <mat-option value="drivers">Vozači</mat-option>
+                <mat-option value="passengers">Putnici</mat-option>
+                <mat-option value="both">Oba</mat-option>
+              </mat-select>
+        </mat-form-field>
+        </div>
+        <div class="profile-card-container">
+          <app-profile-card *ngFor="let user of users" [user]="user" (userClicked)="onUserClicked($event)"></app-profile-card>
+        </div>
+      </div>
+      
+
+    <div class="stats-wrapper">
+        <h1>Statistika</h1>
+        <app-statistics></app-statistics>
+    </div>
+    
+</div>

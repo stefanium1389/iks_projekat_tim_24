@@ -1,0 +1,27 @@
+::ng-deep .mat-select-arrow {
+    color: #2E8B57 !important;
+   }
+
+::ng-deep .mat-select-min-line {
+    color: #2E8B57 !important;
+   }
+
+::ng-deep .mat-focused .mat-form-field-label {
+    color: #2E8B57 !important;
+   }
+  
+   ::ng-deep.mat-form-field-underline {
+    background-color: #2E8B57 !important;
+  } 
+  
+  ::ng-deep.mat-form-field-ripple {
+   background-color: #2E8B57 !important;
+  }
+
+  mat-label{
+    color: #2E8B57;
+  }
+
+  :host ::ng-deep .mat-raised-button.mat-primary {
+    background-color: #2E8B57;
+  }

@@ -1,46 +1,44 @@
 <div class = "real-wrapper">
     <div class="wrapper">
         <div class="driver-side-panel">
-            <p>Status: Aktivan</p>
-            <p>Danasnjih sati rada: 5h</p>
-            <button>Pauziraj</button>
+            <p>Status: {{activityStatus}}</p>
+            <p>Danasnjih sati rada: {{workHours}}</p>
+            <button *ngIf="isDriverActive" (click)="onClickEndDriverHour()">Pauziraj</button>
+            <button *ngIf="!isDriverActive" (click)="onClickStartDriverHour()"  [disabled]="isWorkingHourButtonDisabled">Nastavi</button>
         </div>
 
-        <div class="driver-side-panel" id = "destination-parameters">
+        <div *ngIf='hasAcceptedRide()' class="driver-side-panel" id = "destination-parameters">
             
-                    <input type="text" placeholder="pocetna destinacija"/>
-                    <input type="text" placeholder="krajnja destinacija"/>
+                    <input [(ngModel)]="startLocation"  [disabled]="true" type="text" placeholder="pocetna destinacija"/>
+                    <input [(ngModel)]="endLocation" [disabled]="true" type="text" placeholder="krajnja destinacija"/>
 
                     <div class="estimate-box">
-                        <p class="estimate">Oko 10 minuta</p>
-                        <p class="estimate">Oko 300 RSD</p>
-                    </div>
-
-                    <div class="checkbox-parameters">
-                        <div class="checkbox-holder">
-                            <input type="checkbox"/>
-                            <span class="checkmark"></span><p>Bebe</p>
-                        </div>
-                        <div class="checkbox-holder">
-                            <input type="checkbox"/>
-                            <span class="checkmark"></span><p>Ljubimci</p>
-                        </div>
+                        <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
+                        <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
+                        <p *ngIf="pets" class="estimate">Prisutni ljubimci</p>
+                        <p *ngIf="baby" class="estimate">Prisutna beba</p>
                     </div>
         </div>
 
-        <div class="driver-side-panel" id="driver-accept-container">
+        <div *ngIf='hasAcceptedRide()'class="driver-side-panel" id="driver-accept-container">
             <div class="profil-pregled">
-                <div class="profile-pic"></div> 
-                <p>Ime Prezime</p>
+                <div class="profile-pic">
+                    <img class="actual-image" src={{passenger.profilePicture}}>
+                </div> 
+                <p>{{passenger.name+" "+passenger.surname}}</p>
             </div>
-            <div>
-                <button>Pocetak</button>
-                <button>Otkazi</button>
+            <div *ngIf="acceptedRide != null && acceptedRide.status=='ACCEPTED'">
+                <button (click)='startRide()'>Start</button>
+                <button (click)="cancel()">Cancel</button>
+            </div>
+            <div *ngIf="acceptedRide != null && acceptedRide.status=='STARTED'">
+                <button (click)='stopRide()'>End ride</button>
+                <button (click)="panic()" class="panic-button">Panic</button>
             </div>
         </div>
     </div>
 
     <div class = "map-container">
-        <app-map></app-map>
+        <app-map [disableClick]="true" [mapType]="mapType" [driverId]="driverId" [markers]="markers"></app-map>
     </div>
 </div>

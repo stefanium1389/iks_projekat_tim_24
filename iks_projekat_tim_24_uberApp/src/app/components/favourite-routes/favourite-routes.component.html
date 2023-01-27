@@ -1,0 +1,34 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/3fd6d494cc.js" crossorigin="anonymous"></script>
+<div class="big-wrapper">
+    <div class="list-container">
+        <h2>Favourite routes:</h2>
+        <p class ="no-favorites" *ngIf="favoriteRoutes.length===0">Currently there are no favorite rides.</p>
+        <div class="route-list-container">
+            <div *ngFor='let fav of favoriteRoutes' (click)='selectFavorite(fav)' class="item">
+                
+                <div class="column">
+                    <i class="fa fa-star"></i> <p> {{fav.favoriteName}} </p>
+                    <br>
+                    <i class="fa fa-arrow-right"></i>  <p>{{fav.locations[0].departure.address | ellipsis:50:false:'...'}}</p> <br>
+                    <i class="fa fa-arrow-left"></i>  <p>{{fav.locations[0].destination.address | ellipsis:50:false:'...'}}</p>
+                </div>
+                <div class="column">
+                    <p>Vehicle type: {{fav.vehicleType}}</p>
+                    <br>
+                    <p>Baby</p><i class="fa " [ngClass]="{'fa-check': fav.babyTransport, 'fa-times': !fav.babyTransport}" ></i>
+                    <br>
+                    <p>Pet</p><i  class="fa " [ngClass]="{'fa-check': fav.petTransport, 'fa-times': !fav.petTransport}" ></i>
+                </div>
+                <div class="column">
+                    <i (click)="removeFav(fav)" style="font-size:30px;" class="fa fa-times"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="map-container">
+        <app-map [markers]="markers" [disableClick]="true"></app-map>
+        <button (click)="createRide(selectedFav!)">Begin</button>
+        <button (click)="openTimePicker(selectedFav!)">Book</button>
+    </div>
+</div>

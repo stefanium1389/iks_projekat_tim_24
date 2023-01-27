@@ -1,20 +1,38 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 <div class = "real-wrapper">
     <div class="wrapper">
         <div class="unregistered-user-side-panel" id = "destination-parameters">
+            
+            <form [formGroup]="destinationForm">
+                <div class="destination-container">
+                    <input type="text" placeholder="pocetna destinacija" formControlName="start_location"/>
+                    <i (click)="search('start')" class="fa fa-search"></i>
+                </div>
+                <div class="destination-container">
+                    <input type="text" placeholder="krajnja destinacija" formControlName="end_location"/>
+                    <i (click)="search('end')" class="fa fa-search"></i>
+                </div>
+            </form>
+            <select [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
+                <option value="departure">Polazište</option>
+                <option value="destination" selected>Odredište</option>
+            </select>
+            <select [(ngModel)]="selectedType" (ngModelChange)="onVehicleTypeChange($event)" id="vehicle-type-selection">
+                <option value="STANDARD">Standardno</option>
+                <option value="LUXURY">Luksuzno</option>
+                <option value="VAN">Kombi</option>
+            </select>
 
-                    <input type="text" placeholder="pocetna destinacija"/>
-                    <input type="text" placeholder="krajnja destinacija"/>
+            <div *ngIf="this.time" class="estimate-box">
+                <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
+                <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
+            </div>
 
-                    <div class="estimate-box">
-                        <p class="estimate">Oko 10 minuta</p>
-                        <p class="estimate">Oko 300 RSD</p>
-                    </div>
-
-                    <button>Zapocni</button>
+                <button [routerLink]="['/login']">Zapocni</button>
         </div>
     </div>
 
     <div class = "map-container">
-        <div id="map"></div>
+        <app-map [mapType]="'ALL'" (out_start_location)="locStartHandler($event)" (out_end_location)="locEndHandler($event)"  (out_timeAndDistance)="timeAndDistanceHandler($event)"></app-map>
     </div>
 </div>
