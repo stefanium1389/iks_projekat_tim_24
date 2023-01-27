@@ -78,7 +78,6 @@ export class MapComponent implements AfterViewInit {
   }
   
   ngOnInit() {
-    this.route();
     this.vehicleLocations = [];
     this.vehicleMarkers = [];
     
@@ -90,6 +89,7 @@ export class MapComponent implements AfterViewInit {
     });
     
     this.initializeWebSocketConnection();
+    this.route();
   }
   
   // Funkcija za otvaranje konekcije sa serverom
@@ -245,12 +245,12 @@ export class MapComponent implements AfterViewInit {
   }
   
   route(): void {
+  
+    if (this.ride_route) {
+      this.ride_route.remove();
+    }
     
-    if (this.start_location && this.end_location) {
-      
-      if (this.ride_route) {
-        this.ride_route.remove();
-      }
+    if (this.markers.length != 0) {
       
       let myPlan = new L.Routing.Plan([this.start_location.getLatLng(), this.end_location.getLatLng()],
           {
@@ -313,18 +313,18 @@ export class MapComponent implements AfterViewInit {
   }
   
   ngOnChanges() {
-    if (this.markers.length == 0) {
-      return;
-    }
     if (this.start_location) {
       this.start_location.removeFrom(this.map);
     }
-    this.start_location = new L.Marker([this.markers[0].lat, this.markers[0].lon], {icon: this.newIcon}).addTo(this.map);
-    
+  
     if (this.end_location) {
       this.end_location.removeFrom(this.map);
     }
-    this.end_location = new L.Marker([this.markers[1].lat, this.markers[1].lon], {icon: this.newIcon}).addTo(this.map);
+    
+    if (this.markers.length != 0) {
+      this.start_location = new L.Marker([this.markers[0].lat, this.markers[0].lon], {icon: this.newIcon}).addTo(this.map);
+      this.end_location = new L.Marker([this.markers[1].lat, this.markers[1].lon], {icon: this.newIcon}).addTo(this.map);
+    }
     
     this.route();
   }

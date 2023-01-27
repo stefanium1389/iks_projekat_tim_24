@@ -27,12 +27,12 @@
                 </div> 
                 <p>{{passenger.name+" "+passenger.surname}}</p>
             </div>
-            <div *ngIf='!inRide'>
-                <button (click)='startRide()'>Pocetak</button>
-                <button>Otkazi</button>
+            <div *ngIf="acceptedRide != null && acceptedRide.status=='ACCEPTED'">
+                <button (click)='startRide()'>Start</button>
+                <button (click)="cancel()">Cancel</button>
             </div>
-            <div *ngIf="inRide">
-                <button (click)='stopRide()'>Zavrsi</button>
+            <div *ngIf="acceptedRide != null && acceptedRide.status=='STARTED'">
+                <button (click)='stopRide()'>End ride</button>
                 <button (click)="panic()" class="panic-button">Panic</button>
             </div>
         </div>

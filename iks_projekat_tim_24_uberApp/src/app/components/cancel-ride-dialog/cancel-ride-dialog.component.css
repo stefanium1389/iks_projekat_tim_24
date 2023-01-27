@@ -1,0 +1,5 @@
+:host ::ng-deep .mat-raised-button.mat-primary
+{
+    background-color: #2E8B57;
+    margin-top: 5px;
+}
