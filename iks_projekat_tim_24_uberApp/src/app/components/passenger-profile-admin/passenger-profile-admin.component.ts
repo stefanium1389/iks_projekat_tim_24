@@ -2,15 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BlockDialogComponent } from '../block-dialog/block-dialog.component';
-import { JwtService } from '../jwt-service.service';
 import { defaultPicture } from 'src/app/user';
 import { PassengerDataService } from 'src/app/backend-services/passenger-data.service';
-import { PassengerUpdateDTO } from 'src/app/backend-services/DTO/UserDTO';
-import { PasswordChangeDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { Router } from '@angular/router';
 import {BlockUserService} from "../../backend-services/block-user.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {NoteResponseDTO} from "../../backend-services/DTO/NoteResponseDTO";
+import {NoteService} from "../../backend-services/note.service";
 
 @Component({
   selector: 'app-passenger-profile-admin',
@@ -27,6 +26,9 @@ export class PassengerProfileAdminComponent implements OnInit {
   userId: number;
   blocked: boolean;
   blockButtonText: string;
+  
+  notes: NoteResponseDTO[];
+  registerForm: FormGroup;
 
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -40,7 +42,7 @@ export class PassengerProfileAdminComponent implements OnInit {
     newPass: new FormControl(),
   });
 
-  constructor(public dialog: MatDialog, private blockService: BlockUserService, private adminViewingService: AdminViewingService, private snackBar: MatSnackBar,
+  constructor(public dialog: MatDialog, private blockService: BlockUserService, private noteService: NoteService, private adminViewingService: AdminViewingService, private snackBar: MatSnackBar,
     private passengerService: PassengerDataService, private router: Router) { }
 
   ngOnInit(): void {
@@ -48,6 +50,18 @@ export class PassengerProfileAdminComponent implements OnInit {
     this.pictureReader = new FileReader();
     this.loadForms();
     this.setReader();
+    this.notes = [];
+    this.noteService.getAllNotesByUserId(this.userId).subscribe({
+      next: (result) => {
+        this.notes = result.results;
+      },
+      error: (error) => {
+        console.log(error.error.message);
+      }
+    });
+    this.registerForm = new FormGroup({
+      note: new FormControl('')}
+    );
   }
 
   loadForms() {
@@ -110,6 +124,21 @@ export class PassengerProfileAdminComponent implements OnInit {
       this.blockService.putBlock(this.userId).subscribe();
       this.blocked = true;
       this.blockButtonText = "Unblock";
+    }
+  }
+  
+  submitNote()
+  {
+    let message: string = this.registerForm.get('note')?.value;
+    if(message != "")
+    {
+      this.noteService.postNoteByUserId(this.userId, message).subscribe();
+      let noteResponseDTO: NoteResponseDTO = {
+        id: 0,
+        message: message,
+        date: "28. 6. 1389."
+      };
+      this.notes.push(noteResponseDTO);
     }
   }
 

@@ -19,7 +19,7 @@ export class PanicDialogComponent implements OnInit
   ngOnInit(): void
   {
     this.registerForm = new FormGroup({
-          reason: new FormControl('')}
+      reason: new FormControl('')}
     );
   }
 
