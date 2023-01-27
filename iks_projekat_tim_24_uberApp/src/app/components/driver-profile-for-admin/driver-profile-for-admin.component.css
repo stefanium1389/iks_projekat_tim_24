@@ -199,3 +199,46 @@ button:hover{
   {
     min-width: 320px
   }
+
+div.notes
+{
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    flex-direction: column;
+    background-color:#2E8B57 ;
+    border-radius: 25px;
+    height: 390px;
+    width: 330px;
+}
+
+div.note-list
+{
+    display: block;
+    height: 75%;
+    overflow-y: auto;
+}
+
+div.note
+{
+    background-color: #DDDBDB;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+p
+{
+    margin: 0px;
+}
+
+#input-note
+{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    min-width: 300px;
+    color: white;
+    border-bottom-style: solid;
+    border-color: white;
+}

@@ -68,6 +68,22 @@
       </div>
     </div>
 
+
+    <div class="notes">
+      <div class="note-list">
+        <div class="note" *ngFor="let note of notes">
+          <p>{{note.message}}</p>
+        </div>
+      </div>
+      <form
+              method="POST"
+              [formGroup]="registerForm"
+      >
+        <input matInput id="input-note" name="input-note" type="text" formControlName="note"/>
+      </form>
+      <button (click)="submitNote()" class="submit-button">Submit note</button>
+    </div>
+
   </div>
 
   <div class="stats-wrapper">

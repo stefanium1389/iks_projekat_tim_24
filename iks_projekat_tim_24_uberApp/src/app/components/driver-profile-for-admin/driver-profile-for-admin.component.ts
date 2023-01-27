@@ -13,6 +13,8 @@ import { DriverChangeDTO } from 'src/app/backend-services/DTO/DriverChangeDTO';
 import { Router } from '@angular/router';
 import {BlockUserService} from "../../backend-services/block-user.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {NoteResponseDTO} from "../../backend-services/DTO/NoteResponseDTO";
+import {NoteService} from "../../backend-services/note.service";
 
 @Component({
   selector: 'app-driver-profile-for-admin',
@@ -31,6 +33,9 @@ export class DriverProfileForAdminComponent implements OnInit {
   userId: number;
   blocked: boolean;
   blockButtonText: string;
+  
+  notes: NoteResponseDTO[];
+  registerForm: FormGroup;
   
   ProfileForm = new FormGroup({
     name: new FormControl(),
@@ -56,7 +61,7 @@ export class DriverProfileForAdminComponent implements OnInit {
   thereIsChange: boolean = false;
   change: DriverChangeDTO;
 
-  constructor(public dialog: MatDialog, private blockService: BlockUserService, private adminViewingService: AdminViewingService,
+  constructor(public dialog: MatDialog, private blockService: BlockUserService, private noteService: NoteService, private adminViewingService: AdminViewingService,
     private driverService: DriverDataService, private router: Router,
     private snackBar: MatSnackBar) { }
 
@@ -65,6 +70,18 @@ export class DriverProfileForAdminComponent implements OnInit {
     this.pictureReader = new FileReader();
     this.loadForms();
     this.setReader();
+    this.notes = [];
+    this.noteService.getAllNotesByUserId(this.userId).subscribe({
+      next: (result) => {
+        this.notes = result.results;
+      },
+      error: (error) => {
+        console.log(error.error.message);
+      }
+    });
+    this.registerForm = new FormGroup({
+      note: new FormControl('')}
+    );
   }
 
   setReader() {
@@ -87,6 +104,7 @@ export class DriverProfileForAdminComponent implements OnInit {
     let id = this.adminViewingService.getAdminViewingId();
     if (id != null)
     {
+      this.userId = id;
       this.driverService.getLatestDriverChange(id).subscribe(
         {
           next: (result) => {
@@ -220,6 +238,21 @@ export class DriverProfileForAdminComponent implements OnInit {
       this.blockService.putBlock(this.userId).subscribe();
       this.blocked = true;
       this.blockButtonText = "Unblock";
+    }
+  }
+  
+  submitNote()
+  {
+    let message: string = this.registerForm.get('note')?.value;
+    if(message != "")
+    {
+      this.noteService.postNoteByUserId(this.userId, message).subscribe();
+      let noteResponseDTO: NoteResponseDTO = {
+        id: 0,
+        message: message,
+        date: "28. 6. 1389."
+      };
+      this.notes.push(noteResponseDTO);
     }
   }
 

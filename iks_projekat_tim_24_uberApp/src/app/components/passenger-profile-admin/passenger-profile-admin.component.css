@@ -158,14 +158,14 @@ div.notes
     flex-direction: column;
     background-color:#2E8B57 ;
     border-radius: 25px;
-    height: 400px;
+    height: 390px;
 }
 
 div.note-list
 {
     display: block;
-    height: 80%;
-    overflow-y: scroll;
+    height: 75%;
+    overflow-y: auto;
 }
 
 div.note
@@ -182,8 +182,12 @@ p
     margin: 0px;
 }
 
-input
+#input-note
 {
+    margin-top: 5px;
     margin-bottom: 10px;
     min-width: 300px;
+    color: white;
+    border-bottom-style: solid;
+    border-color: white;
 }
