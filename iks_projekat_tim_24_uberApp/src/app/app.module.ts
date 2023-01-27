@@ -55,13 +55,14 @@ import { EllipsisPipe, FavouriteRoutesComponent } from "./components/favourite-r
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { BackendServicesModule } from './backend-services/backend-services.module';
 import { StringDialogComponent } from './components/string-dialog/string-dialog.component';
-import {PanicDialogComponent} from "./components/panic-dialog/panic-dialog.component";
+import { PanicDialogComponent } from "./components/panic-dialog/panic-dialog.component";
 import { DriverProfileForAdminComponent } from './components/driver-profile-for-admin/driver-profile-for-admin.component';
 import { StatisticsAdminComponent } from './components/statistics-admin/statistics-admin.component';
 import { PassengerProfileAdminComponent } from './components/passenger-profile-admin/passenger-profile-admin.component';
 import { RideHistoryPassengerAdminComponent } from './ride-history/ride-history-passenger-admin/ride-history-passenger-admin.component';
 import { RideHistoryDriverAdminComponent } from './ride-history/ride-history-driver-admin/ride-history-driver-admin.component';
 import { RateRideDialogComponent } from './components/rate-ride-dialog/rate-ride-dialog.component';
+import {CancelRideDialogComponent} from "./components/cancel-ride-dialog/cancel-ride-dialog.component";
 
 const appRoutes : Routes =
 [
@@ -110,6 +111,7 @@ const appRoutes : Routes =
         DriverProfileComponent,
         ReportDialogComponent,
         PanicDialogComponent,
+        CancelRideDialogComponent,
         StatisticsComponent,
         BlockDialogComponent,
         AdminViewUsersComponent,
@@ -133,7 +135,8 @@ const appRoutes : Routes =
       }],
     bootstrap: [AppComponent],
     imports: [
-        MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule, NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
+        MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule,
+        NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
         MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         NotificationModule, MatDatepickerModule, MatNativeDateModule, NgChartsModule,
     ]

@@ -11,9 +11,8 @@ export class PanicDialogService {
     
     constructor(private http:HttpClient) { }
     
-    public putPanic(rideId: number, reason: string): Observable<any>
+    public putPanic(rideId: number, reasonDTO: ReasonDTO): Observable<any>
     {
-        let reasonDTO:ReasonDTO = {reason: reason};
         return this.http.put<any>(environment.apiBaseUrl+`api/ride/${rideId}/panic`, reasonDTO);
     }
 }

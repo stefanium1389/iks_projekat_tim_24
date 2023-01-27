@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {matchPasswords} from "../register/register.component";
 import {subscribeOn} from "rxjs";
 import {PanicDialogService} from "../../backend-services/panic-dialog.service";
+import {ReasonDTO} from "../../backend-services/DTO/ReasonDTO";
 
 @Component({
   selector: 'app-panic-dialog',
@@ -25,7 +26,8 @@ export class PanicDialogComponent implements OnInit
 
   onSubmit()
   {
-    this.panicDialogCall.putPanic(this.data.rideId, this.registerForm.get('reason')?.value).subscribe();
+    let reasonDTO:ReasonDTO = {reason: this.registerForm.get('reason')?.value};
+    this.panicDialogCall.putPanic(this.data.rideId, reasonDTO).subscribe();
     this.dialogRef.close();
   }
 

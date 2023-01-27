@@ -45,9 +45,9 @@
                     method="POST"
                     [formGroup]="registerForm"
             >
-                <input id="input-note" name="input-note" type="text" formControlName="note"/>
+                <input matInput id="input-note" name="input-note" type="text" formControlName="note"/>
             </form>
-            <button matInput (click)="submitNote()" class="submit-button">Submit note</button>
+            <button (click)="submitNote()" class="submit-button">Submit note</button>
         </div>
     </div>
 

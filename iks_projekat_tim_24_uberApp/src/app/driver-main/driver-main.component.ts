@@ -13,6 +13,7 @@ import { RideDTO } from "../backend-services/DTO/RideDTO";
 import { PassengerDataService } from '../backend-services/passenger-data.service';
 import { defaultPicture } from '../user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {CancelRideDialogComponent} from "../components/cancel-ride-dialog/cancel-ride-dialog.component";
 
 
 
@@ -120,8 +121,7 @@ export class DriverMainComponent implements OnInit {
       });
     }
   }
-
-
+  
   revertExceeded() {
     //wip
   }
@@ -153,6 +153,7 @@ export class DriverMainComponent implements OnInit {
       const id = this.acceptedRide.id;
       try {
         this.http.put(environment.apiBaseUrl + `api/ride/${id}/end`, {}).toPromise();
+        this.markers = [];
       }
       catch (HttpErrorResponse) {
         console.error(HttpErrorResponse);
@@ -209,6 +210,17 @@ export class DriverMainComponent implements OnInit {
   }
   activeButtonClick() {
     this._isActive = !this._isActive;
+  }
+  
+  cancel() {
+    const dialogRef = this.dialog.open(CancelRideDialogComponent, {
+      width: '250px',
+      data: { rideId: this.acceptedRide?.id }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 
   panic() {
