@@ -133,11 +133,13 @@ export class MapComponent implements AfterViewInit {
   });
   
   search(address: string, which: string): void {
+    if (!this.markers)
+    {
+      this.markers = [];
+    }
     
     this.mapService.search(address).subscribe({
       next: (result) => {
-        //console.log(result);
-        console.log(this.start_location);
         if (which === "start") {
           if (this.start_location) {
             this.start_location.removeFrom(this.map);
@@ -153,6 +155,7 @@ export class MapComponent implements AfterViewInit {
           }
           this.name_of_start_location = address;
           this.out_start_location.emit(info);//EMITUJ OVDE
+          this.markers.push(this.start_location);
           
         } else {
           if (this.end_location) {
@@ -168,6 +171,7 @@ export class MapComponent implements AfterViewInit {
           }
           this.name_of_end_location = address;
           this.out_end_location.emit(info);//EMITUJ OVDE
+          this.markers.push(this.end_location);
           
         }
         this.route();
