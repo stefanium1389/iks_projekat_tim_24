@@ -372,7 +372,7 @@ export class PassengerMainComponent implements OnInit {
     try{
       const response = await this.http.get(environment.apiBaseUrl + `api/ride/passenger/${userId}/active`).toPromise() as RideDTO;
       this.ride = response;
-      console.log(this.ride)
+      
       this.cost = this.ride.totalCost;
       this.time = this.ride.estimatedTimeInMinutes;
       this.hasBaby = this.ride.babyTransport;
@@ -420,9 +420,10 @@ export class PassengerMainComponent implements OnInit {
         });
       }
       this.ride=null;
+      if(this.mapType == "RIDE") //Markere brisemo samo ako su ostali od prethodne voznje. U suprotnom, treba da ostanu na mapi jer ih je korisnik tu stavio.
+        this.markers = [];
       this.mapType = "ALL";
       this.driverId = null;
-      this.markers = [];
       this.disabledClick = false;
     }
   }
