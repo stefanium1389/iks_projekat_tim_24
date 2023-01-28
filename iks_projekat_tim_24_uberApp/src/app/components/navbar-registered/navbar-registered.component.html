@@ -5,8 +5,11 @@
         <img class="actual-image" src="{{base64String}}">
     </div>
     <div *ngFor="let notification of notifications" class="notification">
-        <h1>
-            {{notification.notificationType}}
+        <h1 *ngIf="notification.notificationType == 'PANIC'">
+            PANIC
+        </h1>
+        <h1 *ngIf="notification.notificationType == 'NORMAL'">
+            Notification
         </h1>
         <p>
             {{notification.note}}

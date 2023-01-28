@@ -3,7 +3,12 @@
     <p class ="no-notifications" *ngIf="notifications.length===0">Trenutno nemate notifikacije.</p>
     <div class="list">
         <div *ngFor="let notification of notifications" class="notification {{notification.notificationType}} {{notification.read}}">
-            <h1>{{notification.notificationType}}</h1>
+            <h1 *ngIf="notification.notificationType == 'PANIC'">
+                PANIC
+            </h1>
+            <h1 *ngIf="notification.notificationType == 'NORMAL'">
+                Notification
+            </h1>
             <p>{{notification.note}}</p>
             <p class="date">{{notification.date}}</p>
         </div>
