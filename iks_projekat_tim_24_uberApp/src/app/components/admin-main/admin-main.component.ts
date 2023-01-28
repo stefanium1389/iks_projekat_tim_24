@@ -12,7 +12,7 @@ import { ReportDialogComponent } from '../report-dialog/report-dialog.component'
 })
 export class AdminMainComponent implements OnInit {
 
-  inRide = true;
+  inRide = false;
   time:number;
   cost:number;
   hasBaby:boolean;

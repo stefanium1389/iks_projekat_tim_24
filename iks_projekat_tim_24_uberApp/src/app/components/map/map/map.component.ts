@@ -177,10 +177,10 @@ export class MapComponent implements AfterViewInit {
     });
   }
   
-  registerOnClick(): void {
-    
-    
-    if (this.disableClick) {
+  registerOnClick(): void
+  {
+    if (this.disableClick)
+    {
       return;
     }
     
@@ -233,6 +233,16 @@ export class MapComponent implements AfterViewInit {
         }
         this.end_location = new L.Marker([lat, lng], {icon: this.newIcon});
         this.end_location.addTo(this.map).openPopup();
+      }
+      
+      this.markers = [];
+      if (this.start_location)
+      {
+        this.markers.push(this.start_location);
+      }
+      if (this.end_location)
+      {
+        this.markers.push(this.end_location);
       }
       
       this.route();
@@ -321,9 +331,10 @@ export class MapComponent implements AfterViewInit {
       this.end_location.removeFrom(this.map);
     }
     
-    if (this.markers.length != 0) {
+    if (this.markers.length > 0) {
       this.start_location = new L.Marker([this.markers[0].lat, this.markers[0].lon], {icon: this.newIcon}).addTo(this.map);
-      this.end_location = new L.Marker([this.markers[1].lat, this.markers[1].lon], {icon: this.newIcon}).addTo(this.map);
+      if(this.markers.length > 1)
+        this.end_location = new L.Marker([this.markers[1].lat, this.markers[1].lon], {icon: this.newIcon}).addTo(this.map);
     }
     
     this.route();
