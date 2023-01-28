@@ -63,6 +63,13 @@ import { RideHistoryPassengerAdminComponent } from './ride-history/ride-history-
 import { RideHistoryDriverAdminComponent } from './ride-history/ride-history-driver-admin/ride-history-driver-admin.component';
 import { RateRideDialogComponent } from './components/rate-ride-dialog/rate-ride-dialog.component';
 import {CancelRideDialogComponent} from "./components/cancel-ride-dialog/cancel-ride-dialog.component";
+import { AuthGuardModule } from './auth-guard/auth-guard.module';
+import { DriverAuthGuardService } from './auth-guard/driver-auth-guard.service';
+import { AdminAuthGuardService } from './auth-guard/admin-auth-guard.service';
+import { UserAuthGuardService } from './auth-guard/user-auth-guard.service';
+import { DeniedAccessComponent } from './auth-guard/denied-access/denied-access.component';
+import { LoggedInAuthGuardService } from './auth-guard/logged-in-auth-guard.service';
+
 
 const appRoutes : Routes =
 [
@@ -70,24 +77,25 @@ const appRoutes : Routes =
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
-  {path: 'notifications', component: NotificationPageComponent},
-  {path: 'driver-home', component: DriverMainComponent},
-  {path: 'admin-home' , component: AdminMainComponent},
-  {path: 'admin-create-driver', component: AdminCreateDriverComponent},
-  {path: 'user-home', component: PassengerMainComponent},
-  {path: 'user-profile', component: PassengerProfileComponent},
-  {path: 'user-ride-history', component: RideHistoryPassengerComponent},
-  {path: 'favorite-routes', component: FavouriteRoutesComponent},
-  {path: 'driver-profile', component: DriverProfileComponent},
-  {path: 'driver-ride-history', component:RideHistoryDriverComponent},
-  {path: 'account-management', component:AdminViewUsersComponent},
+  {path: 'notifications', component: NotificationPageComponent, canActivate:[LoggedInAuthGuardService]},
+  {path: 'driver-home', component: DriverMainComponent, canActivate:[DriverAuthGuardService]},
+  {path: 'admin-home' , component: AdminMainComponent, canActivate:[AdminAuthGuardService]},
+  {path: 'admin-create-driver', component: AdminCreateDriverComponent, canActivate:[AdminAuthGuardService]},
+  {path: 'user-home', component: PassengerMainComponent, canActivate:[UserAuthGuardService]},
+  {path: 'user-profile', component: PassengerProfileComponent, canActivate:[UserAuthGuardService]},
+  {path: 'user-ride-history', component: RideHistoryPassengerComponent, canActivate:[UserAuthGuardService]},
+  {path: 'favorite-routes', component: FavouriteRoutesComponent, canActivate:[UserAuthGuardService]},
+  {path: 'driver-profile', component: DriverProfileComponent,canActivate:[DriverAuthGuardService]},
+  {path: 'driver-ride-history', component:RideHistoryDriverComponent,canActivate:[DriverAuthGuardService]},
+  {path: 'account-management', component:AdminViewUsersComponent, canActivate:[AdminAuthGuardService]},
   {path: 'activate', component:VerifyEmailComponent},
   {path: 'register-success',component:RegisterNotificationComponent},
-  {path: 'rate-ride',component:RateRideComponent},
-  {path: 'driver-profile-admin',component:DriverProfileForAdminComponent},
-  {path: 'passenger-profile-admin',component:PassengerProfileAdminComponent},
-  {path: 'user-ride-history-admin', component:RideHistoryPassengerAdminComponent},
-  {path: 'driver-ride-history-admin', component:RideHistoryDriverAdminComponent},
+  {path: 'rate-ride',component:RateRideComponent, canActivate:[UserAuthGuardService]},
+  {path: 'driver-profile-admin',component:DriverProfileForAdminComponent, canActivate:[AdminAuthGuardService]},
+  {path: 'passenger-profile-admin',component:PassengerProfileAdminComponent, canActivate:[AdminAuthGuardService]},
+  {path: 'user-ride-history-admin', component:RideHistoryPassengerAdminComponent, canActivate:[AdminAuthGuardService]},
+  {path: 'driver-ride-history-admin', component:RideHistoryDriverAdminComponent, canActivate:[AdminAuthGuardService]},
+  {path: 'access-denied', component:DeniedAccessComponent}
 ]
 
 @NgModule({
