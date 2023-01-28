@@ -20,6 +20,7 @@ import { FavoriteRideDTO } from 'src/app/backend-services/DTO/FavoriteRideDTO';
 import { StringDialogComponent } from 'src/app/components/string-dialog/string-dialog.component';
 import { AdminViewingService } from 'src/app/services/admin-viewing.service';
 import { defaultPicture } from 'src/app/user';
+import { ReviewDTOPlus } from 'src/app/backend-services/DTO/ReviewDTO';
 
 @Component({
   selector: 'app-ride-history-passenger-admin',
@@ -36,7 +37,7 @@ export class RideHistoryPassengerAdminComponent implements OnInit {
   selectedRideVehicle:VehicleDTO;
   rides:RideDTO[];
   selectedRide: RideDTO;
-  selectedRideReviews:ReviewDTO[];
+  selectedRideReviews:ReviewDTOPlus[];
   selectedRideDriverAvgRating:number;
   selectedRideVehicleAvgRating:number;  
   markers: any[];
@@ -79,7 +80,32 @@ export class RideHistoryPassengerAdminComponent implements OnInit {
     })
     this.reviews.getReviewsByRideId(ride.id).subscribe({
       next: (result) => {
-        this.selectedRideReviews = result.results;
+        this.selectedRideReviews = [];
+        let reviews = result.results;
+        for (let r of reviews)
+        {
+          this.passengerData.getPassengerById(r.passenger.id).subscribe({
+            next: (result) => {
+              let thePicture = defaultPicture;
+              if (result.profilePicture)
+              {
+                thePicture = result.profilePicture
+              }
+              let s : ReviewDTOPlus = 
+                {
+                  rating : r.rating,
+                  passenger : r.passenger,
+                  comment : r.comment,
+                  picture : thePicture,
+                  id : r.id,
+                }
+                this.selectedRideReviews.push(s);
+            },
+            error: (error) => {console.log(error.error.message)}
+          })
+          
+        }
+        
       }
     })
     this.reviews.getReviewsByDriverId(ride.driver.id).subscribe({
