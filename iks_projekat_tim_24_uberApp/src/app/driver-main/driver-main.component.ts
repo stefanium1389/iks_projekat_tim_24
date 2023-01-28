@@ -199,10 +199,10 @@ export class DriverMainComponent implements OnInit {
     }
     catch (HttpErrorResponse) {
       this.acceptedRide = null;
-
+      if(this.mapType == "RIDE") //Markere brisemo samo ako su ostali od prethodne voznje. U suprotnom, treba da ostanu na mapi jer ih je korisnik tu stavio.
+        this.markers = [];
       this.mapType = "ALL";
       this.driverId = null;
-      this.markers = [];
     }
   }
   isActive() {
