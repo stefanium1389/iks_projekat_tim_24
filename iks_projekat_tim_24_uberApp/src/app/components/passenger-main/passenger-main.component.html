@@ -90,7 +90,7 @@
             <!-- <p *ngIf="!inRide">Pristiže u 7 minuta</p> -->
             <!-- <button *ngIf="!inRide">Odustani</button> -->
             <div class="u-voznji">
-                <button *ngIf="ride?.status=='PENDING' || ride?.status=='ACCEPTED'" (click)="withdrawRide()">Odustani</button>
+                <button id="withdraw-ride-button" *ngIf="ride?.status=='PENDING' || ride?.status=='ACCEPTED'" (click)="withdrawRide()">Odustani</button>
                 <button *ngIf="ride?.status=='STARTED'"  (click)="openReportDialog()">Prijavi</button>
                 <button *ngIf="ride?.status=='STARTED'" (click)="panic()" class="panic-dugme">PANIC</button>
             </div>
