@@ -2,7 +2,7 @@
 <div class="bell-and-profile-container">
     <i class="fa fa-solid fa-bell" [ngClass]="{'no-notifications': !hasNotification, 'has-notifications': hasNotification}" [routerLink]="['/notifications']"></i>
     <div class="profile-pic" mat-raised-button  [matMenuTriggerFor]="menu">
-        <img class="actual-image" src="{{base64String}}">
+        <img id="profile-pic-nav" class="actual-image" src="{{base64String}}">
     </div>
     <div *ngFor="let notification of notifications" class="notification">
         <h1 *ngIf="notification.notificationType == 'PANIC'">
@@ -39,7 +39,7 @@
     <button mat-menu-item (click)="onClickOption('/admin-create-driver')" *ngIf="role === 'ADMIN'">Kreiraj vozaca</button>
     <button mat-menu-item *ngIf="role === 'ADMIN'">Poruke</button>
     
-    <button mat-menu-item (click)="logout()">Izlogujte se</button>
+    <button id="logout-option" mat-menu-item (click)="logout()">Izlogujte se</button>
 
 </mat-menu>
 

@@ -28,12 +28,12 @@
                 <p>{{passenger.name+" "+passenger.surname}}</p>
             </div>
             <div *ngIf="acceptedRide != null && acceptedRide.status=='ACCEPTED'">
-                <button (click)='startRide()'>Start</button>
-                <button (click)="cancel()">Cancel</button>
+                <button id="start-button" (click)='startRide()'>Start</button>
+                <button id="cancel-button" (click)="cancel()">Cancel</button>
             </div>
             <div *ngIf="acceptedRide != null && acceptedRide.status=='STARTED'">
-                <button (click)='stopRide()'>End ride</button>
-                <button (click)="panic()" class="panic-button">Panic</button>
+                <button id="end-button" (click)='stopRide()'>End ride</button>
+                <button id="panic-button" (click)="panic()" class="panic-button">Panic</button>
             </div>
         </div>
     </div>
