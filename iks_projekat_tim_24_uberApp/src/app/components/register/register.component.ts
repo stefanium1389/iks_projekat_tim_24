@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit
       surname: this.registerForm.get('surname')?.value,
       phone: this.registerForm.get('phone')?.value,
       address: this.registerForm.get('address')?.value,
-      profilePicture: "default.png"
+      profilePicture: null
     } as RegistrationDTO
 
     const response = await this.http.post(environment.apiBaseUrl+'api/passenger', dto).toPromise() as UserDTO;
@@ -85,5 +85,5 @@ export interface RegistrationDTO{
   surname:string;
   phone:string;
   address:string;
-  profilePicture:string;
+  profilePicture:string | null;
 }
