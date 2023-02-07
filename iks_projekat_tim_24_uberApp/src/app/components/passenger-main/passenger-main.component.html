@@ -7,12 +7,12 @@
 
             <form [formGroup]="destinationForm">
                 <div class="destination-container">
-                    <input [readOnly]="inRide" type="text" placeholder="pocetna destinacija" formControlName="start_location" />
-                    <i (click)="search('start')" class="fa fa-search"></i>
+                    <input id="start-location-input" [readOnly]="inRide" type="text" placeholder="pocetna destinacija" formControlName="start_location" />
+                    <i id="start-location-search" (click)="search('start')" class="fa fa-search"></i>
                 </div>
                 <div class="destination-container">
-                    <input [readonly]="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
-                    <i (click)="search('end')" class="fa fa-search"></i>
+                    <input id="end-location-input" [readonly]="inRide" type="text" placeholder="krajnja destinacija" formControlName="end_location" />
+                    <i id="end-location-search" (click)="search('end')" class="fa fa-search"></i>
                 </div>
             </form>
             <select *ngIf="!ride" [(ngModel)]="locationType" (ngModelChange)="onTypeChange($event)" id="location-type-selection">
@@ -21,8 +21,8 @@
             </select>
 
             <div *ngIf="time" class="estimate-box">
-                <p *ngIf="time" class="estimate">Oko {{ time }} minuta</p>
-                <p *ngIf="cost" class="estimate">{{ cost }} RSD</p>
+                <p *ngIf="time" id="estimate-minutes" class="estimate">Oko {{ time }} minuta</p>
+                <p *ngIf="cost" id="estimate-cost" class="estimate">{{ cost }} RSD</p>
             </div>
 
             <div class="select-and-star">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="action-buttons">
-                <button [disabled]="inRide" (click)="createRide()">Započni</button>
+                <button id="begin-button" [disabled]="inRide" (click)="createRide()">Započni</button>
                 <button [disabled]="inRide" (click)="openTimePicker()">Zakazi</button>
             </div>
             <div id="display-time" *ngIf="selectedTime">{{ "selektovano vreme: " + selectedTime }}</div>
