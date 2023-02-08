@@ -38,13 +38,13 @@
             </div>
 
             <div  class="checkbox-parameters">
-                <mat-checkbox [disabled]="inRide" [(ngModel)]="hasBaby" label="baby">Beba</mat-checkbox>
-                <mat-checkbox [disabled]="inRide" [(ngModel)]="hasPet" label="pets">Ljubimci</mat-checkbox>
+                <mat-checkbox id="baby-checkbox" [disabled]="inRide" [(ngModel)]="hasBaby" label="baby">Beba</mat-checkbox>
+                <mat-checkbox id="pets-checkbox" [disabled]="inRide" [(ngModel)]="hasPet" label="pets">Ljubimci</mat-checkbox>
             </div>
 
             <div class="action-buttons">
                 <button id="begin-button" [disabled]="inRide" (click)="createRide()">Započni</button>
-                <button [disabled]="inRide" (click)="openTimePicker()">Zakazi</button>
+                <button id="book-button" [disabled]="inRide" (click)="openTimePicker()">Zakazi</button>
             </div>
             <div id="display-time" *ngIf="selectedTime">{{ "selektovano vreme: " + selectedTime }}</div>
         </div>

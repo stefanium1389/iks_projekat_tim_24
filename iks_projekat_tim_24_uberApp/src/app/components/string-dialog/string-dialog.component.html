@@ -1,10 +1,10 @@
 <h1 mat-dialog-title>Enter text</h1>
     <div mat-dialog-content>
       <mat-form-field>
-        <input matInput [(ngModel)]="data.string">
+        <input matInput id="dialog-input-text" [(ngModel)]="data.string">
       </mat-form-field>
     </div>
     <div mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">Cancel</button>
-      <button mat-button [mat-dialog-close]="data.string" cdkFocusInitial>Ok</button>
+      <button id="dialog-cancel-button" mat-button (click)="onNoClick()">Cancel</button>
+      <button id="dialog-accept-button" mat-button [mat-dialog-close]="data.string" cdkFocusInitial>Ok</button>
     </div>

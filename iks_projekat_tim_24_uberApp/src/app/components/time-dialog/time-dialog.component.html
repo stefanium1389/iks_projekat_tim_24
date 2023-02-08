@@ -1,8 +1,8 @@
 <form #form="ngForm" (ngSubmit)="saveTime()">
   <mat-form-field>
-    <input matInput type="time" [(ngModel)]="selectedTime" name="selectedTime" required (ngModelChange)="checkSelectedTime()">
+    <input matInput type="time" id="dialog-time-input" [(ngModel)]="selectedTime" name="selectedTime" required (ngModelChange)="checkSelectedTime()">
   </mat-form-field>
-  <button mat-button type="submit" [disabled]="isFiveHoursInTheFuture">Save time</button>
+  <button mat-button id="dialog-time-submit" type="submit" [disabled]="isFiveHoursInTheFuture">Save time</button>
 </form>
   <div *ngIf="isFiveHoursInTheFuture" class="warning-message">
     Warning: The selected time is more than 5 hours in the future
