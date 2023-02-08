@@ -70,6 +70,7 @@ import { UserAuthGuardService } from './auth-guard/user-auth-guard.service';
 import { DeniedAccessComponent } from './auth-guard/denied-access/denied-access.component';
 import { LoggedInAuthGuardService } from './auth-guard/logged-in-auth-guard.service';
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 const appRoutes : Routes =
@@ -147,7 +148,7 @@ const appRoutes : Routes =
         MapModule, RideHistoryDriverModule, RideHistoryPassengerModule, BrowserModule, HttpClientModule, MaterialModule,
         NgbModule, RouterModule.forRoot(appRoutes), ReactiveFormsModule, FormsModule, MatCheckboxModule,
         MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
-        NotificationModule, MatDatepickerModule, MatNativeDateModule, NgChartsModule, MatSnackBarModule, BrowserAnimationsModule
+        NotificationModule, MatDatepickerModule, MatNativeDateModule, NgChartsModule, MatSnackBarModule, BrowserAnimationsModule, OverlayModule
     ]
 })
 export class AppModule { }
