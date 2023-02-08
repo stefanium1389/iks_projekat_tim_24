@@ -32,15 +32,29 @@ export class RegisterComponent implements OnInit
       surname: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required)}
-      , { validators: matchPasswords }
+      , { validators: [matchPasswords,properMail]}
     );
   }
 
   async register(){
     if(this.registerForm.invalid){
-      this.snackBar.open('Popunite formu!', 'Ok', {
-        duration: 3000
-      });
+      const matchPasswordsError = this.registerForm.getError('notSame');
+      const properMailError = this.registerForm.getError('properMail');
+      
+      if (matchPasswordsError) {
+        this.snackBar.open('Passwords do not match!', 'Ok', {
+          duration: 3000
+        });
+      } else if (properMailError) {
+        this.snackBar.open('Email is in invalid format.', 'Ok', {
+          duration: 3000
+        });
+      } else {
+        this.snackBar.open('Please fill out the form.', 'Ok', {
+          duration: 3000
+        });
+      }
+
       return;
     }
     try{
@@ -77,6 +91,16 @@ export function matchPasswords(control: AbstractControl) {
   }
   return null;
 }
+
+export function properMail(control: AbstractControl) {
+  const email = control.get('email')?.value;
+  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!pattern.test(email)) {
+    return { properMail: true };
+  }
+  return null;
+}
+
 
 export interface RegistrationDTO{
   email:string;
