@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatMenu } from '@angular/material/menu';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DriverDataService } from 'src/app/backend-services/driver-data-service.service';
-import { GeoCoordinateDTO } from 'src/app/backend-services/DTO/RouteDTO';
 import { UserRegistrationDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { VehicleRequestDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { VehicleDataService } from 'src/app/backend-services/vehicle-data.service';
+import {ConsoleLogger} from "@angular/compiler-cli";
 
 @Component({
   selector: 'app-admin-create-driver',
@@ -16,13 +14,13 @@ import { VehicleDataService } from 'src/app/backend-services/vehicle-data.servic
 })
 export class AdminCreateDriverComponent implements OnInit {
 
-  constructor(private driverDataService:DriverDataService, private vehicleDataService:VehicleDataService, private snackBar: MatSnackBar) {
+  constructor(private driverDataService:DriverDataService, private vehicleDataService:VehicleDataService, public snackBar:MatSnackBar) {
 
     this.form = new FormGroup({
       name: new FormControl('',Validators.required),
       lastname: new FormControl('', Validators.required),
       address: new FormControl('',Validators.required),
-      phone: new FormControl('',Validators.required), 
+      phone: new FormControl('',Validators.required),
       email: new FormControl('', Validators.required),
       vehicle_model: new FormControl('', Validators.required),
       vehicle_license: new FormControl('', Validators.required),
@@ -30,15 +28,15 @@ export class AdminCreateDriverComponent implements OnInit {
       babyVehicle: new FormControl(''),
       petsVehicle: new FormControl('')
     });
-   }
-
+  }
+  
   hasPetVehicle:boolean = false;
   hasBabyVehicle:boolean = false;
   selectedType:string = "STANDARD";
   form: FormGroup;
   validFile: boolean = true; //za dokumenat, ako budem imao vremena
   pictureReader: FileReader;
-
+  public snackBarMessage: String = "aa";
 
 
   ngOnInit(): void {
@@ -50,10 +48,15 @@ export class AdminCreateDriverComponent implements OnInit {
     //   if (this.form.controls[el].errors) {
     //     console.log(el)
     //   }
-    // }       
+    // }
+  
+    this.snackBarMessage = "1";
+  
     if(!this.form.valid){
       return;
     }
+  
+    this.snackBarMessage = "2";
     
     const driverDto: UserRegistrationDTO = {
       name: this.form.get('name')?.value,
@@ -84,19 +87,22 @@ export class AdminCreateDriverComponent implements OnInit {
         let driverId = result.id;
         this.vehicleDataService.postVehicle(driverId, vehicleDto).subscribe({
           next: (result) => {
+            this.snackBarMessage = "Uspesno dodat novi vozac!";
             this.snackBar.open('Uspesno dodat novi vozac!', 'Ok', {
               duration: 3000
             });
           },
           error: (error) => {
-            this.snackBar.open(error.error.message, 'Ok', {
+            this.snackBarMessage = error.error.message;
+                this.snackBar.open(error.error.message, 'Ok', {
               duration: 3000
             });
           }
         })
       },
       error: (error) => {
-        this.snackBar.open(error.error.message, 'Ok', {
+        this.snackBarMessage = error.error.message;
+            this.snackBar.open(error.error.message, 'Ok', {
           duration: 3000
         });
       }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportDialogComponent } from './report-dialog.component';
+import { CancelRideDialogComponent } from './cancel-ride-dialog.component';
 
-describe('ReportDialogComponent', () => {
-  let component: ReportDialogComponent;
-  let fixture: ComponentFixture<ReportDialogComponent>;
+describe('CancelRideDialogComponent', () => {
+  let component: CancelRideDialogComponent;
+  let fixture: ComponentFixture<CancelRideDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReportDialogComponent ]
+      declarations: [ CancelRideDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReportDialogComponent);
+    fixture = TestBed.createComponent(CancelRideDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
