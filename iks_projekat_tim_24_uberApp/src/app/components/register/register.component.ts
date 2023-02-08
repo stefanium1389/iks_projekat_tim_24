@@ -31,8 +31,8 @@ export class RegisterComponent implements OnInit
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
-      address: new FormControl('', Validators.required)}
-      , { validators: [matchPasswords,properMail]}
+      address: new FormControl('', Validators.required)},
+      { validators: [matchPasswords,properMail]}
     );
   }
 

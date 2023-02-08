@@ -6,6 +6,7 @@ import { UserRegistrationDTO } from 'src/app/backend-services/DTO/UserDTO';
 import { VehicleRequestDTO } from 'src/app/backend-services/DTO/VehicleDTO';
 import { VehicleDataService } from 'src/app/backend-services/vehicle-data.service';
 import {ConsoleLogger} from "@angular/compiler-cli";
+import {matchPasswords, properMail} from "../register/register.component";
 
 @Component({
   selector: 'app-admin-create-driver',
@@ -21,7 +22,7 @@ export class AdminCreateDriverComponent implements OnInit {
       lastname: new FormControl('', Validators.required),
       address: new FormControl('',Validators.required),
       phone: new FormControl('',Validators.required),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
       vehicle_model: new FormControl('', Validators.required),
       vehicle_license: new FormControl('', Validators.required),
       vehicle_detail: new FormControl('', [Validators.required, Validators.min(1), Validators.max(10)]),
@@ -36,7 +37,6 @@ export class AdminCreateDriverComponent implements OnInit {
   form: FormGroup;
   validFile: boolean = true; //za dokumenat, ako budem imao vremena
   pictureReader: FileReader;
-  public snackBarMessage: String = "aa";
 
 
   ngOnInit(): void {
@@ -50,13 +50,9 @@ export class AdminCreateDriverComponent implements OnInit {
     //   }
     // }
   
-    this.snackBarMessage = "1";
-  
     if(!this.form.valid){
       return;
     }
-  
-    this.snackBarMessage = "2";
     
     const driverDto: UserRegistrationDTO = {
       name: this.form.get('name')?.value,
@@ -87,13 +83,11 @@ export class AdminCreateDriverComponent implements OnInit {
         let driverId = result.id;
         this.vehicleDataService.postVehicle(driverId, vehicleDto).subscribe({
           next: (result) => {
-            this.snackBarMessage = "Uspesno dodat novi vozac!";
             this.snackBar.open('Uspesno dodat novi vozac!', 'Ok', {
               duration: 3000
             });
           },
           error: (error) => {
-            this.snackBarMessage = error.error.message;
                 this.snackBar.open(error.error.message, 'Ok', {
               duration: 3000
             });
@@ -101,7 +95,6 @@ export class AdminCreateDriverComponent implements OnInit {
         })
       },
       error: (error) => {
-        this.snackBarMessage = error.error.message;
             this.snackBar.open(error.error.message, 'Ok', {
           duration: 3000
         });
