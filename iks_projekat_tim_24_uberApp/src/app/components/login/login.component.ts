@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { LoginDTO } from 'src/app/backend-services/DTO/LoginDTO';
+import { UserdataService } from 'src/app/backend-services/userdata.service';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../jwt-service.service';
 import { loginResponse } from './loginResponse';
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   
-  constructor(private http: HttpClient, private jwtService: JwtService, private router:Router, private snackBar:MatSnackBar) { 
+  constructor(private jwtService: JwtService, private router:Router, private snackBar:MatSnackBar, private userService: UserdataService) { 
   }
 
   ngOnInit(): void {
@@ -27,26 +29,30 @@ export class LoginComponent implements OnInit {
     });
     
   }
-  async login() {
-    try {
+  login() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-    
-    const response = await this.http.post(environment.apiBaseUrl+'api/user/login', {email:email, password:password}).toPromise() as loginResponse;
-    this.jwtService.setJwt(response.accessToken);
-    this.jwtService.setRefreshToken(response.refreshToken);
-
-    this.routeUsers();
-
+    const dto:LoginDTO = {
+      email: email,
+      password: password
     }
-    catch (error) {
-      if (error instanceof HttpErrorResponse) {
-        this.snackBar.open(error.error.message, 'Ok', {
+    this.userService.login(dto).subscribe({
+      next: (result) => {
+        this.jwtService.setJwt(result.accessToken);
+        this.jwtService.setRefreshToken(result.refreshToken);
+
+        this.routeUsers();
+      },
+      error: (error) => {
+        const errorMessage = error.error?.message || 'An unknown error occurred';
+        this.snackBar.open(errorMessage, 'Ok', {
           duration: 3000
         });
-      }  
-    }
-  };
+      }
+    })    
+  }
+
+    
 
   routeUsers()
   {
