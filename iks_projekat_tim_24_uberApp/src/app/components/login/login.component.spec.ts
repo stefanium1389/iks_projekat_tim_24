@@ -5,14 +5,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtService } from '../jwt-service.service';
 import { Router } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let jwtServiceSpy: any;
+  let routerSpy:any;
 
-  beforeEach(async () => {
+  beforeEach(() => {
+
+    jwtServiceSpy = jasmine.createSpyObj<JwtService>(['getRole']);
+    routerSpy = jasmine.createSpyObj<Router>(['navigate']);
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
@@ -20,13 +23,12 @@ describe('LoginComponent', () => {
         MatSnackBarModule
         ],
       declarations: [LoginComponent],
-      providers: [JwtService, { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } }]
+      providers: [
+        {provide: JwtService, useValue: jwtServiceSpy},
+        { provide: Router, useValue: routerSpy }]
     })
       .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+      fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -68,4 +70,29 @@ describe('LoginComponent', () => {
     expect(errors['required']).toBeFalsy();
     expect(password.valid).toBeTruthy();
   });
+  
+  it('should route to driver-home when role is DRIVER', () => {
+    jwtServiceSpy.getRole.and.returnValue('DRIVER');
+    
+    component.routeUsers();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/driver-home']);
+  });
+
+  it('should route to user-home when role is USER', () => {
+    jwtServiceSpy.getRole.and.returnValue('USER');
+    
+    component.routeUsers();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/user-home']);
+  });
+
+  it('should route to admin-home when role is ADMIN', () => {
+    jwtServiceSpy.getRole.and.returnValue('ADMIN');
+    
+    component.routeUsers();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/admin-home']);
+  });
+
 });
