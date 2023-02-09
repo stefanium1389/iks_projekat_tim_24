@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtService } from '../jwt-service.service';
 import { Router } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -11,11 +11,13 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let jwtServiceSpy: any;
   let routerSpy:any;
+  let httpSpy:any;
 
   beforeEach(() => {
 
-    jwtServiceSpy = jasmine.createSpyObj<JwtService>(['getRole']);
+    jwtServiceSpy = jasmine.createSpyObj<JwtService>(['getRole','setJwt','setRefreshToken']);
     routerSpy = jasmine.createSpyObj<Router>(['navigate']);
+    httpSpy = jasmine.createSpyObj<HttpClient>(['post']);
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
@@ -24,6 +26,7 @@ describe('LoginComponent', () => {
         ],
       declarations: [LoginComponent],
       providers: [
+        {provide: HttpClient, useValue: httpSpy},
         {provide: JwtService, useValue: jwtServiceSpy},
         { provide: Router, useValue: routerSpy }]
     })
@@ -95,4 +98,11 @@ describe('LoginComponent', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/admin-home']);
   });
 
+  it('should call http post when login', ()=>{
+    component.login();
+    expect(httpSpy.post).toHaveBeenCalled();
+
+  });
+
 });
+
