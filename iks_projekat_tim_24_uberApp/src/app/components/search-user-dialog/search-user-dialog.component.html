@@ -4,10 +4,10 @@
 >
     <div>
       <p>Pretraga korisnika</p>
-      <input type="text" formControlName="q"/>
+      <input id="search-user-input" type="text" formControlName="q"/>
       <br>
     </div>
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <button id="user-search-submit"  mat-raised-button color="primary" type="submit">Submit</button>
     <div class="search-results">
       <div *ngFor="let user of results" class="user-result" (click)="addUser(user);">{{user.name}} {{user.surname}} <span class="email">{{user.email}}</span></div>
     </div>
